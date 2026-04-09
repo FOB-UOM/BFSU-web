@@ -26,17 +26,16 @@ export const AboutUs = () => {
 
                 </div>
 
-                <Grid cols={1} md={2} gap={8} className="mb-24">
+                <div className="max-w-4xl mx-auto mb-24">
                     <Card hover={false} className="h-full bg-bfsu-glass backdrop-blur-xl">
                         <CardContent className="flex flex-col justify-center items-center text-center p-10 mt-6">
-                            <Typography variant="h2" className="text-bfsu-gold mb-4">About Us</Typography>
-                            <Typography variant="p" className="text-gray-300">
-                                The Business Faculty Students’ Union represents the students of the Faculty of Business, University of Moratuwa. The union works to support student welfare, encourage leadership, and create opportunities for personal and professional development. It organizes academic programs, networking events, social activities, and community projects that help students build connections and gain real-world experience. The union also acts as a bridge between students and the faculty, ensuring that student voices are heard and their needs are addressed.
+                            <Typography variant="h2" className="text-bfsu-gold mb-4 text-center">About Us</Typography>
+                            <Typography variant="p" className="text-gray-300 text-center">
+                                {`The Business Faculty Students' Union represents the students of the Faculty of Business, University of Moratuwa. The union works to support student welfare, encourage leadership, and create opportunities for personal and professional development. It organizes academic programs, networking events, social activities, and community projects that help students build connections and gain real-world experience. The union also acts as a bridge between students and the faculty, ensuring that student voices are heard and their needs are addressed.`}
                             </Typography>
                         </CardContent>
                     </Card>
-
-                </Grid>
+                </div>
 
                 <div className="text-center mb-12">
                     <Typography variant="h2" className="text-white mb-4">Board of <span className="text-bfsu-gold">Officials</span></Typography>

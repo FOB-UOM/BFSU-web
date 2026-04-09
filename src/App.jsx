@@ -7,6 +7,7 @@ import { AboutUs } from './pages/AboutUs';
 import { NewsPage } from './pages/NewsPage';
 import { SingleNewsPage } from './pages/SingleNewsPage';
 import { EventsPage } from './pages/EventsPage';
+import { SingleEventPage } from './pages/SingleEventPage';
 
 function App() {
     return (
@@ -20,6 +21,7 @@ function App() {
                     <Route path="/news" element={<NewsPage />} />
                     <Route path="/news/:slug" element={<SingleNewsPage />} />
                     <Route path="/events" element={<EventsPage />} />
+                    <Route path="/events/:slug" element={<SingleEventPage />} />
                 </Routes>
 
                 <Footer />

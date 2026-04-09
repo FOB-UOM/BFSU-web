@@ -48,13 +48,13 @@ export const siteData = {
     ],
     links: {
         resources: [
-            { name: "Faculty of Business Website", url: "https://uom.lk/business" },
-            { name: "Dept of Management of Technology (LinkedIn)", url: "#" },
-            { name: "Dept of Industrial Management (LinkedIn)", url: "#" }
+            { name: "Student Portal - Time Tables", url: "https://lms.uom.lk" },
+            { name: "Library - Business Faculty", url: "https://lib.uom.lk" },
+            { name: "Curriculum Details", url: "#" }
         ],
         social: [
-            { name: "Business Faculty Union Facebook", url: "#" },
-            { name: "Society of Business Analysis Facebook", url: "#" }
+            { name: "Business Faculty Union Facebook", url: "https://www.facebook.com/BfacMora" },
+            { name: "Business Faculty Union LinkedIn", url: "https://www.linkedin.com/company/business-faculty-students-union-university-of-moratuwa/" }
         ]
     }
 };

@@ -9,10 +9,9 @@ export const AboutSection = () => {
     return (
         <section id="about" className="py-24 bg-transparent relative">
             <Container>
-                <Grid cols={1} md={2} gap={12}>
-
+                <div className="max-w-4xl mx-auto">
                     {/* The Union Block */}
-                    <div className="bg-bfsu-glass p-10 rounded-3xl border border-bfsu-glass-border hover:bg-white/[0.08] hover:border-bfsu-gold transition-all relative overflow-hidden group">
+                    <div className="bg-bfsu-glass p-10 rounded-3xl border border-bfsu-glass-border hover:bg-white/[0.08] hover:border-bfsu-gold transition-all relative overflow-hidden group text-center flex flex-col items-center">
                         <div className="absolute top-0 right-0 w-32 h-32 bg-bfsu-gold/10 rounded-full -mr-16 -mt-16 transition-transform group-hover:scale-110" />
                         <div className="w-14 h-14 bg-bfsu-primary border border-bfsu-glass-border text-bfsu-gold rounded-xl flex items-center justify-center mb-8 shadow-[0_5px_15px_rgba(212,175,55,0.2)]">
                             <Users size={28} />
@@ -28,10 +27,7 @@ export const AboutSection = () => {
                             Meet the Team &rarr;
                         </a>
                     </div>
-
-
-
-                </Grid>
+                </div>
             </Container>
         </section>
     );
