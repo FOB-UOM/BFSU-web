@@ -12,7 +12,7 @@ export const QuickLinksSection = () => {
             description: "Current semester dates and holidays.",
             icon: Calendar,
             buttonText: "View Calendar",
-            url: "#"
+            url: "https://uom.lk/business/undergraduate-studies/academic-calendar"
         },
         {
             id: 2,
@@ -20,23 +20,23 @@ export const QuickLinksSection = () => {
             description: "Latest lecture and examination schedules.",
             icon: Clock,
             buttonText: "View Schedules",
-            url: "#"
+            url: "https://uom.lk/business/undergraduate-studies"
         },
         {
             id: 3,
             title: "Library",
-            description: "Link to the UoM Library Business Faculty section.",
+            description: "Access digital resources, book catalog, and study spaces",
             icon: Library,
             buttonText: "Visit Library",
-            url: "#"
+            url: "https://uom.lk/lib"
         },
         {
             id: 4,
-            title: "Student Handbooks",
+            title: "FOB Curriculum",
             description: "Downloadable PDFs and module guides.",
             icon: Book,
             buttonText: "Download",
-            url: "#"
+            url: "https://uom.lk/sites/default/files/business/files/FOB%20Full%20Curriculum%20Intake%202025%20for%20Website%2027-11-2025_0.pdf"
         },
         {
             id: 5,

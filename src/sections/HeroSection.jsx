@@ -26,10 +26,10 @@ export const HeroSection = () => {
 
                     <div className="flex flex-wrap gap-4 justify-center">
                         <a
-                            href="#about"
+                            href="/news"
                             className="bg-bfsu-gold text-bfsu-primary px-10 py-4 rounded-full font-bold shadow-[0_10px_20px_rgba(212,175,55,0.2)] hover:-translate-y-[3px] transition-all hover:shadow-[0_15px_30px_rgba(212,175,55,0.4)] flex items-center gap-2 group tracking-wide uppercase text-sm"
                         >
-                            Our Story
+                            News
                             <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
                         </a>
                         <a

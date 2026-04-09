@@ -12,7 +12,7 @@ export const EventsPage = () => {
             <div className="absolute inset-0 z-0 bg-gradient-to-b from-[#0A0A0A] via-[#0A0A0A]/95 to-[#0A0A0A]" />
             <Container className="relative z-10">
                 <div className="text-center mb-16">
-                    <Typography variant="h1" className="text-white mb-6">Events & <span className="text-bfsu-gold">News</span></Typography>
+                    <Typography variant="h1" className="text-white mb-6">Events<span className="text-bfsu-gold"></span></Typography>
                     <Typography variant="p" className="text-gray-400 font-light text-lg">Stay updated with the latest happenings and upcoming activities.</Typography>
                 </div>
 
