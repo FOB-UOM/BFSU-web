@@ -18,6 +18,8 @@
     "vite": "^8.0.1"
   },
   "dependencies": {
+    "@intuitui-labs/a11y-gate": "^0.2.0",
+    "@intuitui-labs/editorial": "^0.1.1",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
     "react-router-dom": "^7.14.0"

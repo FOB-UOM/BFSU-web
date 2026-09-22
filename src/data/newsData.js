@@ -1,17 +1,20 @@
-import { Trophy, FileText, AlertTriangle, Link as LinkIcon } from 'lucide-react';
+import { Trophy, AlertTriangle, Link as LinkIcon } from 'lucide-react';
+import { articleFrontmatterSchema } from '@intuitui-labs/editorial';
 
-export const newsData = [
+const rawArticles = [
     {
         id: 1,
         slug: "colours-award-winners-2025",
         title: "Congratulations to the Colours Award winners - 2025!",
-        date: "Latest",
+        description: "May your journey continue to shine with success and inspiration.",
+        date: "2026-04-01",
         label: "Achievement",
+        author: "BFSU Editorial Board",
         brief: "May your journey continue to shine with success and inspiration.",
         content: `
             <p>Congratulations to the Colours Award winners - 2025!</p>
             <br/>
-            <p>May your journey continue to shine with success and inspiration.</p>
+            <p>May your journey continue to shine with success and inspiration as you bring pride and honor to the Faculty of Business, University of Moratuwa.</p>
         `,
         image: "/images/colours-2025-1.jpg",
         images: [
@@ -19,14 +22,18 @@ export const newsData = [
             "/images/colours-2025-2.jpg",
             "/images/colours-2025-3.jpg"
         ],
-        icon: Trophy
+        icon: Trophy,
+        kind: "article",
+        language: "en"
     },
     {
         id: 2,
         slug: "urgent-safety-alert",
         title: "URGENT SAFETY ALERT: ATTEMPTED ROBBERIES",
-        date: "Recent",
+        description: "Please be extremely careful. Security notice regarding safety around boarding places.",
+        date: "2026-03-12",
         label: "Security",
+        author: "BFSU Security & Welfare",
         brief: "Please be extremely careful. There have been incident (2026.03.12) of armed robbers targeting students.",
         content: `
             <p>🚨 <strong>URGENT SAFETY ALERT: ATTEMPTED ROBBERIES</strong> 🚨</p>
@@ -44,28 +51,59 @@ export const newsData = [
             <p><em>-MSU-</em></p>
         `,
         image: null,
-        icon: AlertTriangle
+        icon: AlertTriangle,
+        kind: "article",
+        language: "en"
     },
     {
         id: 3,
         slug: "student-feedback-form",
         title: "Faculty of Business – Student Feedback Form",
-        date: "Notice",
+        description: "The Business Faculty Students' Union invites all students to share their feedback, concerns, and suggestions.",
+        date: "2026-03-01",
         label: "Feedback",
-        brief: "The Business Faculty Students’ Union invites all students to share their feedback, concerns, complaints, and suggestions.",
+        author: "BFSU Academic & Welfare",
+        brief: "The Business Faculty Students' Union invites all students to share their feedback, concerns, complaints, and suggestions.",
         content: `
             <p>📢 <strong>Faculty of Business – Student Feedback Form</strong></p>
             <br/>
             <p>The Business Faculty Students’ Union, University of Moratuwa, invites all students to share their feedback, concerns, complaints, and suggestions to help improve the academic and student experience.</p>
             <br/>
             <p>🔗 <strong>Submit your response here:</strong><br/>
-            <a href="https://forms.gle/uPNxwgi6P3wp8HAA8" target="_blank" class="text-bfsu-gold hover:underline">https://forms.gle/uPNxwgi6P3wp8HAA8</a></p>
+            <a href="https://forms.gle/uPNxwgi6P3wp8HAA8" target="_blank" class="text-bfsu-gold font-bold hover:underline">https://forms.gle/uPNxwgi6P3wp8HAA8</a></p>
             <br/>
             <p>Your input is valuable and will help us work towards positive improvements.</p>
             <br/>
             <p>Business Faculty Students’ Union<br/>University of Moratuwa</p>
         `,
         image: null,
-        icon: LinkIcon
+        icon: LinkIcon,
+        kind: "article",
+        language: "en"
     }
 ];
+
+export const newsData = rawArticles.map(article => {
+    // Validate with Intuitui Labs Editorial Frontmatter schema when possible
+    let editorialMeta = null;
+    try {
+        if (articleFrontmatterSchema && articleFrontmatterSchema.safeParse) {
+            const parsed = articleFrontmatterSchema.safeParse({
+                title: article.title,
+                description: article.description,
+                publishedAt: article.date,
+                kind: article.kind,
+                language: article.language,
+                authors: [article.author]
+            });
+            if (parsed.success) editorialMeta = parsed.data;
+        }
+    } catch (e) {
+        // Schema fallback
+    }
+
+    return {
+        ...article,
+        editorialMeta
+    };
+});

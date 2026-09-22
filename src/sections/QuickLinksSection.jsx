@@ -2,7 +2,7 @@ import React from 'react';
 import { Container } from '../components/ui/Container';
 import { Card } from '../components/ui/Card';
 import { Typography } from '../components/ui/Typography';
-import { Calendar, Clock, Library, Book, AlertCircle } from 'lucide-react';
+import { Calendar, Clock, Library, Book, AlertCircle, ExternalLink } from 'lucide-react';
 
 export const QuickLinksSection = () => {
     const quickLinks = [
@@ -25,7 +25,7 @@ export const QuickLinksSection = () => {
         {
             id: 3,
             title: "Library",
-            description: "Access digital resources, book catalog, and study spaces",
+            description: "Access digital resources, catalog, and study spaces.",
             icon: Library,
             buttonText: "Visit Library",
             url: "https://uom.lk/lib"
@@ -35,44 +35,50 @@ export const QuickLinksSection = () => {
             title: "FOB Curriculum",
             description: "Downloadable PDFs and module guides.",
             icon: Book,
-            buttonText: "Download",
+            buttonText: "Download PDF",
             url: "https://uom.lk/sites/default/files/business/files/FOB%20Full%20Curriculum%20Intake%202025%20for%20Website%2027-11-2025_0.pdf"
         },
         {
             id: 5,
-            title: "Complaints",
+            title: "Complaints & Feedback",
             description: "Report issues and submit feedback directly.",
             icon: AlertCircle,
-            buttonText: "Submit Complaint",
-            url: "#"
+            buttonText: "Submit Form",
+            url: "https://forms.gle/uPNxwgi6P3wp8HAA8"
         }
     ];
 
     return (
-        <section id="quick-links" className="py-24 bg-transparent relative z-10 border-b border-bfsu-glass-border/50">
+        <section id="quick-links" className="py-20 bg-transparent relative z-10 border-b border-black/5 dark:border-white/5 transition-colors">
             <Container className="max-w-[1400px]">
-                <div className="text-center mb-16">
-                    <Typography variant="h2" className="text-white mb-4">
+                <div className="text-center mb-14">
+                    <Typography variant="h2" className="mb-3">
                         Student <span className="text-bfsu-gold">Portal</span>
                     </Typography>
-                    <Typography variant="p" className="text-gray-300">
-                        High-utility links to help you navigate your daily academic life.
+                    <Typography variant="p" className="text-gray-600 dark:text-gray-400 max-w-xl mx-auto">
+                        Essential tools and university resources to navigate your daily academic life.
                     </Typography>
                 </div>
 
-                <div className="flex flex-col lg:flex-row justify-center gap-4 w-full">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-5 w-full">
                     {quickLinks.map((link) => {
                         const Icon = link.icon;
                         return (
-                            <Card key={link.id} hover={true} className="flex-1 min-w-[200px] flex flex-col items-center text-center p-6 bg-bfsu-glass backdrop-blur-md">
-                                <div className="w-14 h-14 bg-bfsu-primary border border-bfsu-glass-border text-bfsu-gold rounded-2xl flex items-center justify-center mb-6 shadow-[0_5px_15px_rgba(212,175,55,0.2)]">
-                                    <Icon size={28} />
+                            <Card key={link.id} hover={true} className="flex flex-col items-center text-center p-6">
+                                <div className="w-13 h-13 p-3 bg-bfsu-gold/15 dark:bg-bfsu-primary border border-bfsu-gold/30 text-bfsu-primary dark:text-bfsu-gold rounded-2xl flex items-center justify-center mb-5 shadow-sm">
+                                    <Icon size={26} />
                                 </div>
-                                <Typography variant="h4" className="text-white mb-3 !text-[1.05rem] font-bold leading-tight">{link.title}</Typography>
-                                <p className="text-gray-400 text-[0.85rem] mb-6 flex-grow leading-relaxed">{link.description}</p>
+                                <Typography variant="h4" className="mb-2 !text-base font-bold leading-snug">{link.title}</Typography>
+                                <p className="text-gray-600 dark:text-gray-400 text-xs mb-6 flex-grow leading-relaxed">{link.description}</p>
 
-                                <a href={link.url} className="w-full inline-block mt-auto bg-transparent border border-bfsu-glass-border hover:border-bfsu-gold text-bfsu-gold hover:bg-bfsu-gold hover:text-bfsu-primary px-3 py-2 rounded-full font-bold text-[0.7rem] uppercase tracking-wider transition-all">
+                                <a 
+                                    href={link.url} 
+                                    target={link.url.startsWith('http') ? '_blank' : '_self'}
+                                    rel="noreferrer"
+                                    className="w-full inline-flex items-center justify-center gap-1.5 mt-auto border border-bfsu-gold/40 text-bfsu-primary dark:text-bfsu-gold hover:bg-bfsu-gold hover:text-bfsu-primary px-3 py-2 rounded-full font-bold text-[0.7rem] uppercase tracking-wider transition-all"
+                                >
                                     {link.buttonText}
+                                    {link.url.startsWith('http') && <ExternalLink size={11} />}
                                 </a>
                             </Card>
                         );

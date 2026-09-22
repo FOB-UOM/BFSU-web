@@ -1,12 +1,28 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
+  :root {
+    --bg-page: #FAF9F6;
+    --text-page: #1F1A17;
+    --card-bg: rgba(255, 255, 255, 0.85);
+    --card-border: rgba(45, 27, 16, 0.1);
+  }
+
+  .dark {
+    --bg-page: #0A0A0A;
+    --text-page: #F3F4F6;
+    --card-bg: rgba(255, 255, 255, 0.05);
+    --card-border: rgba(255, 255, 255, 0.1);
+  }
+
   body {
-    @apply font-sans antialiased bg-bfsu-dark text-white overflow-x-hidden;
+    @apply font-sans antialiased overflow-x-hidden transition-colors duration-300;
+    background-color: var(--bg-page);
+    color: var(--text-page);
   }
 
   body::before {
@@ -16,18 +32,32 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: radial-gradient(circle at 10% 20%, rgba(45, 27, 16, 0.15) 0%, transparent 40%),
-      radial-gradient(circle at 90% 80%, rgba(212, 175, 55, 0.05) 0%, transparent 40%);
     z-index: -1;
+    pointer-events: none;
+    transition: opacity 0.5s ease;
+  }
+
+  body:not(.dark)::before {
+    background: radial-gradient(circle at 15% 15%, rgba(212, 175, 55, 0.12) 0%, transparent 40%),
+      radial-gradient(circle at 85% 85%, rgba(45, 27, 16, 0.05) 0%, transparent 40%);
+  }
+
+  .dark body::before {
+    background: radial-gradient(circle at 10% 20%, rgba(45, 27, 16, 0.25) 0%, transparent 45%),
+      radial-gradient(circle at 90% 80%, rgba(212, 175, 55, 0.08) 0%, transparent 45%);
   }
 }
 
 @layer utilities {
   .glass-effect {
-    @apply bg-bfsu-glass backdrop-blur-md border border-bfsu-glass-border;
+    @apply backdrop-blur-xl border transition-all duration-300;
+    background-color: var(--card-bg);
+    border-color: var(--card-border);
   }
 
   .glass-card {
-    @apply bg-bfsu-glass backdrop-blur-sm border border-bfsu-glass-border;
+    @apply backdrop-blur-md border transition-all duration-300;
+    background-color: var(--card-bg);
+    border-color: var(--card-border);
   }
 }
