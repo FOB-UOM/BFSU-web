@@ -1,37 +1,34 @@
 import React from 'react';
 
-export const Card = ({ children, className = '', hover = true, ...props }) => {
-    const hoverClass = hover 
-        ? 'transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl hover:border-bfsu-gold/60' 
-        : '';
+export const Card = ({ children, className = '', hover = true, variant = 'default', ...props }) => {
+    const hoverStyles = hover
+        ? 'hover:border-bfsu-gold/40 hover:shadow-paper-hover dark:hover:border-bfsu-gold/40 transition-all duration-300'
+        : 'transition-colors duration-200';
 
     return (
         <div
-            className={`rounded-3xl overflow-hidden relative glass-card shadow-sm ${hoverClass} ${className}`}
+            className={`bg-white dark:bg-[#121721] border border-[#E8E6E1] dark:border-white/10 rounded-xl shadow-paper ${hoverStyles} ${className}`}
             {...props}
         >
-            <div className="absolute top-0 left-0 w-full h-[70%] bg-[radial-gradient(circle_at_top_right,rgba(212,175,55,0.08),transparent_70%)] pointer-events-none" />
-            <div className="relative z-10 w-full h-full flex flex-col">
-                {children}
-            </div>
+            {children}
         </div>
     );
 };
 
 export const CardHeader = ({ children, className = '', ...props }) => (
-    <div className={`p-8 pb-4 ${className}`} {...props}>
+    <div className={`p-6 pb-3 border-b border-[#E8E6E1]/60 dark:border-white/5 ${className}`} {...props}>
         {children}
     </div>
 );
 
 export const CardContent = ({ children, className = '', ...props }) => (
-    <div className={`p-8 pt-0 flex-grow ${className}`} {...props}>
+    <div className={`p-6 ${className}`} {...props}>
         {children}
     </div>
 );
 
 export const CardFooter = ({ children, className = '', ...props }) => (
-    <div className={`p-8 pt-0 mt-auto ${className}`} {...props}>
+    <div className={`p-6 pt-3 mt-auto border-t border-[#E8E6E1]/60 dark:border-white/5 ${className}`} {...props}>
         {children}
     </div>
 );

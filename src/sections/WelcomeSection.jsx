@@ -1,28 +1,26 @@
-import React from 'react';
-import { Container } from '../components/ui/Container';
-import { Typography } from '../components/ui/Typography';
+﻿import React from 'react';
 import { siteData } from '../data';
-import { Building2 } from 'lucide-react';
 
 export const WelcomeSection = () => {
     return (
-        <section className="py-20 bg-transparent relative">
-            <Container>
-                <div className="max-w-4xl mx-auto text-center">
-                    <div className="w-16 h-16 bg-bfsu-glass border border-bfsu-glass-border rounded-2xl flex items-center justify-center mx-auto mb-8 shadow-sm">
-                        <Building2 size={32} className="text-bfsu-gold" />
-                    </div>
+        <section className="border-b border-[var(--border)] bg-transparent  py-20 sm:py-24 transition-colors">
+            <div className="max-w-[1000px] mx-auto px-6 sm:px-12 text-center">
+                <span className="font-mono text-xs font-bold uppercase tracking-[0.2em] text-[#C59B27] block mb-4">
+                    Collegiate Mission
+                </span>
 
-                    <Typography variant="h2" className="mb-6 pb-6 relative inline-block text-white">
-                        About Business Faculty
-                        <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-24 h-1.5 bg-bfsu-gold rounded-full" />
-                    </Typography>
+                <h2 className="font-display text-3xl sm:text-5xl font-bold tracking-tight text-[var(--text-primary)]  leading-[1.12] mb-8">
+                    Analytical Rigor, Ethical Enterprise & Public Good.
+                </h2>
 
-                    <Typography variant="lead" className="text-gray-300 mt-6 !leading-relaxed !font-light">
-                        {siteData.facultyBrief.description}
-                    </Typography>
-                </div>
-            </Container>
+                <div className="w-12 h-[2px] bg-[#C59B27] mx-auto mb-8" />
+
+                <p className="font-body text-lg sm:text-xl text-[#333C4D] font-medium leading-relaxed italic max-w-3xl mx-auto">
+                    "{siteData.facultyBrief.description}"
+                </p>
+            </div>
         </section>
     );
 };
+
+

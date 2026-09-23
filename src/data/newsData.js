@@ -1,5 +1,4 @@
 import { Trophy, AlertTriangle, Link as LinkIcon } from 'lucide-react';
-import { articleFrontmatterSchema } from '@intuitui-labs/editorial';
 
 const rawArticles = [
     {
@@ -83,27 +82,4 @@ const rawArticles = [
     }
 ];
 
-export const newsData = rawArticles.map(article => {
-    // Validate with Intuitui Labs Editorial Frontmatter schema when possible
-    let editorialMeta = null;
-    try {
-        if (articleFrontmatterSchema && articleFrontmatterSchema.safeParse) {
-            const parsed = articleFrontmatterSchema.safeParse({
-                title: article.title,
-                description: article.description,
-                publishedAt: article.date,
-                kind: article.kind,
-                language: article.language,
-                authors: [article.author]
-            });
-            if (parsed.success) editorialMeta = parsed.data;
-        }
-    } catch (e) {
-        // Schema fallback
-    }
-
-    return {
-        ...article,
-        editorialMeta
-    };
-});
+export const newsData = rawArticles;

@@ -1,3 +1,5 @@
+'use client';
+
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
 const ThemeContext = createContext({
@@ -8,7 +10,10 @@ const ThemeContext = createContext({
 
 export const ThemeProvider = ({ children }) => {
   const [theme, setTheme] = useState(() => {
-    return localStorage.getItem('bfsu-theme') || 'system';
+    if (typeof window !== 'undefined') {
+      return localStorage.getItem('bfsu-theme') || 'system';
+    }
+    return 'system';
   });
 
   const [resolvedTheme, setResolvedTheme] = useState('dark');

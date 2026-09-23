@@ -1,73 +1,122 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { Container } from '../components/ui/Container';
-import { Typography } from '../components/ui/Typography';
-import { Card, CardContent } from '../components/ui/Card';
-import { ArrowRight, Newspaper } from 'lucide-react';
+import Link from 'next/link';
+import { ArrowRight } from 'lucide-react';
 import { newsData } from '../data/newsData';
 
 export const NewsSection = () => {
-    // Show first 2 recent news
-    const recentNews = newsData.slice(0, 2);
+    const leadNotice = newsData[0];
+    const secondaryNotices = newsData.slice(1, 3);
 
     return (
-        <section className="py-20 relative overflow-hidden bg-transparent border-b border-black/5 dark:border-white/5 transition-colors">
-            <Container>
-                <div className="flex flex-col lg:flex-row gap-12 items-center">
+        <section id="notices" className="border-b border-[var(--border)] bg-transparent  py-16 sm:py-20 transition-colors">
+            <div className="max-w-[1400px] mx-auto px-6 sm:px-12">
+                
+                {/* Header */}
+                <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 border-b border-[var(--border)] pb-4">
+                    <div>
+                        <span className="font-mono text-xs font-bold uppercase tracking-[0.22em] text-[#C59B27] block mb-1">
+                            Official Notices & Governance
+                        </span>
+                        <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-[var(--text-primary)] ">
+                            Circulars & Announcements
+                        </h2>
+                    </div>
+                    <Link 
+                        href="/news"
+                        className="font-mono text-xs font-bold uppercase tracking-[0.22em] text-[var(--text-primary)]  hover:text-[#C59B27] inline-flex items-center gap-1.5 mt-4 md:mt-0 transition-colors"
+                    >
+                        <span>Archive Ledger</span>
+                        <ArrowRight size={14} />
+                    </Link>
+                </div>
 
-                    {/* Left: Description & Button */}
-                    <div className="lg:w-1/3 text-center lg:text-left">
-                        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-bfsu-gold/30 bg-bfsu-gold/10 text-bfsu-primary dark:text-bfsu-gold text-xs font-semibold uppercase tracking-wider mb-4">
-                            <Newspaper size={13} />
-                            Editorial Bulletin
+                {/* Grid Spread */}
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+                    
+                    {/* Primary Highlight Notice (Diagnosed Image 3) */}
+                    <div className="lg:col-span-7 border border-[var(--border)] bg-[var(--bg-surface)]  p-8 sm:p-10 shadow-sm rounded-sm flex flex-col justify-between">
+                        <div>
+                            <div className="flex items-center gap-3 mb-6">
+                                <span className="px-3 py-1 bg-[#C59B27] text-[var(--text-primary)] font-mono text-xs font-bold uppercase tracking-widest rounded-sm">
+                                    Official Circular
+                                </span>
+                                <span className="font-mono text-xs font-bold text-[#4B5563] dark:text-[#9CA3AF] tracking-wider">
+                                    SEC / 2026 / 04
+                                </span>
+                            </div>
+
+                            <span className="font-mono text-xs text-[#4B5563] dark:text-[#9CA3AF] block mb-3 font-semibold">
+                                {leadNotice?.date}
+                            </span>
+                            
+                            <h3 className="text-2xl sm:text-3xl font-extrabold text-[var(--text-primary)]  leading-snug mb-4 hover:text-[#C59B27] transition-colors tracking-tight">
+                                <Link href={`/news/${leadNotice?.slug || leadNotice?.id}`}>
+                                    {leadNotice?.title}
+                                </Link>
+                            </h3>
+
+                            {/* Elevated high-contrast, robust authority lead copy */}
+                            <p className="text-base sm:text-lg font-medium text-[#1A202C] leading-relaxed mb-8">
+                                {leadNotice?.brief}
+                            </p>
                         </div>
-                        <Typography variant="h2" className="mb-4">
-                            News & <span className="text-bfsu-gold">Announcements</span>
-                        </Typography>
-                        <p className="text-gray-600 dark:text-gray-300 text-base mb-8 leading-relaxed">
-                            Stay up to date with official announcements, academic schedules, and important faculty notices validated under institutional editorial standards.
-                        </p>
-                        <Link to="/news" className="inline-flex items-center gap-2 px-7 py-3 bg-bfsu-gold hover:bg-bfsu-accent text-bfsu-primary rounded-full font-bold uppercase tracking-wider text-xs shadow-md hover:-translate-y-0.5 transition-all">
-                            See All Notices
-                            <ArrowRight size={15} />
-                        </Link>
+
+                        <div className="pt-6 border-t border-[var(--border)] flex justify-between items-center font-mono text-xs">
+                            <span className="uppercase tracking-[0.2em] text-[#4B5563] dark:text-[#9CA3AF] font-bold">
+                                BFSU Secretariat
+                            </span>
+                            <Link 
+                                href={`/news/${leadNotice?.slug || leadNotice?.id}`}
+                                className="font-bold uppercase tracking-[0.2em] text-[var(--text-primary)]  hover:text-[#C59B27] inline-flex items-center gap-2"
+                            >
+                                <span>Read Circular</span>
+                                <ArrowRight size={14} />
+                            </Link>
+                        </div>
                     </div>
 
-                    {/* Right: Previews */}
-                    <div className="lg:w-2/3 w-full grid grid-cols-1 md:grid-cols-2 gap-6">
-                        {recentNews.map((newsItem) => {
-                            const IconComponent = newsItem.icon;
-                            return (
-                                <Card key={newsItem.id} hover={true} className="group h-full">
-                                    <CardContent className="p-7 flex flex-col h-full">
-                                        <div className="flex items-center justify-between mb-5">
-                                            <div className="w-11 h-11 bg-bfsu-gold/15 dark:bg-bfsu-primary border border-bfsu-gold/30 text-bfsu-primary dark:text-bfsu-gold rounded-xl flex items-center justify-center shadow-sm">
-                                                <IconComponent size={20} />
-                                            </div>
-                                            <span className="text-[0.68rem] font-bold px-3 py-1 rounded-full bg-black/5 dark:bg-white/10 text-gray-700 dark:text-gray-300 uppercase tracking-wider border border-black/10 dark:border-white/10 group-hover:border-bfsu-gold/50 group-hover:text-bfsu-gold transition-colors">
-                                                {newsItem.label}
-                                            </span>
-                                        </div>
-                                        <Typography variant="h4" className="mb-3 !text-lg leading-snug">
-                                            {newsItem.title}
-                                        </Typography>
-                                        <p className="text-gray-600 dark:text-gray-400 text-sm flex-grow mb-6 leading-relaxed">
-                                            {newsItem.brief.substring(0, 115)}...
-                                        </p>
-                                        <div className="mt-auto pt-4 border-t border-black/5 dark:border-white/10 flex items-center justify-between">
-                                            <span className="text-xs text-gray-500">{newsItem.date}</span>
-                                            <Link to={`/news/${newsItem.slug}`} className="text-bfsu-gold hover:text-bfsu-primary dark:hover:text-white text-xs font-bold uppercase tracking-wider transition-colors inline-flex items-center gap-1">
-                                                Read Notice &rarr;
-                                            </Link>
-                                        </div>
-                                    </CardContent>
-                                </Card>
-                            );
-                        })}
+                    {/* Secondary Notices Column */}
+                    <div className="lg:col-span-5 flex flex-col justify-between space-y-6">
+                        {secondaryNotices.map((item) => (
+                            <div 
+                                key={item.id}
+                                className="p-8 border border-[var(--border)] bg-[var(--bg-surface)]  rounded-sm shadow-sm flex flex-col justify-between h-full hover:border-[#C59B27]/60 transition-colors"
+                            >
+                                <div>
+                                    <div className="flex items-center justify-between font-mono text-xs text-[#4B5563] dark:text-[#9CA3AF] mb-4 font-semibold">
+                                        <span className="uppercase text-[#C59B27] font-bold tracking-wider">[{item.label}]</span>
+                                        <span>{item.date}</span>
+                                    </div>
+
+                                    <h4 className="text-xl font-bold text-[var(--text-primary)]  leading-snug mb-3 hover:text-[#C59B27] transition-colors tracking-tight">
+                                        <Link href={`/news/${item.slug || item.id}`}>
+                                            {item.title}
+                                        </Link>
+                                    </h4>
+
+                                    <p className="text-sm font-medium text-[#2D3748] leading-relaxed mb-6">
+                                        {item.brief}
+                                    </p>
+                                </div>
+
+                                <div className="pt-4 border-t border-[var(--border)] flex justify-end font-mono text-xs">
+                                    <Link 
+                                        href={`/news/${item.slug || item.id}`}
+                                        className="font-bold uppercase tracking-[0.18em] text-[var(--text-primary)]  hover:text-[#C59B27] inline-flex items-center gap-1.5"
+                                    >
+                                        <span>Full Dossier</span>
+                                        <ArrowRight size={12} />
+                                    </Link>
+                                </div>
+                            </div>
+                        ))}
                     </div>
 
                 </div>
-            </Container>
+
+            </div>
         </section>
     );
 };
+
+

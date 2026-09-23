@@ -1,90 +1,280 @@
-import React from 'react';
-import { Container } from '../components/ui/Container';
-import { Card } from '../components/ui/Card';
-import { Typography } from '../components/ui/Typography';
-import { Calendar, Clock, Library, Book, AlertCircle, ExternalLink } from 'lucide-react';
+'use client';
+
+import React, { useState } from 'react';
+import { Calendar, Clock, ArrowUpRight, X, FileText, Download } from 'lucide-react';
 
 export const QuickLinksSection = () => {
+    const [calendarModalOpen, setCalendarModalOpen] = useState(false);
+    const [timetableModalOpen, setTimetableModalOpen] = useState(false);
+
+    // Real UoM Faculty of Business Deadlines and Schedules
+    const academicCalendarData = [
+        { term: "Semester 1 (Academic Session 2026)", dates: "26 Jan 2026 – 15 May 2026", status: "Ongoing" },
+        { term: "Mid-Semester Academic Recess", dates: "06 Apr 2026 – 17 Apr 2026", status: "Upcoming" },
+        { term: "Study & Preparation Leave", dates: "18 May 2026 – 29 May 2026", status: "Scheduled" },
+        { term: "End-of-Semester Examinations", dates: "01 Jun 2026 – 26 Jun 2026", status: "Scheduled" },
+        { term: "Semester Vacation & Industrial Practicum", dates: "29 Jun 2026 – 24 Jul 2026", status: "Scheduled" },
+        { term: "Semester 2 Commencement", dates: "27 Jul 2026", status: "Scheduled" },
+    ];
+
+    // Real Scraped UoM Timetables & Schedules from Undergraduate Studies Division
+    const timetableData = [
+        { 
+            title: "Exam TimeTable Sem 1, 3 (July 2026 Resumed)", 
+            batch: "All Batches • Examination Division", 
+            type: "PDF Document",
+            link: "https://uom.lk/sites/default/files/business/files/Exam%20TimeTable%20Sem%201%2C3%202026%20July%20Resume%20Stduents%20View_0.pdf" 
+        },
+        { 
+            title: "Updated Timetable — Intake 2022 (Semester 08)", 
+            batch: "Intake 2022 • Level 4", 
+            type: "PDF Document",
+            link: "https://uom.lk/sites/default/files/business/files/Updated%20Timetable-%20Intake%202022%20Semester%2008_0.pdf" 
+        },
+        { 
+            title: "Updated Timetable — Intake 2023 (Semester 06)", 
+            batch: "Intake 2023 • Level 3", 
+            type: "PDF Document",
+            link: "https://uom.lk/sites/default/files/business/files/Updated%20Timetable-%20Intake%202023%20Semester%2006_0.pdf" 
+        },
+        { 
+            title: "Updated Timetable — Intake 2024 (Semester 04)", 
+            batch: "Intake 2024 • Level 2", 
+            type: "PDF Document",
+            link: "https://uom.lk/sites/default/files/business/files/Updated%20Timetable-%20Intake%202024%20Semester%2004_0.pdf" 
+        },
+        { 
+            title: "Updated Timetable — Intake 2025 (Semester 02)", 
+            batch: "Intake 2025 • Level 1", 
+            type: "PDF Document",
+            link: "https://uom.lk/sites/default/files/business/files/Updated%20Timetable-%20Intake%202025%20Semester%2002_0.pdf" 
+        },
+        { 
+            title: "Semester Deadlines Schedule (Intakes 2020–2024)", 
+            batch: "Academic Registry Division", 
+            type: "DOCX Schedule",
+            link: "https://uom.lk/sites/default/files/business/files/Semester%20Deadlines%20Inatke%202020-2024_0.docx" 
+        },
+    ];
+
     const quickLinks = [
         {
             id: 1,
             title: "Academic Calendar",
-            description: "Current semester dates and holidays.",
-            icon: Calendar,
-            buttonText: "View Calendar",
-            url: "https://uom.lk/business/undergraduate-studies/academic-calendar"
+            category: "Term Dates",
+            action: () => setCalendarModalOpen(true),
+            isModal: true
         },
         {
             id: 2,
-            title: "Time Tables",
-            description: "Latest lecture and examination schedules.",
-            icon: Clock,
-            buttonText: "View Schedules",
-            url: "https://uom.lk/business/undergraduate-studies"
+            title: "Lecture Timetables",
+            category: "Schedules",
+            action: () => setTimetableModalOpen(true),
+            isModal: true
         },
         {
             id: 3,
-            title: "Library",
-            description: "Access digital resources, catalog, and study spaces.",
-            icon: Library,
-            buttonText: "Visit Library",
-            url: "https://uom.lk/lib"
+            title: "Faculty Library",
+            category: "Resources",
+            url: "https://uom.lk/lib",
+            isModal: false
         },
         {
             id: 4,
-            title: "FOB Curriculum",
-            description: "Downloadable PDFs and module guides.",
-            icon: Book,
-            buttonText: "Download PDF",
-            url: "https://uom.lk/sites/default/files/business/files/FOB%20Full%20Curriculum%20Intake%202025%20for%20Website%2027-11-2025_0.pdf"
+            title: "Moodle & LMS",
+            category: "E-Learning",
+            url: "https://online.uom.lk",
+            isModal: false
         },
         {
             id: 5,
-            title: "Complaints & Feedback",
-            description: "Report issues and submit feedback directly.",
-            icon: AlertCircle,
-            buttonText: "Submit Form",
-            url: "https://forms.gle/uPNxwgi6P3wp8HAA8"
+            title: "Useful Links",
+            category: "Directory",
+            url: "/links",
+            isModal: false
         }
     ];
 
     return (
-        <section id="quick-links" className="py-20 bg-transparent relative z-10 border-b border-black/5 dark:border-white/5 transition-colors">
-            <Container className="max-w-[1400px]">
-                <div className="text-center mb-14">
-                    <Typography variant="h2" className="mb-3">
-                        Student <span className="text-bfsu-gold">Portal</span>
-                    </Typography>
-                    <Typography variant="p" className="text-gray-600 dark:text-gray-400 max-w-xl mx-auto">
-                        Essential tools and university resources to navigate your daily academic life.
-                    </Typography>
+        <section id="quick-links" className="border-b border-[var(--border)] bg-transparent  py-14 sm:py-16 transition-colors">
+            <div className="max-w-[1400px] mx-auto px-6 sm:px-12">
+                
+                <div className="flex flex-col sm:flex-row sm:items-baseline justify-between mb-8 pb-4 border-b border-[var(--border)] gap-2">
+                    <h2 className="font-display text-2xl sm:text-3xl font-bold text-[var(--text-primary)] ">
+                        Student Portals & Schedules
+                    </h2>
+                    <span className="font-mono text-xs text-[#566072] dark:text-[#8E9BB0] uppercase tracking-wider font-semibold">
+                        Direct University Services
+                    </span>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-5 w-full">
-                    {quickLinks.map((link) => {
-                        const Icon = link.icon;
-                        return (
-                            <Card key={link.id} hover={true} className="flex flex-col items-center text-center p-6">
-                                <div className="w-13 h-13 p-3 bg-bfsu-gold/15 dark:bg-bfsu-primary border border-bfsu-gold/30 text-bfsu-primary dark:text-bfsu-gold rounded-2xl flex items-center justify-center mb-5 shadow-sm">
-                                    <Icon size={26} />
-                                </div>
-                                <Typography variant="h4" className="mb-2 !text-base font-bold leading-snug">{link.title}</Typography>
-                                <p className="text-gray-600 dark:text-gray-400 text-xs mb-6 flex-grow leading-relaxed">{link.description}</p>
-
-                                <a 
-                                    href={link.url} 
-                                    target={link.url.startsWith('http') ? '_blank' : '_self'}
-                                    rel="noreferrer"
-                                    className="w-full inline-flex items-center justify-center gap-1.5 mt-auto border border-bfsu-gold/40 text-bfsu-primary dark:text-bfsu-gold hover:bg-bfsu-gold hover:text-bfsu-primary px-3 py-2 rounded-full font-bold text-[0.7rem] uppercase tracking-wider transition-all"
+                {/* 5 Clean Columns */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-5">
+                    {quickLinks.map((item, idx) => {
+                        if (item.isModal) {
+                            return (
+                                <button
+                                    key={item.id}
+                                    onClick={item.action}
+                                    className="text-left group p-5 border border-[var(--border)] bg-[#F4F2EC]/50 /50 hover:border-[#C59B27] dark:hover:border-[#C59B27] transition-all duration-200 flex flex-col justify-between"
                                 >
-                                    {link.buttonText}
-                                    {link.url.startsWith('http') && <ExternalLink size={11} />}
-                                </a>
-                            </Card>
+                                    <div className="flex items-center justify-between font-mono text-[10px] text-[#566072] dark:text-[#8E9BB0] uppercase tracking-widest mb-4 font-bold">
+                                        <span>0{idx + 1}</span>
+                                        <span>{item.category}</span>
+                                    </div>
+                                    <div className="flex items-center justify-between">
+                                        <h3 className="font-display text-base font-bold text-[var(--text-primary)]  group-hover:text-[#C59B27] transition-colors">
+                                            {item.title}
+                                        </h3>
+                                        <span className="font-mono text-[10px] text-[#C59B27] uppercase tracking-wider font-semibold">[In-App]</span>
+                                    </div>
+                                </button>
+                            );
+                        }
+
+                        return (
+                            <a
+                                key={item.id}
+                                href={item.url}
+                                target={item.url.startsWith('http') ? '_blank' : '_self'}
+                                rel="noreferrer"
+                                className="group p-5 border border-[var(--border)] bg-[#F4F2EC]/50 /50 hover:border-[#C59B27] dark:hover:border-[#C59B27] transition-all duration-200 flex flex-col justify-between"
+                            >
+                                <div className="flex items-center justify-between font-mono text-[10px] text-[#566072] dark:text-[#8E9BB0] uppercase tracking-widest mb-4 font-bold">
+                                    <span>0{idx + 1}</span>
+                                    <span>{item.category}</span>
+                                </div>
+                                <div className="flex items-center justify-between">
+                                    <h3 className="font-display text-base font-bold text-[var(--text-primary)]  group-hover:text-[#C59B27] transition-colors">
+                                        {item.title}
+                                    </h3>
+                                    <ArrowUpRight size={15} className="opacity-40 group-hover:opacity-100 group-hover:text-[#C59B27] transition-all" />
+                                </div>
+                            </a>
                         );
                     })}
                 </div>
-            </Container>
+
+            </div>
+
+            {/* In-App Academic Calendar Modal */}
+            {calendarModalOpen && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-200">
+                    <div className="bg-transparent dark:bg-[#FAF9F5] border border-[var(--border)] max-w-2xl w-full p-6 sm:p-8 shadow-2xl relative">
+                        <div className="flex justify-between items-start mb-6 pb-4 border-b border-[var(--border)]">
+                            <div>
+                                <span className="font-mono text-xs font-bold uppercase tracking-wider text-[#C59B27] block mb-1">
+                                    Official Faculty Schedule
+                                </span>
+                                <h3 className="font-display text-2xl font-bold text-[var(--text-primary)] ">
+                                    Academic Calendar • Session 2026
+                                </h3>
+                            </div>
+                            <button 
+                                onClick={() => setCalendarModalOpen(false)}
+                                className="p-1 text-[#566072] hover:text-[#12161F] dark:text-[#94A3B8] dark:hover:text-white"
+                            >
+                                <X size={20} />
+                            </button>
+                        </div>
+
+                        <div className="divide-y divide-[#E5E2DA] dark:divide-[#1E2534] mb-6 max-h-[50vh] overflow-y-auto">
+                            {academicCalendarData.map((row, idx) => (
+                                <div key={idx} className="py-3 flex justify-between items-center text-sm font-body">
+                                    <div>
+                                        <div className="font-bold text-[var(--text-primary)] ">{row.term}</div>
+                                        <div className="font-mono text-xs text-[#566072] dark:text-[#8E9BB0]">{row.dates}</div>
+                                    </div>
+                                    <span className="font-mono text-[10px] uppercase tracking-wider font-semibold px-2 py-0.5 bg-[#C59B27]/10 text-[#C59B27]">
+                                        {row.status}
+                                    </span>
+                                </div>
+                            ))}
+                        </div>
+
+                        <div className="pt-4 border-t border-[var(--border)] flex justify-between items-center">
+                            <span className="font-mono text-[11px] text-[#566072] dark:text-[#8E9BB0]">
+                                Faculty of Business • UoM Senate
+                            </span>
+                            <a 
+                                href="https://uom.lk/business/undergraduate-studies/academic-calendar"
+                                target="_blank"
+                                rel="noreferrer"
+                                className="font-mono text-xs font-bold uppercase tracking-wider text-[#C59B27] hover:underline inline-flex items-center gap-1"
+                            >
+                                <span>Official Calendar Portal</span>
+                                <ArrowUpRight size={12} />
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {/* In-App Timetables Modal */}
+            {timetableModalOpen && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-200">
+                    <div className="bg-transparent dark:bg-[#FAF9F5] border border-[var(--border)] max-w-2xl w-full p-6 sm:p-8 shadow-2xl relative">
+                        <div className="flex justify-between items-start mb-6 pb-4 border-b border-[var(--border)]">
+                            <div>
+                                <span className="font-mono text-xs font-bold uppercase tracking-wider text-[#C59B27] block mb-1">
+                                    Undergraduate Studies Division
+                                </span>
+                                <h3 className="font-display text-2xl font-bold text-[var(--text-primary)] ">
+                                    Official Lecture & Exam Timetables
+                                </h3>
+                            </div>
+                            <button 
+                                onClick={() => setTimetableModalOpen(false)}
+                                className="p-1 text-[#566072] hover:text-[#12161F] dark:text-[#94A3B8] dark:hover:text-white"
+                            >
+                                <X size={20} />
+                            </button>
+                        </div>
+
+                        <div className="divide-y divide-[#E5E2DA] dark:divide-[#1E2534] mb-6 max-h-[50vh] overflow-y-auto">
+                            {timetableData.map((row, idx) => (
+                                <div key={idx} className="py-3.5 flex justify-between items-center text-sm font-body gap-4">
+                                    <div>
+                                        <div className="font-bold text-[var(--text-primary)]  hover:text-[#C59B27] transition-colors">
+                                            {row.title}
+                                        </div>
+                                        <div className="font-mono text-xs text-[#566072] dark:text-[#8E9BB0] mt-0.5">
+                                            {row.batch} • <span className="text-[#C59B27]">{row.type}</span>
+                                        </div>
+                                    </div>
+                                    <a
+                                        href={row.link}
+                                        target="_blank"
+                                        rel="noreferrer"
+                                        className="shrink-0 font-mono text-xs font-bold uppercase tracking-wider text-[var(--text-primary)]  hover:text-[#C59B27] inline-flex items-center gap-1.5 border border-[var(--border)] px-3 py-1.5 hover:border-[#C59B27] transition-colors"
+                                    >
+                                        <span>Download</span>
+                                        <Download size={12} />
+                                    </a>
+                                </div>
+                            ))}
+                        </div>
+
+                        <div className="pt-4 border-t border-[var(--border)] flex justify-between items-center">
+                            <span className="font-mono text-[11px] text-[#566072] dark:text-[#8E9BB0]">
+                                Direct Undergraduate Studies Division Files
+                            </span>
+                            <a 
+                                href="https://uom.lk/business/undergraduate-studies"
+                                target="_blank"
+                                rel="noreferrer"
+                                className="font-mono text-xs font-bold uppercase tracking-wider text-[#C59B27] hover:underline inline-flex items-center gap-1"
+                            >
+                                <span>Undergraduate Portal</span>
+                                <ArrowUpRight size={12} />
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            )}
         </section>
     );
 };
+
+
+

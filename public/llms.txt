@@ -1,0 +1,29 @@
+﻿# Business Faculty Students' Union (BFSU) — University of Moratuwa
+> Institutional public documentation and machine-readable sitemap for language models, academic researchers, and faculty constituents.
+
+## Institutional Profile
+- Organization: Business Faculty Students' Union (BFSU)
+- Parent Entity: Faculty of Business, University of Moratuwa
+- Campus: Katubedda, Moratuwa, Sri Lanka
+- Official Faculty URL: https://uom.lk/business
+
+## Academic Departments
+- Decision Sciences (Business Analytics): https://uom.lk/ds
+- Management of Technology (Business Process Management): https://uom.lk/mot
+- Industrial Management (Financial Services Management): https://uom.lk/im
+- Undergraduate Studies Division (UGS): https://uom.lk/business/undergraduate-studies
+
+## Core Student Portals
+- Moodle LMS: https://online.uom.lk
+- Faculty LMS: https://lms.uom.lk
+- University Library & Digital Repository: https://uom.lk/lib | http://dl.lib.mrt.ac.lk/
+- Examination Portal: https://uom.lk/examinations
+
+## Key Routes & Sitemap
+- /: Primary landing page, leadership addresses, latest dispatches, and intake schedules.
+- /about: Institutional charter of Faculty of Business, BFSU constitution, current executive council, and past alumni leadership.
+- /explore: Multidimensional showcase of student life, academic achievements, events, and undergraduate research.
+- /news: Official faculty gazettes, administrative circulars, and student union announcements.
+- /links: Architectural campus directory of virtual learning, departments, examination divisions, and welfare services.
+- /alumni: Alumni fellowship directory, graduate research cross-linking, and profile portal authentication.
+- /research: Undergraduate dissertations and scholarly output linked to UoM Digital Repository.

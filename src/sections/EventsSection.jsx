@@ -1,75 +1,106 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { Container } from '../components/ui/Container';
-import { Typography } from '../components/ui/Typography';
-import { Card, CardContent } from '../components/ui/Card';
+import Link from 'next/link';
+import { ArrowRight, MapPin } from 'lucide-react';
 import { eventsData } from '../data/eventsData';
-import { Calendar, MapPin, ArrowRight } from 'lucide-react';
 
 export const EventsSection = () => {
-    // Show only first 3 events on home page
-    const recentEvents = eventsData.slice(0, 3);
+    const featuredEvents = [
+        {
+            ...eventsData[0],
+            image: "/images/colours-2025-1.jpg",
+            aspect: "aspect-[16/10]"
+        },
+        {
+            ...eventsData[1],
+            image: "/images/colours-2025-2.jpg",
+            aspect: "aspect-[16/10]"
+        },
+        {
+            ...eventsData[2],
+            image: "/images/hanthana-trip.jpg",
+            aspect: "aspect-[16/10]"
+        }
+    ];
 
     return (
-        <section id="events" className="py-24 relative overflow-hidden bg-[url('/images/faculty_official_real.jpg')] bg-cover bg-fixed">
-            <div className="absolute inset-0 z-0 bg-gradient-to-b from-[#0A0A0A] via-[#0A0A0A]/95 to-[#0A0A0A]" />
-            <Container className="relative z-10 w-full">
-                <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
-                    <div className="max-w-2xl">
-                        <Typography variant="h2" className="text-white mb-4">
-                            Upcoming & Past <span className="text-bfsu-gold">Events</span>
-                        </Typography>
-                        <p className="text-gray-300 text-lg leading-relaxed">
-                            Be a part of our vibrant student community. Explore amazing memories from our workshops and celebrations.
-                        </p>
+        <section id="events" className="bg-transparent py-16 sm:py-24 transition-colors border-t border-[var(--border)]">
+            <div className="max-w-[1400px] mx-auto px-6 sm:px-12">
+                
+                {/* Section Header */}
+                <div className="flex flex-col md:flex-row md:items-end justify-between mb-14 pb-6 border-b border-[var(--border)] gap-4">
+                    <div>
+                        <span className="font-mono text-xs font-bold uppercase tracking-[0.22em] text-[#C59B27] block mb-2">
+                            Visual Dispatches & Assemblies
+                        </span>
+                        <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-[var(--text-primary)]">
+                            Collegiate Life & Traditions
+                        </h2>
                     </div>
-                    <Link to="/events" className="inline-flex items-center gap-2 group text-bfsu-gold font-bold uppercase tracking-wider text-sm hover:text-white transition-colors">
-                        View All Events
-                        <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+                    <Link 
+                        href="/events"
+                        className="font-mono text-xs font-bold uppercase tracking-[0.22em] text-[var(--text-primary)] hover:text-[#C59B27] transition-colors inline-flex items-center gap-2 pb-1 border-b-2 border-[#0F141E]"
+                    >
+                        <span>Complete Calendar</span>
+                        <ArrowRight size={14} />
                     </Link>
                 </div>
 
+                {/* 3-Column Image-First Editorial Grid */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    {recentEvents.map((event) => {
-                        const IconComponent = event.icon || Calendar;
-                        return (
-                            <Card key={event.id} hover={true} className="bg-bfsu-glass backdrop-blur-md border-bfsu-glass-border flex flex-col h-full group">
-                                <CardContent className="p-8 flex flex-col h-full relative overflow-hidden">
-                                    <div className="absolute top-0 right-0 w-32 h-32 bg-white/5 rounded-full -mr-16 -mt-16 transition-transform duration-500 group-hover:scale-125 z-0" />
-
-                                    <div className="w-14 h-14 bg-bfsu-primary text-bfsu-gold rounded-xl flex items-center justify-center mb-6 shadow-[0_5px_15px_rgba(212,175,55,0.2)] border border-bfsu-glass-border relative z-10">
-                                        <IconComponent size={24} />
-                                    </div>
-                                    <div className="flex items-center gap-2 mb-3 relative z-10">
-                                        <span className="bg-bfsu-gold/20 text-bfsu-gold text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider border border-bfsu-gold/20">
-                                            {event.label}
+                    {featuredEvents.map((event) => (
+                        <article 
+                            key={event.id}
+                            className="group flex flex-col justify-between border border-[var(--border)] bg-[var(--bg-surface)] p-5 hover:border-[#C59B27] transition-all duration-300 shadow-sm rounded-sm"
+                        >
+                            <div>
+                                {/* Photographic Hero Frame */}
+                                <div className="overflow-hidden aspect-[16/10] relative mb-5 border border-[var(--border)] bg-[#FAF9F5] rounded-sm">
+                                    <img 
+                                        src={event.image} 
+                                        alt={event.title}
+                                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 filter contrast-[1.03]"
+                                    />
+                                    <div className="absolute top-2.5 left-2.5">
+                                        <span className="font-mono text-[10px] uppercase tracking-wider px-2.5 py-1 bg-white/95 text-[#C59B27] font-bold border border-[var(--border)] rounded-sm shadow-sm">
+                                            [{event.label}]
                                         </span>
                                     </div>
-                                    <Typography variant="h4" className="text-white mb-4 !text-[1.1rem] leading-snug relative z-10">
-                                        {event.title}
-                                    </Typography>
-                                    <p className="text-gray-400 text-sm mb-6 flex-grow leading-relaxed relative z-10">
-                                        {event.brief}
-                                    </p>
-                                    <div className="mt-auto space-y-3 pt-5 border-t border-white/10 relative z-10">
-                                        <div className="flex items-center gap-3 text-gray-300 text-sm">
-                                            <Calendar size={16} className="text-bfsu-gold" />
-                                            <span>{event.date}</span>
-                                        </div>
-                                        <div className="flex items-center gap-3 text-gray-300 text-sm mb-6">
-                                            <MapPin size={16} className="text-bfsu-gold" />
-                                            <span>{event.location}</span>
-                                        </div>
-                                        <Link to={`/events/${event.slug}`} className="inline-block px-6 py-2.5 rounded-full border border-bfsu-gold font-bold text-[0.75rem] uppercase tracking-wider text-bfsu-gold hover:bg-bfsu-gold hover:text-bfsu-primary transition-all text-center w-full">
-                                            Learn More
-                                        </Link>
+                                    <div className="absolute bottom-2.5 right-2.5">
+                                        <span className="font-mono text-[10px] uppercase tracking-wider px-2.5 py-1 bg-white/95 text-[var(--text-primary)] font-bold border border-[var(--border)] rounded-sm shadow-sm">
+                                            {event.date}
+                                        </span>
                                     </div>
-                                </CardContent>
-                            </Card>
-                        );
-                    })}
+                                </div>
+
+                                <h3 className="text-xl font-bold text-[var(--text-primary)] leading-snug mb-3 group-hover:text-[#C59B27] transition-colors tracking-tight">
+                                    <Link href={`/events/${event.slug}`}>
+                                        {event.title}
+                                    </Link>
+                                </h3>
+
+                                <p className="text-sm font-medium text-[#374151] leading-relaxed mb-6">
+                                    {event.brief}
+                                </p>
+                            </div>
+
+                            <div className="pt-4 border-t border-[var(--border)] flex items-center justify-between font-mono text-xs">
+                                <span className="inline-flex items-center gap-1.5 text-[#566072] text-[11px] font-semibold">
+                                    <MapPin size={13} className="text-[#C59B27]" />
+                                    <span>{event.location}</span>
+                                </span>
+                                <Link 
+                                    href={`/events/${event.slug}`}
+                                    className="font-bold uppercase tracking-[0.18em] text-[11px] text-[var(--text-primary)] hover:text-[#C59B27] inline-flex items-center gap-1"
+                                >
+                                    <span>Dossier</span>
+                                    <ArrowRight size={12} />
+                                </Link>
+                            </div>
+                        </article>
+                    ))}
                 </div>
-            </Container>
+
+            </div>
         </section>
     );
 };
