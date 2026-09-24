@@ -7,6 +7,7 @@ import { ScrollToAnchor } from '../components/ScrollToAnchor';
 import { BackgroundCanvas } from '../components/BackgroundCanvas';
 import { GridBackground } from '../components/GridBackground';
 import { AuthModal } from '../components/AuthModal';
+import { ProfilePeekProvider } from '../context/ProfilePeekContext';
 
 export const metadata = {
     title: {
@@ -60,26 +61,28 @@ export default function RootLayout({ children }) {
             <body className="antialiased selection:bg-[#C59B27]/25 selection:text-[#0F141E]">
                 <ThemeProvider>
                     <AuthProvider>
-                        <ScrollToAnchor />
+                        <ProfilePeekProvider>
+                            <ScrollToAnchor />
 
-                        {/* Fixed background layers — always behind content */}
-                        <GridBackground />
-                        <BackgroundCanvas />
+                            {/* Fixed background layers — always behind content */}
+                            <GridBackground />
+                            <BackgroundCanvas />
 
-                        {/* Main scrollable surface */}
-                        <div
-                            className="relative min-h-screen flex flex-col font-sans w-full overflow-x-hidden"
-                            style={{ zIndex: 10 }}
-                        >
-                            <Navbar />
-                            <div className="flex-grow w-full">
-                                {children}
+                            {/* Main scrollable surface */}
+                            <div
+                                className="relative min-h-screen flex flex-col font-sans w-full overflow-x-hidden"
+                                style={{ zIndex: 10 }}
+                            >
+                                <Navbar />
+                                <div className="flex-grow w-full">
+                                    {children}
+                                </div>
+                                <Footer />
                             </div>
-                            <Footer />
-                        </div>
 
-                        {/* Global Authentication Modal */}
-                        <AuthModal />
+                            {/* Global Authentication Modal */}
+                            <AuthModal />
+                        </ProfilePeekProvider>
                     </AuthProvider>
                 </ThemeProvider>
             </body>

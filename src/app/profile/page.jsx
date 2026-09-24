@@ -62,16 +62,23 @@ export default function ProfilePage() {
 
     // Load initial profile data
     useEffect(() => {
+        const metadataLinkedIn = (user?.user_metadata?.linkedin_url && user.user_metadata.linkedin_url.startsWith('http')) 
+            ? user.user_metadata.linkedin_url 
+            : (user?.user_metadata?.profile && user.user_metadata.profile.startsWith('http'))
+            ? user.user_metadata.profile
+            : '';
+        const metadataAvatar = user?.user_metadata?.avatar_url || user?.user_metadata?.picture || '';
+
         if (profile) {
-            setFullName(profile.full_name || '');
+            setFullName(profile.full_name || user?.user_metadata?.full_name || user?.user_metadata?.name || '');
             setStudentId(profile.student_id || '');
             setDepartment(profile.department || '');
             setBatch(profile.batch || '');
             setBio(profile.bio || '');
-            setLinkedinUrl(profile.linkedin_url || '');
+            setLinkedinUrl(profile.linkedin_url || metadataLinkedIn);
             setGithubUrl(profile.github_url || '');
             setPortfolioUrl(profile.portfolio_url || '');
-            setAvatarUrl(profile.avatar_url || '');
+            setAvatarUrl(profile.avatar_url || metadataAvatar);
             setCvUrl(profile.cv_url || '');
             setGraduationYear(profile.graduation_year || '');
             setCurrentCompany(profile.current_company || '');
@@ -85,7 +92,8 @@ export default function ProfilePage() {
             }
         } else if (user) {
             setFullName(user.user_metadata?.full_name || user.user_metadata?.name || '');
-            setAvatarUrl(user.user_metadata?.avatar_url || user.user_metadata?.picture || '');
+            setAvatarUrl(metadataAvatar);
+            setLinkedinUrl(metadataLinkedIn);
         }
     }, [profile, user]);
 
@@ -521,13 +529,21 @@ export default function ProfilePage() {
                                         </label>
                                         <div className="relative">
                                             <GraduationCap size={15} className="absolute left-3 top-3 text-[var(--text-faint)]" />
-                                            <input
-                                                type="text"
+                                            <select
                                                 value={batch}
                                                 onChange={(e) => setBatch(e.target.value)}
-                                                placeholder="e.g. Batch '22"
-                                                className="w-full pl-9 pr-3 py-2 text-sm bg-transparent border border-[var(--border)] focus:border-[#C59B27] outline-none rounded-sm font-mono"
-                                            />
+                                                className="w-full pl-9 pr-3 py-2 text-sm bg-[var(--bg-surface)] border border-[var(--border)] focus:border-[#C59B27] outline-none rounded-sm font-mono cursor-pointer"
+                                            >
+                                                <option value="">Select Batch</option>
+                                                <option value="Batch '20">Batch '20</option>
+                                                <option value="Batch '21">Batch '21</option>
+                                                <option value="Batch '22">Batch '22</option>
+                                                <option value="Batch '23">Batch '23</option>
+                                                <option value="Batch '24">Batch '24</option>
+                                                <option value="Batch '25">Batch '25</option>
+                                                <option value="Batch '26">Batch '26</option>
+                                                <option value="Faculty Alumni">Faculty Alumni</option>
+                                            </select>
                                         </div>
                                     </div>
                                 </div>
@@ -631,21 +647,21 @@ export default function ProfilePage() {
                                     </div>
                                 )}
 
-                                {/* Links: LinkedIn, CV, GitHub */}
-                                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                                {/* Links: LinkedIn, GitHub, CV, Avatar Image URL */}
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                     <div>
                                         <label className="block text-xs font-mono font-bold uppercase tracking-wider text-[var(--text-muted)] mb-1">
-                                            LinkedIn Profile
+                                            LinkedIn Profile / Handle
                                         </label>
                                         <div className="relative">
                                             <div className="absolute left-3 top-3 text-[var(--text-faint)]">
                                                 <span className="font-bold text-xs bg-[#0077B5] text-white px-1 py-0.5 rounded leading-none">in</span>
                                             </div>
                                             <input
-                                                type="url"
+                                                type="text"
                                                 value={linkedinUrl}
                                                 onChange={(e) => setLinkedinUrl(e.target.value)}
-                                                placeholder="https://linkedin.com/in/..."
+                                                placeholder="https://linkedin.com/in/... or handle"
                                                 className="w-full pl-10 pr-3 py-2 text-sm bg-transparent border border-[var(--border)] focus:border-[#C59B27] outline-none rounded-sm font-sans"
                                             />
                                         </div>
@@ -653,13 +669,26 @@ export default function ProfilePage() {
 
                                     <div>
                                         <label className="block text-xs font-mono font-bold uppercase tracking-wider text-[var(--text-muted)] mb-1">
-                                            GitHub Username
+                                            GitHub Username / Link
                                         </label>
                                         <input
                                             type="text"
                                             value={githubUrl}
                                             onChange={(e) => setGithubUrl(e.target.value)}
-                                            placeholder="e.g. torvalds or URL"
+                                            placeholder="e.g. torvalds or https://github.com/..."
+                                            className="w-full px-3 py-2 text-sm bg-transparent border border-[var(--border)] focus:border-[#C59B27] outline-none rounded-sm font-sans"
+                                        />
+                                    </div>
+
+                                    <div>
+                                        <label className="block text-xs font-mono font-bold uppercase tracking-wider text-[var(--text-muted)] mb-1">
+                                            Profile Picture Image URL
+                                        </label>
+                                        <input
+                                            type="text"
+                                            value={avatarUrl}
+                                            onChange={(e) => setAvatarUrl(e.target.value)}
+                                            placeholder="https://... or synced from OAuth"
                                             className="w-full px-3 py-2 text-sm bg-transparent border border-[var(--border)] focus:border-[#C59B27] outline-none rounded-sm font-sans"
                                         />
                                     </div>
@@ -710,6 +739,82 @@ export default function ProfilePage() {
                                 </div>
 
                             </form>
+                        </div>
+
+                        {/* Explicit OAuth Account & Identity Linking Section */}
+                        <div className="bg-[var(--bg-surface)] border border-[var(--border)] p-6 sm:p-8 rounded-sm shadow-sm">
+                            <div className="flex items-center justify-between mb-4 pb-4 border-b border-[var(--border)]">
+                                <div>
+                                    <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-[#C59B27] block">
+                                        Multi-Provider Identity
+                                    </span>
+                                    <h3 className="font-display text-xl font-bold text-[var(--text-primary)]">
+                                        Explicit Connected Accounts
+                                    </h3>
+                                </div>
+                                <span className="font-mono text-xs text-emerald-600 dark:text-emerald-400 font-bold">
+                                    Single Profile Unified
+                                </span>
+                            </div>
+
+                            <p className="font-body text-xs text-[#566072] dark:text-[#9CA3AF] mb-6">
+                                Explicitly link multiple OAuth identities (Google UoM, LinkedIn, GitHub) to your single delegate profile so you can log in seamlessly using any account.
+                            </p>
+
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <button
+                                    type="button"
+                                    onClick={async () => {
+                                        await supabase.auth.linkIdentity({
+                                            provider: 'linkedin_oidc',
+                                            options: { redirectTo: `${window.location.origin}/profile` }
+                                        });
+                                    }}
+                                    className="p-4 border border-[var(--border)] bg-[#0077B5]/10 hover:bg-[#0077B5]/20 border-[#0077B5]/30 rounded-sm text-left transition-colors flex items-center justify-between cursor-pointer"
+                                >
+                                    <div className="flex items-center gap-3">
+                                        <span className="font-black text-xs bg-[#0077B5] text-white px-1.5 py-0.5 rounded">in</span>
+                                        <div>
+                                            <span className="font-mono text-xs font-bold text-[var(--text-primary)] block">LinkedIn Identity</span>
+                                            <span className="font-mono text-[10px] text-[#566072] dark:text-[#9CA3AF]">
+                                                {user?.app_metadata?.providers?.includes('linkedin_oidc') ? 'Connected' : 'Click to Link Account'}
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <span className="font-mono text-[10px] px-2 py-0.5 bg-[#0077B5] text-white rounded font-bold uppercase">
+                                        {user?.app_metadata?.providers?.includes('linkedin_oidc') ? 'Linked' : 'Link'}
+                                    </span>
+                                </button>
+
+                                <button
+                                    type="button"
+                                    onClick={async () => {
+                                        await supabase.auth.linkIdentity({
+                                            provider: 'google',
+                                            options: { redirectTo: `${window.location.origin}/profile` }
+                                        });
+                                    }}
+                                    className="p-4 border border-[var(--border)] bg-emerald-500/10 hover:bg-emerald-500/20 border-emerald-500/30 rounded-sm text-left transition-colors flex items-center justify-between cursor-pointer"
+                                >
+                                    <div className="flex items-center gap-3">
+                                        <svg className="w-4 h-4" viewBox="0 0 24 24">
+                                            <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.66-5.17 3.66-9.17z"/>
+                                            <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.25v3.15C3.26 21.36 7.33 24 12 24z"/>
+                                            <path fill="#FBBC05" d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.58H1.25C.45 8.18 0 9.99 0 12s.45 3.82 1.25 5.42l4.03-3.15z"/>
+                                            <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.33 0 3.26 2.64 1.25 6.58l4.03 3.15c.95-2.83 3.6-4.98 6.72-4.98z"/>
+                                        </svg>
+                                        <div>
+                                            <span className="font-mono text-xs font-bold text-[var(--text-primary)] block">Google (UoM) Identity</span>
+                                            <span className="font-mono text-[10px] text-[#566072] dark:text-[#9CA3AF]">
+                                                {user?.app_metadata?.providers?.includes('google') ? 'Connected' : 'Click to Link Account'}
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <span className="font-mono text-[10px] px-2 py-0.5 bg-emerald-600 text-white rounded font-bold uppercase">
+                                        {user?.app_metadata?.providers?.includes('google') ? 'Linked' : 'Link'}
+                                    </span>
+                                </button>
+                            </div>
                         </div>
 
                         {/* Temporal Career Milestones Section */}

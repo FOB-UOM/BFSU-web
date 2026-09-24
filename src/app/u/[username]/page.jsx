@@ -9,8 +9,34 @@ import { QRCodeSVG } from 'qrcode.react';
 import { 
     GraduationCap, Briefcase, BookOpen, MapPin, 
     Globe, FileText, Share2, 
-    CheckCircle2, ArrowLeft, ExternalLink, Calendar, Award
+    CheckCircle2, ArrowLeft, ExternalLink, Calendar, Award,
+    Sparkles, Code2, Building2, Shield
 } from 'lucide-react';
+
+function formatExternalUrl(url, type) {
+    if (!url || typeof url !== 'string') return null;
+    let trimmed = url.trim();
+    if (!trimmed) return null;
+    if (trimmed.startsWith('http://') || trimmed.startsWith('https://')) return trimmed;
+    if (type === 'github' && !trimmed.includes('/')) return `https://github.com/${trimmed}`;
+    if (type === 'linkedin' && !trimmed.includes('/')) return `https://www.linkedin.com/in/${trimmed}`;
+    return `https://${trimmed}`;
+}
+
+function getDepartmentSociety(departmentName) {
+    if (!departmentName) return null;
+    const lower = departmentName.toLowerCase();
+    if (lower.includes('decision') || lower.includes('analytics') || lower.includes('ds')) {
+        return { name: 'Decision Sciences Society', code: 'DSS', slug: 'decision-sciences' };
+    }
+    if (lower.includes('technology') || lower.includes('mot')) {
+        return { name: 'Management of Technology Society', code: 'MOTSS', slug: 'mot' };
+    }
+    if (lower.includes('industrial') || lower.includes('finance') || lower.includes('im')) {
+        return { name: 'Industrial Management Society', code: 'IMSS', slug: 'industrial-management' };
+    }
+    return null;
+}
 
 export async function generateMetadata({ params }) {
     const { username } = await params;
@@ -57,16 +83,22 @@ export default async function PublicProfilePage({ params }) {
         notFound();
     }
 
-    // Fetch related career timeline, projects, and achievements
-    const [careerRes, projectsRes, achievementsRes] = await Promise.all([
+    // Fetch related career timeline, projects, achievements, institutional roles & maintainer status
+    const [careerRes, projectsRes, achievementsRes, rolesRes, maintainerRes] = await Promise.all([
         supabase.from('career_history').select('*').eq('profile_id', profile.id).order('start_date', { ascending: false }),
         supabase.from('student_projects').select('*').eq('profile_id', profile.id).order('created_at', { ascending: false }),
         supabase.from('achievements').select('*').eq('profile_id', profile.id).order('year', { ascending: false }),
+        supabase.from('institutional_roles').select('*').eq('profile_id', profile.id).order('is_current', { ascending: false }),
+        supabase.from('web_maintainers').select('*').eq('profile_id', profile.id),
     ]);
 
     const careerHistory = careerRes.data || [];
     const projects = projectsRes.data || [];
     const achievements = achievementsRes.data || [];
+    const institutionalRoles = rolesRes.data || [];
+    const webMaintainer = maintainerRes.data && maintainerRes.data.length > 0 ? maintainerRes.data[0] : null;
+
+    const societyInfo = getDepartmentSociety(profile.department);
 
     const qrPayload = JSON.stringify({
         org: 'BFSU-UOM',
@@ -79,6 +111,11 @@ export default async function PublicProfilePage({ params }) {
     const isAlumni = profile.role === 'alumni' || Boolean(profile.graduation_year);
     const shareUrl = `https://bfsu-uom.lk/u/${profile.username || profile.id}`;
     const linkedinShareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}`;
+
+    const formattedLinkedin = formatExternalUrl(profile.linkedin_url, 'linkedin');
+    const formattedGithub = formatExternalUrl(profile.github_url, 'github');
+    const formattedCv = formatExternalUrl(profile.cv_url, 'cv');
+    const formattedPortfolio = formatExternalUrl(profile.portfolio_url, 'portfolio');
 
     return (
         <main className="flex-grow pt-32 pb-24 relative transition-colors duration-500">
@@ -116,13 +153,18 @@ export default async function PublicProfilePage({ params }) {
                                 role={profile.role}
                             />
                             <div>
-                                <div className="flex items-center gap-2 mb-1.5">
+                                <div className="flex flex-wrap items-center gap-2 mb-1.5">
                                     <span className="font-mono text-xs px-2.5 py-0.5 rounded bg-[#C59B27]/15 border border-[#C59B27]/40 text-[#C59B27] font-bold uppercase tracking-widest">
                                         {isAlumni ? 'Alumni' : profile.role}
                                     </span>
                                     {profile.is_verified && (
                                         <span className="inline-flex items-center gap-1 font-mono text-[10px] text-emerald-600 dark:text-emerald-400 font-bold uppercase">
                                             <CheckCircle2 size={13} /> Verified Delegate
+                                        </span>
+                                    )}
+                                    {webMaintainer && (
+                                        <span className="inline-flex items-center gap-1 font-mono text-[10px] px-2.5 py-0.5 rounded bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 font-bold uppercase">
+                                            <Code2 size={12} /> Web Maintainer
                                         </span>
                                     )}
                                 </div>
@@ -148,7 +190,15 @@ export default async function PublicProfilePage({ params }) {
                     <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 py-6 border-b border-[var(--border)] font-mono text-xs">
                         <div>
                             <span className="text-[10px] uppercase text-[var(--text-faint)] block mb-1">Department</span>
-                            <span className="font-semibold text-[var(--text-primary)]">{profile.department || 'Faculty of Business'}</span>
+                            <span className="font-semibold text-[var(--text-primary)] block">{profile.department || 'Faculty of Business'}</span>
+                            {societyInfo && (
+                                <Link 
+                                    href={`/societies/${societyInfo.slug}`}
+                                    className="text-[10px] text-[#C59B27] hover:underline font-bold inline-flex items-center gap-1 mt-0.5"
+                                >
+                                    <span>{societyInfo.code} Hub &rarr;</span>
+                                </Link>
+                            )}
                         </div>
                         <div>
                             <span className="text-[10px] uppercase text-[var(--text-faint)] block mb-1">Batch / Class</span>
@@ -173,11 +223,11 @@ export default async function PublicProfilePage({ params }) {
 
                     {/* Links */}
                     <div className="flex flex-wrap items-center gap-3 pt-6">
-                        {profile.linkedin_url && (
+                        {formattedLinkedin && (
                             <a
-                                href={profile.linkedin_url}
+                                href={formattedLinkedin}
                                 target="_blank"
-                                rel="noreferrer"
+                                rel="noopener noreferrer"
                                 className="px-3.5 py-1.5 rounded-sm bg-[#0077B5]/10 border border-[#0077B5]/30 text-[#0077B5] dark:text-sky-300 font-mono text-xs font-semibold inline-flex items-center gap-2 hover:bg-[#0077B5]/20 transition-colors"
                             >
                                 <span className="font-black text-xs">in</span>
@@ -186,11 +236,11 @@ export default async function PublicProfilePage({ params }) {
                             </a>
                         )}
 
-                        {profile.github_url && (
+                        {formattedGithub && (
                             <a
-                                href={profile.github_url}
+                                href={formattedGithub}
                                 target="_blank"
-                                rel="noreferrer"
+                                rel="noopener noreferrer"
                                 className="px-3.5 py-1.5 rounded-sm bg-black/5 dark:bg-white/5 border border-[var(--border)] font-mono text-xs font-semibold inline-flex items-center gap-2 hover:border-[#C59B27] transition-colors"
                             >
                                 <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
@@ -201,11 +251,24 @@ export default async function PublicProfilePage({ params }) {
                             </a>
                         )}
 
-                        {profile.cv_url && (
+                        {formattedPortfolio && (
                             <a
-                                href={profile.cv_url}
+                                href={formattedPortfolio}
                                 target="_blank"
-                                rel="noreferrer"
+                                rel="noopener noreferrer"
+                                className="px-3.5 py-1.5 rounded-sm bg-[#C59B27]/15 border border-[#C59B27]/40 text-[#C59B27] font-mono text-xs font-semibold inline-flex items-center gap-2 hover:bg-[#C59B27]/25 transition-colors"
+                            >
+                                <Globe size={14} />
+                                <span>Personal Portfolio</span>
+                                <ExternalLink size={12} />
+                            </a>
+                        )}
+
+                        {formattedCv && (
+                            <a
+                                href={formattedCv}
+                                target="_blank"
+                                rel="noopener noreferrer"
                                 className="px-3.5 py-1.5 rounded-sm bg-[#C59B27]/10 border border-[#C59B27]/30 text-[#C59B27] font-mono text-xs font-semibold inline-flex items-center gap-2 hover:bg-[#C59B27]/20 transition-colors"
                             >
                                 <FileText size={14} />
@@ -261,8 +324,77 @@ export default async function PublicProfilePage({ params }) {
                         )}
                     </div>
 
-                    {/* Honours & Research Projects */}
+                    {/* Honours, Institutional Roles & Research Projects */}
                     <div className="space-y-8">
+                        {/* Institutional & Society Appointments */}
+                        {institutionalRoles.length > 0 && (
+                            <div className="bg-[var(--bg-surface)] border border-[var(--border)] p-6 sm:p-8 rounded-sm shadow-sm">
+                                <h2 className="font-display text-xl font-bold text-[var(--text-primary)] mb-6 pb-4 border-b border-[var(--border)] flex items-center gap-2">
+                                    <Shield size={18} className="text-[#C59B27]" />
+                                    <span>Institutional & Society Appointments</span>
+                                </h2>
+                                <div className="space-y-3">
+                                    {institutionalRoles.map((role) => (
+                                        <div key={role.id} className="p-3 bg-[var(--bg-page)]/40 rounded-sm border border-[var(--border)] flex items-center justify-between">
+                                            <div>
+                                                <span className="font-mono text-[10px] text-[#C59B27] font-bold uppercase block">
+                                                    {role.organization_type} • {role.term_year}
+                                                </span>
+                                                <h4 className="font-display text-sm font-bold text-[var(--text-primary)]">
+                                                    {role.role_title}
+                                                </h4>
+                                            </div>
+                                            {role.is_current && (
+                                                <span className="font-mono text-[9px] px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 font-bold uppercase">
+                                                    Active
+                                                </span>
+                                            )}
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
+
+                        {/* Tier 4 Personal Portfolio Showcase */}
+                        {formattedPortfolio && (
+                            <div className="bg-[var(--bg-surface)] border border-[#C59B27]/40 p-6 sm:p-8 rounded-sm shadow-md relative overflow-hidden">
+                                <div className="absolute top-0 right-0 w-32 h-32 bg-[#C59B27]/10 rounded-full blur-2xl pointer-events-none" />
+                                <div className="flex items-center justify-between mb-3">
+                                    <h2 className="font-display text-lg font-bold text-[var(--text-primary)] flex items-center gap-2">
+                                        <Globe size={18} className="text-[#C59B27]" />
+                                        <span>Personal Portfolio Showcase</span>
+                                    </h2>
+                                    <span className="font-mono text-[9px] px-2 py-0.5 rounded bg-[#C59B27]/15 text-[#C59B27] font-bold uppercase">
+                                        Tier 4 Persona
+                                    </span>
+                                </div>
+                                <p className="font-body text-xs text-[#566072] dark:text-[#9CA3AF] mb-4 leading-relaxed">
+                                    Independent external portfolio, engineering artifacts, and personal web presence maintained by {profile.full_name}.
+                                </p>
+                                <a 
+                                    href={formattedPortfolio}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="inline-flex items-center justify-between w-full p-3.5 rounded bg-[var(--bg-page)] border border-[var(--border)] hover:border-[#C59B27] transition-all group"
+                                >
+                                    <div className="flex items-center gap-3 min-w-0">
+                                        <div className="p-2 rounded bg-[#C59B27]/10 text-[#C59B27] shrink-0">
+                                            <Globe size={16} />
+                                        </div>
+                                        <div className="min-w-0">
+                                            <span className="font-mono text-xs font-bold text-[var(--text-primary)] block truncate group-hover:text-[#C59B27] transition-colors">
+                                                {formattedPortfolio.replace(/^https?:\/\//, '')}
+                                            </span>
+                                            <span className="text-[10px] text-[var(--text-faint)] block">
+                                                Verified Institutional Anchor
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <ExternalLink size={14} className="text-[#C59B27] shrink-0 ml-2 group-hover:translate-x-0.5 transition-transform" />
+                                </a>
+                            </div>
+                        )}
+
                         {/* Honours & Awards */}
                         <div className="bg-[var(--bg-surface)] border border-[var(--border)] p-6 sm:p-8 rounded-sm shadow-sm">
                             <h2 className="font-display text-xl font-bold text-[var(--text-primary)] mb-6 pb-4 border-b border-[var(--border)] flex items-center gap-2">

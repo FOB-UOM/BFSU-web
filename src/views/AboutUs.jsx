@@ -1,8 +1,12 @@
 'use client';
 
 import React, { useState } from 'react';
+import Link from 'next/link';
 import { Container } from '../components/ui/Container';
 import { Typography } from '../components/ui/Typography';
+import { UserAvatar } from '../components/UserAvatar';
+import { NotionHubWidget } from '../components/NotionHubWidget';
+import { unionNotionConfig } from '../data/societiesData';
 import { 
     Shield, 
     BookOpen, 
@@ -17,23 +21,29 @@ import {
 } from 'lucide-react';
 
 export const AboutUs = () => {
-    // 1. Faculty Departments
+    // 1. Faculty Departments & Departmental Societies
     const departments = [
         {
             code: "DS",
             name: "Department of Decision Sciences",
+            societySlug: "decision-sciences",
+            societyName: "Decision Sciences Society (DSS)",
             focus: "Business Analytics, Applied Machine Learning, Operations Research & Supply Chain Optimization.",
             link: "https://uom.lk/ds"
         },
         {
             code: "MOT",
             name: "Department of Management of Technology",
+            societySlug: "mot",
+            societyName: "MOT Student Society (MOTSS)",
             focus: "Business Process Management, Enterprise Systems Architecture, Technology Strategy & Innovation.",
             link: "https://uom.lk/mot"
         },
         {
             code: "IM",
             name: "Department of Industrial Management",
+            societySlug: "industrial-management",
+            societyName: "IM Student Society (IMSS)",
             focus: "Financial Services Management, Econometrics, Quantitative Finance & Financial Engineering.",
             link: "https://uom.lk/im"
         }
@@ -41,11 +51,11 @@ export const AboutUs = () => {
 
     // 2. Current Union Leadership (Council / Executive Board)
     const officials = [
-        { role: 'President', name: 'Yasitha Sandakalum', department: 'Business Analytics' },
-        { role: 'Secretary', name: 'Miyuranga Rajakaruna', department: 'Industrial Management' },
-        { role: 'Vice President', name: 'Naveen Sandeepa', department: 'Financial Analytics' },
-        { role: 'Editor', name: 'Prageeth Harshana', department: 'Business Technology' },
-        { role: 'Junior Treasurer', name: 'Lakshan Kosala', department: 'Business Analytics' },
+        { role: 'President', name: 'Yasitha Sandakalum', department: 'Business Analytics', username: 'yasitha-sandakalum', avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80' },
+        { role: 'Secretary', name: 'Miyuranga Rajakaruna', department: 'Industrial Management', username: 'miyuranga-rajakaruna', avatar: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=400&q=80' },
+        { role: 'Vice President', name: 'Naveen Sandeepa', department: 'Financial Analytics', username: 'naveen-sandeepa', avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=400&q=80' },
+        { role: 'Editor', name: 'Prageeth Harshana', department: 'Business Technology', username: 'prageeth-harshana', avatar: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=400&q=80' },
+        { role: 'Junior Treasurer', name: 'Lakshan Kosala', department: 'Business Analytics', username: 'lakshan-kosala', avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80' },
     ];
 
     const executiveMembers = [
@@ -152,15 +162,24 @@ export const AboutUs = () => {
                                             {dept.focus}
                                         </p>
                                     </div>
-                                    <a 
-                                        href={dept.link} 
-                                        target="_blank" 
-                                        rel="noreferrer"
-                                        className="font-mono text-xs font-bold text-[var(--text-primary)]  hover:text-[#C59B27] inline-flex items-center gap-1.5"
-                                    >
-                                        <span>Official Department Portal</span>
-                                        <ArrowUpRight size={13} />
-                                    </a>
+                                    <div className="flex flex-col gap-2 pt-2 border-t border-[var(--border)]">
+                                        <Link 
+                                            href={`/societies/${dept.societySlug}`}
+                                            className="font-mono text-xs font-bold text-[#C59B27] hover:underline inline-flex items-center justify-between group"
+                                        >
+                                            <span>{dept.societyName}</span>
+                                            <span className="text-[10px] px-2 py-0.5 rounded bg-[#C59B27]/15 text-[#C59B27]">Society & Notion &rarr;</span>
+                                        </Link>
+                                        <a 
+                                            href={dept.link} 
+                                            target="_blank" 
+                                            rel="noreferrer"
+                                            className="font-mono text-xs font-medium text-[var(--text-secondary)] hover:text-[var(--text-primary)] inline-flex items-center gap-1.5"
+                                        >
+                                            <span>Faculty Department Portal</span>
+                                            <ArrowUpRight size={13} />
+                                        </a>
+                                    </div>
                                 </div>
                             ))}
                         </div>
@@ -222,16 +241,40 @@ export const AboutUs = () => {
                     <div className="border border-[var(--border)] bg-[var(--bg-surface)]  p-8 shadow-sm rounded-sm">
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
                             {officials.map((official, idx) => (
-                                <div key={idx} className="p-5 border border-[var(--border)] rounded-sm">
-                                    <span className="font-mono text-xs font-bold text-[#C59B27] uppercase tracking-wider block mb-1">
-                                        {official.role}
-                                    </span>
-                                    <div className="text-base font-bold text-[var(--text-primary)]  mb-1">
-                                        {official.name}
+                                <div 
+                                    key={idx} 
+                                    className="p-5 border border-[var(--border)] rounded-xl bg-[var(--bg-elevated)]/40 hover:border-[#C59B27]/40 transition-all flex items-start gap-4 group"
+                                >
+                                    <UserAvatar
+                                        src={official.avatar}
+                                        name={official.name}
+                                        size="md"
+                                        peekable={true}
+                                        username={official.username}
+                                        role="union_exec"
+                                        profileData={{
+                                            full_name: official.name,
+                                            username: official.username,
+                                            avatar_url: official.avatar,
+                                            role_title: `BFSU ${official.role}`,
+                                            department: `Department of ${official.department}`,
+                                            headline: `Elected ${official.role} of the Business Faculty Students' Union (BFSU)`
+                                        }}
+                                    />
+                                    <div className="min-w-0 flex-1">
+                                        <span className="font-mono text-[10px] font-bold text-[#C59B27] uppercase tracking-wider block mb-0.5">
+                                            {official.role}
+                                        </span>
+                                        <Link 
+                                            href={`/u/${official.username}`}
+                                            className="text-sm font-bold text-[var(--text-primary)] hover:text-[#C59B27] transition-colors block truncate"
+                                        >
+                                            {official.name}
+                                        </Link>
+                                        <span className="font-mono text-xs text-[var(--text-secondary)] block mt-0.5">
+                                            Dept. of {official.department}
+                                        </span>
                                     </div>
-                                    <span className="font-mono text-xs font-medium text-[#4B5563] dark:text-[#9CA3AF]">
-                                        Dept. of {official.department}
-                                    </span>
                                 </div>
                             ))}
                         </div>
@@ -251,15 +294,43 @@ export const AboutUs = () => {
                     </div>
                 </section>
 
-                {/* 5. SECTION D: Past Union Leadership & Continuity */}
+                {/* 5. SECTION D: Official Union Notion Hub (Student Orgs) */}
+                <section id="union-notion" className="mb-20 scroll-mt-24">
+                    <div className="border-b border-[var(--border)] pb-4 mb-8 flex justify-between items-baseline">
+                        <div>
+                            <span className="font-mono text-xs font-bold uppercase tracking-[0.22em] text-[#C59B27] block mb-1">
+                                [STUDENT ORGANIZATION HUB]
+                            </span>
+                            <h2 className="text-2xl sm:text-3xl font-extrabold text-[var(--text-primary)] tracking-tight">
+                                04. Official Union Notion Hub
+                            </h2>
+                        </div>
+                        <span className="font-mono text-xs font-bold text-[#4B5563] dark:text-[#9CA3AF] tracking-wider">
+                            CONNECTED WORKSPACE
+                        </span>
+                    </div>
+
+                    <NotionHubWidget 
+                        title={unionNotionConfig.workspaceName}
+                        workspaceUrl={unionNotionConfig.workspaceUrl}
+                        description={unionNotionConfig.description}
+                        resources={unionNotionConfig.sections.map(s => ({
+                            title: s.title,
+                            type: s.tag,
+                            tag: s.tag
+                        }))}
+                    />
+                </section>
+
+                {/* 6. SECTION E: Past Union Leadership & Continuity */}
                 <section id="past-leadership" className="mb-12 scroll-mt-24">
                     <div className="border-b border-[var(--border)] pb-4 mb-8 flex justify-between items-baseline">
                         <div>
                             <span className="font-mono text-xs font-bold uppercase tracking-[0.22em] text-[#C59B27] block mb-1">
                                 [HISTORICAL CONTINUITY]
                             </span>
-                            <h2 className="text-2xl sm:text-3xl font-extrabold text-[var(--text-primary)]  tracking-tight">
-                                04. Past Union Leadership & Alumni
+                            <h2 className="text-2xl sm:text-3xl font-extrabold text-[var(--text-primary)] tracking-tight">
+                                05. Past Union Leadership & Alumni
                             </h2>
                         </div>
                         <span className="font-mono text-xs font-bold text-[#4B5563] dark:text-[#9CA3AF] tracking-wider">
