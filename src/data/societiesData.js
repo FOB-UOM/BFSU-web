@@ -1,22 +1,29 @@
 /**
  * Institutional Student Societies Data
  * Official departmental societies under the Faculty of Business, University of Moratuwa.
- * Each society connects to its respective academic department and official Notion workspace.
+ * 
+ * - SOBA: Society of Business Analytics (Department of Decision Sciences)
+ * - FSMSS: FSM Students' Society (Department of Industrial Management)
+ * - MOTSS: MOT Students' Society (Department of Management of Technology)
+ * 
+ * Centralized, editable configuration. Supports live Notion sync.
  */
 
 export const departmentalSocieties = [
     {
-        id: "dss",
-        slug: "decision-sciences",
-        code: "DSS",
-        name: "Decision Sciences Society",
+        id: "soba",
+        slug: "soba",
+        aliases: ["dss", "decision-sciences", "business-analytics"],
+        code: "SOBA",
+        name: "Society of Business Analytics",
         departmentName: "Department of Decision Sciences",
         departmentCode: "DS",
         tagline: "Pioneering Business Analytics, Machine Learning & Algorithmic Optimization",
-        description: "The official academic student body representing undergraduates in Decision Sciences and Business Analytics at the Faculty of Business, University of Moratuwa. DSS empowers students with state-of-the-art computational tools, inter-university hackathons, predictive modeling workshops, and data engineering mastery.",
+        description: "The official academic student body representing undergraduates in Decision Sciences and Business Analytics at the Faculty of Business, University of Moratuwa. SOBA empowers students with state-of-the-art computational tools, inter-university hackathons, predictive modeling workshops, and data engineering mastery.",
         notion: {
             workspaceName: "BFSU / Decision Sciences Hub",
             workspaceUrl: "https://notion.so/bfsu-uom/decision-sciences-society",
+            notionPageId: "30d3b460dd9e81dcb43bcff420397d32",
             description: "The centralized operational and academic workspace for Decision Sciences undergraduates, task teams, and event steering committees.",
             resources: [
                 { title: "Hackathon & Datathon Task Tracker", type: "Database", tag: "Projects" },
@@ -32,19 +39,19 @@ export const departmentalSocieties = [
         },
         executiveBoard: [
             {
-                name: "Yasitha Sandakalum",
+                name: "Yasitha Sandakelum",
                 role: "President",
-                username: "yasitha-sandakalum",
+                username: "yasitha-sandakelum",
                 batch: "Batch '21",
-                avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80",
+                email: "president.soba@uom.lk",
                 headline: "Data Science & Supply Chain Optimization Enthusiast"
             },
             {
-                name: "Lakshan Kosala",
+                name: "Kosala Madushanka",
                 role: "Vice President",
-                username: "lakshan-kosala",
+                username: "kosala-madushanka",
                 batch: "Batch '22",
-                avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80",
+                email: "vp.soba@uom.lk",
                 headline: "Predictive Analytics & Financial Engineering Researcher"
             },
             {
@@ -52,7 +59,7 @@ export const departmentalSocieties = [
                 role: "Secretary",
                 username: "senura-niduk",
                 batch: "Batch '22",
-                avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&q=80",
+                email: "secretary.soba@uom.lk",
                 headline: "Operations Research & Enterprise Data Systems"
             }
         ],
@@ -70,81 +77,19 @@ export const departmentalSocieties = [
         ]
     },
     {
-        id: "motss",
-        slug: "mot",
-        code: "MOTSS",
-        name: "Management of Technology Student Society",
-        departmentName: "Department of Management of Technology",
-        departmentCode: "MOT",
-        tagline: "Bridging Cutting-Edge Enterprise Technology, Digital Transformation & Strategy",
-        description: "The Management of Technology Student Society (MOTSS) is the flagship student organisation of the Department of Management of Technology. Dedicated to grooming technology leaders, enterprise architects, and digital product managers.",
-        notion: {
-            workspaceName: "BFSU / MOTSS Strategy Hub",
-            workspaceUrl: "https://notion.so/bfsu-uom/mot-society",
-            description: "The digital nerve centre for industrial technology projects, corporate sponsorship pipelines, and product architecture roadmaps.",
-            resources: [
-                { title: "Enterprise Technology Industry Directory", type: "Database", tag: "Industry" },
-                { title: "Digital Product Architecture Case Studies", type: "Library", tag: "Curriculum" },
-                { title: "Tech Talk & Corporate Webinar Planner", type: "Calendar", tag: "Events" },
-                { title: "Alumni Technology Mentorship Register", type: "Directory", tag: "Alumni" }
-            ]
-        },
-        stats: {
-            members: "280+ Undergraduates",
-            eventsPerYear: "8 Corporate Forums & Visits",
-            notionPages: "50+ Strategy Guides"
-        },
-        executiveBoard: [
-            {
-                name: "Prageeth Harshana",
-                role: "President",
-                username: "prageeth-harshana",
-                batch: "Batch '21",
-                avatar: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=400&q=80",
-                headline: "Enterprise Systems Architect & Digital Strategist"
-            },
-            {
-                name: "Warsha Joolige",
-                role: "Secretary",
-                username: "warsha-joolige",
-                batch: "Batch '22",
-                avatar: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=400&q=80",
-                headline: "Technology Innovation Management & Product Operations"
-            },
-            {
-                name: "Poorna Lakshan",
-                role: "Vice President",
-                username: "poorna-lakshan",
-                batch: "Batch '22",
-                avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=400&q=80",
-                headline: "Cloud Architectures & Business Process Systems"
-            }
-        ],
-        initiatives: [
-            {
-                title: "TechInno Annual Industry Symposium",
-                type: "Flagship Conference",
-                description: "Gathering Fortune 500 tech leaders and Sri Lanka's leading enterprise executives to mentor business technology undergraduates."
-            },
-            {
-                title: "Industrial Plant & Tech Park Immersion",
-                type: "Corporate Visit",
-                description: "Field visits exposing undergraduates to high-throughput automation plants and enterprise IoT implementations."
-            }
-        ]
-    },
-    {
-        id: "imss",
-        slug: "industrial-management",
-        code: "IMSS",
-        name: "Industrial Management Student Society",
+        id: "fsmss",
+        slug: "fsmss",
+        aliases: ["imss", "industrial-management", "fsm"],
+        code: "FSMSS",
+        name: "FSM Students' Society",
         departmentName: "Department of Industrial Management",
         departmentCode: "IM",
         tagline: "Engineering Financial Systems, Econometrics & High-Stakes Operations",
-        description: "Representing undergraduates in Industrial Management and Financial Services Management at the Faculty of Business, University of Moratuwa. IMSS is dedicated to quantitative finance, risk econometrics, supply chain resilience, and operational excellence.",
+        description: "The official student body representing undergraduates in Industrial Management and Financial Services Management at the Faculty of Business, University of Moratuwa. FSMSS is dedicated to quantitative finance, risk econometrics, supply chain resilience, and operational excellence.",
         notion: {
-            workspaceName: "BFSU / IMSS Operations Hub",
-            workspaceUrl: "https://notion.so/bfsu-uom/industrial-management-society",
+            workspaceName: "BFSU / FSMSS Operations Hub",
+            workspaceUrl: "https://notion.so/bfsu-uom/fsm-students-society",
+            notionPageId: "30d3b460dd9e81bfa07bf533a61bb294",
             description: "Collaborative research databases, financial valuation spreadsheets, trading simulation tracks, and semester revision vaults.",
             resources: [
                 { title: "Quantitative Finance & Econometrics Compendium", type: "Knowledge Base", tag: "Finance" },
@@ -164,7 +109,7 @@ export const departmentalSocieties = [
                 role: "President",
                 username: "miyuranga-rajakaruna",
                 batch: "Batch '21",
-                avatar: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=400&q=80",
+                email: "rajakarunarhmym.22@uom.lk",
                 headline: "Quantitative Analyst & Risk Management Fellow"
             },
             {
@@ -172,7 +117,7 @@ export const departmentalSocieties = [
                 role: "Vice President & Lead Architect",
                 username: "naveen-sandeepa",
                 batch: "Batch '22",
-                avatar: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=400&q=80",
+                email: "kumarasdns.22@uom.lk",
                 headline: "Financial Analytics & Platform Engineer"
             },
             {
@@ -180,7 +125,7 @@ export const departmentalSocieties = [
                 role: "Secretary",
                 username: "mayuri-lakshani",
                 batch: "Batch '22",
-                avatar: "https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=400&q=80",
+                email: "secretary.fsmss@uom.lk",
                 headline: "Supply Chain Optimization & Econometrics Researcher"
             }
         ],
@@ -194,6 +139,72 @@ export const departmentalSocieties = [
                 title: "Operations Excellence Case Challenge",
                 type: "Competition",
                 description: "Real-world supply chain bottleneck resolution simulation with live corporate case studies."
+            }
+        ]
+    },
+    {
+        id: "motss",
+        slug: "motss",
+        aliases: ["mot", "management-of-technology", "bpm"],
+        code: "MOTSS",
+        name: "MOT Students' Society",
+        departmentName: "Department of Management of Technology",
+        departmentCode: "MOT",
+        tagline: "Bridging Cutting-Edge Enterprise Technology, Digital Transformation & Strategy",
+        description: "The Management of Technology Student Society (MOTSS) is the flagship student organisation of the Department of Management of Technology. Dedicated to grooming technology leaders, enterprise architects, and digital product managers.",
+        notion: {
+            workspaceName: "BFSU / MOTSS Strategy Hub",
+            workspaceUrl: "https://notion.so/bfsu-uom/mot-society",
+            notionPageId: null,
+            description: "The digital nerve centre for industrial technology projects, corporate sponsorship pipelines, and product architecture roadmaps.",
+            resources: [
+                { title: "Enterprise Technology Industry Directory", type: "Database", tag: "Industry" },
+                { title: "Digital Product Architecture Case Studies", type: "Library", tag: "Curriculum" },
+                { title: "Tech Talk & Corporate Webinar Planner", type: "Calendar", tag: "Events" },
+                { title: "Alumni Technology Mentorship Register", type: "Directory", tag: "Alumni" }
+            ]
+        },
+        stats: {
+            members: "280+ Undergraduates",
+            eventsPerYear: "8 Corporate Forums & Visits",
+            notionPages: "50+ Strategy Guides"
+        },
+        executiveBoard: [
+            {
+                name: "Prageeth Harshana",
+                role: "President",
+                username: "prageeth-harshana",
+                batch: "Batch '21",
+                email: "president.motss@uom.lk",
+                headline: "Enterprise Systems Architect & Digital Strategist"
+            },
+            {
+                name: "Warsha Julige",
+                role: "Secretary",
+                username: "warsha-julige",
+                batch: "Batch '22",
+                email: "secretary.motss@uom.lk",
+                headline: "Technology Innovation Management & Product Operations"
+            },
+            {
+                name: "Poorna Lakshan",
+                role: "Vice President",
+                username: "poorna-lakshan",
+                batch: "Batch '22",
+                email: "vp.motss@uom.lk",
+                headline: "Cloud Architectures & Business Process Systems"
+            }
+        ],
+        initiatives: [
+            {
+                title: "TechInno Annual Industry Symposium",
+                type: "Flagship Conference",
+                description: "Gathering Fortune 500 tech leaders and Sri Lanka's leading enterprise executives to mentor business technology undergraduates."
+            },
+            {
+                title: "Industrial Plant & Tech Park Immersion",
+                type: "Corporate Visit",
+                description: "Field visits exposing undergraduates to high-throughput automation plants and enterprise IoT implementations."
             }
         ]
     }

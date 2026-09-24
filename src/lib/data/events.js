@@ -1,11 +1,21 @@
+import { fetchNotionEvents } from '../notion.js';
 import { createClient } from '../supabase/server';
 import { eventsData as fallbackEvents } from '../../data/eventsData';
 
 /**
  * Fetch all published collegiate events.
- * Falls back gracefully to static seed data if Supabase connection/table is not yet created.
+ * Prioritizes the live Notion operational backplane with Supabase and seed fallbacks.
  */
 export async function getEvents() {
+    try {
+        const notionEvents = await fetchNotionEvents();
+        if (notionEvents && notionEvents.length > 0) {
+            return notionEvents;
+        }
+    } catch (err) {
+        console.warn('[Events] Failed to fetch Notion events, trying Supabase:', err.message);
+    }
+
     try {
         const supabase = await createClient();
         const { data, error } = await supabase

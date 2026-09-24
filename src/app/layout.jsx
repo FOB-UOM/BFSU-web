@@ -3,6 +3,7 @@ import { ThemeProvider } from '../context/ThemeContext';
 import { AuthProvider } from '../context/AuthContext';
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
+import { MobileBottomNav } from '../components/MobileBottomNav';
 import { ScrollToAnchor } from '../components/ScrollToAnchor';
 import { BackgroundCanvas } from '../components/BackgroundCanvas';
 import { GridBackground } from '../components/GridBackground';
@@ -70,7 +71,7 @@ export default function RootLayout({ children }) {
 
                             {/* Main scrollable surface */}
                             <div
-                                className="relative min-h-screen flex flex-col font-sans w-full overflow-x-hidden"
+                                className="relative min-h-screen flex flex-col font-sans w-full overflow-x-hidden pb-16 lg:pb-0"
                                 style={{ zIndex: 10 }}
                             >
                                 <Navbar />
@@ -78,6 +79,7 @@ export default function RootLayout({ children }) {
                                     {children}
                                 </div>
                                 <Footer />
+                                <MobileBottomNav />
                             </div>
 
                             {/* Global Authentication Modal */}

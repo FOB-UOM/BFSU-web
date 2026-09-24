@@ -1,3 +1,11 @@
+/**
+ * Legacy Site Data Bridge
+ * Re-exports and binds to centralized data modules (departmentsData, linksData).
+ */
+
+import { departmentsData } from './data/departmentsData';
+import { academicPortals, facultySocialLinks } from './data/linksData';
+
 export const siteData = {
     hero: {
         headline: "Transforming business through innovation",
@@ -13,7 +21,7 @@ export const siteData = {
         },
         faculty: {
             title: "The Faculty",
-            description: "Offering the premier Bachelor of Business Science (Hons) program with specialized fields including Business Analytics, Financial Services Management, and IT Management."
+            description: "Offering the premier Bachelor of Business Science (Hons) program with specialized fields including Business Analytics, Financial Services Management, and Business Process Management."
         }
     },
     events: [
@@ -47,14 +55,7 @@ export const siteData = {
         }
     ],
     links: {
-        resources: [
-            { name: "Student Portal - Time Tables", url: "https://lms.uom.lk" },
-            { name: "Library - Business Faculty", url: "https://lib.uom.lk" },
-            { name: "Curriculum Details", url: "#" }
-        ],
-        social: [
-            { name: "Business Faculty Union Facebook", url: "https://www.facebook.com/BfacMora" },
-            { name: "Business Faculty Union LinkedIn", url: "https://www.linkedin.com/company/business-faculty-students-union-university-of-moratuwa/" }
-        ]
+        resources: academicPortals.map(p => ({ name: p.title, url: p.url })),
+        social: facultySocialLinks.map(s => ({ name: `BFSU ${s.platform}`, url: s.url }))
     }
 };

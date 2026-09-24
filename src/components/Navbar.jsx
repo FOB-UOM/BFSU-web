@@ -38,48 +38,34 @@ export const Navbar = () => {
             name: 'About',
             href: '/about',
             items: [
-                { title: 'The Faculty of Business', desc: 'Departments of DS, MOT, IM & UGS', href: '/about#faculty' },
-                { title: 'Union Mandate & Constitution', desc: 'Statutory student advocacy & charter', href: '/about#mandate' },
-                { title: 'Executive Board 2026', desc: 'Elected officials & committee members', href: '/about#council' },
-                { title: 'Past Union Leadership', desc: 'Honor roll & continuity records', href: '/about#past-leadership' },
+                { title: 'The Faculty of Business', desc: 'Departments of DS, IM & MOT', href: '/about#faculty' },
+                { title: 'Degrees & Specializations', desc: 'Business Analytics, FSM, BPM & Masters', href: '/about#degrees' },
+                { title: 'Executive Council 2026', desc: 'Elected officials & committee members (from Notion)', href: '/about#council' },
+                { title: 'Student Societies', desc: 'SOBA, FSMSS & MOTSS hubs', href: '/about#departments' },
+                { title: '2027 Decennial Milestone', desc: '10 years of pioneering analytics education', href: '/about#decennial' },
+                { title: 'Platform Capabilities', desc: 'Live feature matrix & operating cockpit', href: '/capabilities' },
             ]
         },
         {
-            key: 'explore',
-            name: 'Explore',
-            href: '/explore',
+            key: 'happenings',
+            name: 'Happenings',
+            href: '/events',
             items: [
-                { title: 'Student Achievements', desc: 'National hackathons & global titles', href: '/explore#achievements' },
-                { title: 'Campus Traditions & Life', desc: 'Welfare, sports fixtures & culture', href: '/explore#life' },
-                { title: 'Assemblies & Events', desc: 'Annual conferences & ceremonial meets', href: '/explore#events' },
-                { title: 'Research & Projects', desc: 'Undergraduate dissertations & models', href: '/explore#projects' },
+                { title: 'Events Calendar', desc: 'Orientation, hackathons & academic calendar', href: '/events' },
+                { title: 'News & Updates', desc: 'Official faculty updates & press releases', href: '/news' },
+                { title: 'Achievements & Accolades', desc: 'National hackathon wins & honors', href: '/news#achievements' },
+                { title: 'Notices & Circulars', desc: 'Registry notices & exam timetables', href: '/news#notices' },
             ]
         },
         {
-            key: 'notices',
-            name: 'Notices',
-            href: '/news',
-            items: null
-        },
-        {
-            key: 'links',
-            name: 'Links',
-            href: '/links',
-            items: [
-                { title: 'Virtual Learning & LMS', desc: 'Moodle (online.uom.lk) & Faculty LMS', href: '/links#lms' },
-                { title: 'Academic Departments', desc: 'Portals for /ds, /mot, /im & UGS division', href: '/links#departments' },
-                { title: 'Examinations & Calendar', desc: 'Official timetables & session schedules', href: '/links#registry' },
-                { title: 'Library & E-Repository', desc: 'Digital dissertations (dl.lib.mrt.ac.lk)', href: '/links#student_services' },
-            ]
-        },
-        {
-            key: 'alumni',
-            name: 'Alumni',
+            key: 'people',
+            name: 'People & Life',
             href: '/alumni',
             items: [
-                { title: 'Graduate Fellowship', desc: 'Mentorship network & industry dispatch', href: '/alumni#fellowship' },
-                { title: 'Verified Profiles', desc: 'Alumni linked to their undergraduate research', href: '/alumni#profiles' },
-                { title: 'Sign In with LinkedIn', desc: 'Member authentication & profile access', href: '/alumni#linkedin-auth' },
+                { title: 'Current Undergraduates', desc: 'Batches 21–25 student directory & talent', href: '/alumni#students' },
+                { title: 'Alumni Network', desc: 'Global fellowship & career placements', href: '/alumni' },
+                { title: 'Campus Moments & Gallery', desc: 'Culture, traditions, sports & memories', href: '/gallery' },
+                { title: 'Union Room & Services', desc: 'Room booking & student ombudsman', href: '/about#union-notion' },
             ]
         },
     ];

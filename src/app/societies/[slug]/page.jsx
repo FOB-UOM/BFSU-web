@@ -12,19 +12,25 @@ import {
     ChevronRight,
     Compass
 } from 'lucide-react';
-import { departmentalSocieties, unionNotionConfig } from '../../../data/societiesData';
+import { departmentalSocieties } from '../../../data/societiesData';
 import { NotionHubWidget } from '../../../components/NotionHubWidget';
 import { UserAvatar } from '../../../components/UserAvatar';
+import { fetchNotionCouncil } from '../../../lib/notion';
 
 export async function generateStaticParams() {
-    return departmentalSocieties.map((society) => ({
-        slug: society.slug,
-    }));
+    const params = [];
+    departmentalSocieties.forEach((society) => {
+        params.push({ slug: society.slug });
+        society.aliases?.forEach((alias) => {
+            params.push({ slug: alias });
+        });
+    });
+    return params;
 }
 
 export async function generateMetadata({ params }) {
     const { slug } = await params;
-    const society = departmentalSocieties.find(s => s.slug === slug);
+    const society = departmentalSocieties.find(s => s.slug === slug || s.aliases?.includes(slug));
 
     if (!society) {
         return {
@@ -44,14 +50,41 @@ export async function generateMetadata({ params }) {
 
 export default async function SocietyPage({ params }) {
     const { slug } = await params;
-    const society = departmentalSocieties.find(s => s.slug === slug);
+    const society = departmentalSocieties.find(s => s.slug === slug || s.aliases?.includes(slug));
 
     if (!society) {
         notFound();
     }
 
-    // Other two departmental societies for quick navigation
-    const otherSocieties = departmentalSocieties.filter(s => s.slug !== slug);
+    // Attempt to enrich executive board from live Notion council
+    let liveExecutives = [];
+    try {
+        const council = await fetchNotionCouncil();
+        if (Array.isArray(council) && council.length > 0) {
+            const deptOfficers = council.filter(m => 
+                m.department?.toUpperCase() === society.departmentCode.toUpperCase() ||
+                m.role?.toLowerCase().includes(society.code.toLowerCase())
+            );
+            if (deptOfficers.length > 0) {
+                liveExecutives = deptOfficers.map(m => ({
+                    name: m.name,
+                    role: m.role,
+                    username: m.username || m.name.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
+                    batch: m.batch || "Batch '22",
+                    avatar: m.avatar || m.image || '',
+                    headline: m.bio || `${m.role} representing ${society.departmentName}`,
+                    email: m.email || ''
+                }));
+            }
+        }
+    } catch {
+        // Fall back gracefully to curated society roster
+    }
+
+    const executiveBoard = liveExecutives.length > 0 ? liveExecutives : society.executiveBoard;
+
+    // Sister departmental societies for quick navigation
+    const otherSocieties = departmentalSocieties.filter(s => s.id !== society.id);
 
     return (
         <div className="min-h-screen pt-28 pb-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
@@ -130,7 +163,7 @@ export default async function SocietyPage({ params }) {
                         </div>
 
                         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                            {society.executiveBoard.map((member, idx) => (
+                            {executiveBoard.map((member, idx) => (
                                 <div
                                     key={idx}
                                     className="p-5 rounded-2xl border border-[var(--border)] bg-[var(--bg-surface)] hover:border-[#C59B27]/40 transition-all shadow-md group relative"
