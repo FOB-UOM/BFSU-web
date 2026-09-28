@@ -45,11 +45,11 @@ graph TD
     IM --> FSMSS[FSM Students' Society]
     
     MOT --> BPM_DEGREE[BBSc Hons in Business Process Management]
-    MOT --> MOTSS[MOT Students' Society]
+    MOT --> BPMSS[MOT Students' Society]
     
     BFSU -.-> SOBA
     BFSU -.-> FSMSS
-    BFSU -.-> MOTSS
+    BFSU -.-> BPMSS
 ```
 
 ### Departmental & Society Mapping Matrix
@@ -58,7 +58,7 @@ graph TD
 | :--- | :--- | :--- | :--- | :--- |
 | **Department of Decision Sciences (DS)** | **Business Analytics** | Bachelor of Business Science (BBSc) Hons in Business Analytics | **Society of Business Analytics (SOBA)** *(Notion ID: `30d3...7d32`)* | Machine learning, predictive analytics, optimization, statistical computing (Python/R), operations research. |
 | **Department of Industrial Management (IM)** | **Financial Services Management (FSM)** | Bachelor of Business Science (BBSc) Hons in Financial Services Management | **FSM Students' Society (FSMSS)** *(Notion ID: `30d3...b294`)* | Quantitative finance, fintech, algorithmic trading, risk engineering, investment banking, actuarial concepts. |
-| **Department of Management of Technology (MOT)** | **Business Process Management (BPM) / MOT** | Bachelor of Business Science (BBSc) Hons in Business Process Management | **MOT Students' Society (MOTSS)** | Enterprise architectures (ERP/SAP), technology commercialization, innovation strategy, supply chain management. |
+| **Department of Management of Technology (MOT)** | **Business Process Management (BPM) / MOT** | Bachelor of Business Science (BBSc) Hons in Business Process Management | **MOT Students' Society (BPMSS)** | Enterprise architectures (ERP/SAP), technology commercialization, innovation strategy, supply chain management. |
 
 ---
 
@@ -162,7 +162,7 @@ To unlock full richness without requiring code changes, the existing Notion data
 - `Date` (Date) — Start and end timestamp
 - `Location` (Rich Text) — Venue (e.g. "Auditorium 2", "Civil Auditorium", "Virtual")
 - `Category` (Select) — Academic, Career Fair, Hackathon, Cultural, Sports, Orientation
-- `Host Society` (Select) — Students' Union (BFSU), Society of Business Analytics, FSM Students' Society, MOTSS
+- `Host Society` (Select) — Students' Union (BFSU), Society of Business Analytics, FSM Students' Society, BPMSS
 - `Cover Image` (Files & Media) — Promotional banner / poster
 - `Description` (Rich Text) — Detailed agenda and requirements
 - `Registration Link` (URL) — Google Form or RSVP link

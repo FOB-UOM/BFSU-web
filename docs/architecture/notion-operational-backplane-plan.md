@@ -50,7 +50,7 @@ Using `@4ier/notion-cli`, the live databases in the workspace (`Students' Union 
 | `Date` | `date` | Start timestamp (and optional end time) | **Yes** | Shows "Date TBD" if absent |
 | `Location` | `rich_text` | Venue (Auditorium 2, Virtual, etc.) | No | Defaults to "University of Moratuwa" |
 | `Category` | `select` | Academic, Career, Social, Hackathon, Orientation | No | Defaults to "Faculty Event" |
-| `Organizer` | `select` | BFSU, SOBA, FSMSS, MOTSS | No | Defaults to "BFSU" |
+| `Organizer` | `select` | BFSU, SOBA, FSMSS, BPMSS | No | Defaults to "BFSU" |
 | `Description` | `rich_text` | Event summary and expectations | No | Truncates to title or placeholder |
 | `Cover` | `files` | Event banner or poster | No | **Fallback to gradient category banner** |
 | `Registration` | `url` | RSVP / registration form link | No | "RSVP" button changes to "Details" |

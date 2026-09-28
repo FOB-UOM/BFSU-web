@@ -141,7 +141,7 @@ export const AuthModal = () => {
                         type="button"
                         onClick={() => handleOAuth('google')}
                         disabled={loading}
-                        className="w-full bg-white dark:bg-[#1A202C] hover:bg-gray-100 dark:hover:bg-[#2D3748] text-gray-800 dark:text-gray-200 border border-[var(--border)] px-4 py-2.5 font-mono text-xs font-bold uppercase tracking-wider transition-all flex items-center justify-center gap-2.5 shadow-sm rounded-sm"
+                        className="w-full bg-[var(--bg-surface)] hover:bg-[var(--bg-elevated)] text-[var(--text-primary)] border border-[var(--border)] px-4 py-2.5 font-mono text-xs font-bold uppercase tracking-wider transition-all flex items-center justify-center gap-2.5 shadow-sm rounded-sm"
                     >
                         <svg className="w-4 h-4" viewBox="0 0 24 24">
                             <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.66-5.17 3.66-9.17z"/>

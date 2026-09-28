@@ -1,0 +1,37 @@
+; ====================================================================
+; Cloudflare DNS Zone Configuration: bfsu-uom.lk
+; Standard BIND format compatible with Cloudflare DNS Import
+; ====================================================================
+; How to use in Cloudflare Dashboard:
+; 1. Navigate to: Websites > bfsu-uom.lk > DNS > Records
+; 2. Click "Advanced" or "Import and Export" -> "Import DNS records"
+; 3. Upload this file.
+; ====================================================================
+
+$ORIGIN bfsu-uom.lk.
+$TTL 300
+
+; --------------------------------------------------------------------
+; 1. Production Web Application (Vercel Origin)
+; --------------------------------------------------------------------
+; CRITICAL: Never point '@' to Cloudflare edge IPs (e.g. 104.21.x.x / 172.67.x.x).
+; Doing so triggers 'Error 1000: DNS points to prohibited IP'.
+; The A record MUST point to Vercel's Anycast IP (76.76.21.21).
+
+@       IN  A       76.76.21.21
+www     IN  CNAME   cname.vercel-dns.com.
+
+; --------------------------------------------------------------------
+; 2. Cloudflare Email Routing (Inbound Forwarding)
+; --------------------------------------------------------------------
+; Active Forwarding: info@bfsu-uom.lk -> bfsu.uom@gmail.com
+; Catch-all: *@bfsu-uom.lk -> bfsu.uom@gmail.com
+
+@       IN  MX  10  route1.mx.cloudflare.net.
+@       IN  MX  78  route2.mx.cloudflare.net.
+@       IN  MX  42  route3.mx.cloudflare.net.
+
+; --------------------------------------------------------------------
+; 3. Email Authentication (SPF)
+; --------------------------------------------------------------------
+@       IN  TXT     "v=spf1 include:_spf.mx.cloudflare.net ~all"

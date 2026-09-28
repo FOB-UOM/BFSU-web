@@ -90,7 +90,7 @@ CREATE TABLE IF NOT EXISTS public.departments (
 CREATE TABLE IF NOT EXISTS public.student_societies (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     department_id UUID REFERENCES public.departments(id) ON DELETE SET NULL,
-    code TEXT UNIQUE NOT NULL, -- 'DSS', 'MOTSS', 'IMSS'
+    code TEXT UNIQUE NOT NULL, -- 'DSS', 'BPMSS', 'IMSS'
     name TEXT NOT NULL,
     slug TEXT UNIQUE NOT NULL, -- 'decision-sciences', 'mot', 'industrial-management'
     description TEXT NOT NULL,
@@ -147,7 +147,7 @@ Data Source: `src/data/societiesData.js` (with live Supabase fallback)
      - Dept: Department of Decision Sciences
      - Focus: Operations Research, Big Data & Business Analytics
      - Notion Hub: Collaborative data science projects & event planning
-  2. **Management of Technology Student Society (MOTSS)** (`/societies/mot`)
+  2. **Management of Technology Student Society (BPMSS)** (`/societies/mot`)
      - Dept: Department of Management of Technology
      - Focus: Technology Strategy, Enterprise Architecture & Innovation
      - Notion Hub: Industry tech visits, corporate connections & workshops

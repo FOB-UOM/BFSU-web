@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React from 'react';
 import { ArrowRight, GraduationCap, Briefcase, Users } from 'lucide-react';
 
 export const AlumniSection = () => {
@@ -12,55 +12,55 @@ export const AlumniSection = () => {
                         <span className="font-mono text-xs font-bold uppercase tracking-[0.22em] text-[#C59B27] block mb-3">
                             Graduate Network
                         </span>
-                        <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-[var(--text-primary)]  leading-tight mb-4">
+                        <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-[var(--text-primary)] leading-tight mb-4">
                             Faculty Alumni Fellowship
                         </h2>
-                        <p className="text-base sm:text-lg text-[#2D3748] leading-relaxed mb-6 font-medium">
+                        <p className="text-base sm:text-lg text-[var(--text-secondary)] leading-relaxed mb-6 font-medium">
                             Connecting graduates across global analytics, financial services, and management practices with current undergraduates.
                         </p>
                         <a 
                             href="/alumni"
-                            className="font-mono text-xs font-bold uppercase tracking-[0.22em] text-[var(--text-primary)]  hover:text-[#C59B27] inline-flex items-center gap-2 border-b-2 border-[#0F141E] dark:border-white pb-1 transition-colors"
+                            className="font-mono text-xs font-bold uppercase tracking-[0.22em] text-[var(--text-primary)] hover:text-[#C59B27] inline-flex items-center gap-2 border-b-2 border-[#12161F] dark:border-[#C59B27] pb-1 transition-colors"
                         >
                             <span>Explore Alumni Portal</span>
                             <ArrowRight size={14} />
                         </a>
                     </div>
 
-                    {/* Right 3 Generous Air Pillars (Diagnosed Image 1) */}
+                    {/* Right 3 Generous Air Pillars */}
                     <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-3 gap-8">
-                        <div className="border-t-2 border-[#0F141E] dark:border-white/60 pt-6">
+                        <div className="border-t-2 border-[#12161F] dark:border-[var(--border-strong)] pt-6">
                             <div className="p-2 w-fit bg-[#C59B27]/10 rounded-sm mb-4">
                                 <GraduationCap size={22} className="text-[#C59B27]" />
                             </div>
-                            <h3 className="text-xl font-bold text-[var(--text-primary)]  mb-3 tracking-tight">
+                            <h3 className="text-xl font-bold text-[var(--text-primary)] mb-3 tracking-tight">
                                 Mentorship
                             </h3>
-                            <p className="text-sm font-medium text-[#1A202C] leading-relaxed">
+                            <p className="text-sm font-medium text-[var(--text-secondary)] leading-relaxed">
                                 1-on-1 industry guidance for final-year undergraduates transitioning into professional enterprise.
                             </p>
                         </div>
 
-                        <div className="border-t-2 border-[#0F141E] dark:border-white/60 pt-6">
+                        <div className="border-t-2 border-[#12161F] dark:border-[var(--border-strong)] pt-6">
                             <div className="p-2 w-fit bg-[#C59B27]/10 rounded-sm mb-4">
                                 <Briefcase size={22} className="text-[#C59B27]" />
                             </div>
-                            <h3 className="text-xl font-bold text-[var(--text-primary)]  mb-3 tracking-tight">
+                            <h3 className="text-xl font-bold text-[var(--text-primary)] mb-3 tracking-tight">
                                 Placements
                             </h3>
-                            <p className="text-sm font-medium text-[#1A202C] leading-relaxed">
+                            <p className="text-sm font-medium text-[var(--text-secondary)] leading-relaxed">
                                 Direct career pathways and internship pipelines shared by alumni employers.
                             </p>
                         </div>
 
-                        <div className="border-t-2 border-[#0F141E] dark:border-white/60 pt-6">
+                        <div className="border-t-2 border-[#12161F] dark:border-[var(--border-strong)] pt-6">
                             <div className="p-2 w-fit bg-[#C59B27]/10 rounded-sm mb-4">
                                 <Users size={22} className="text-[#C59B27]" />
                             </div>
-                            <h3 className="text-xl font-bold text-[var(--text-primary)]  mb-3 tracking-tight">
+                            <h3 className="text-xl font-bold text-[var(--text-primary)] mb-3 tracking-tight">
                                 Community
                             </h3>
-                            <p className="text-sm font-medium text-[#1A202C] leading-relaxed">
+                            <p className="text-sm font-medium text-[var(--text-secondary)] leading-relaxed">
                                 Annual reunions, guest lecture series, and corporate case study workshops.
                             </p>
                         </div>

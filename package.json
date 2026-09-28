@@ -7,9 +7,21 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "login:bfsu": "node scripts/login-bfsu.mjs",
+    "login:cf": "node scripts/login-bfsu.mjs cf",
+    "login:vercel": "node scripts/login-bfsu.mjs vercel",
+    "login:supabase": "node scripts/login-bfsu.mjs supabase",
+    "git:profile": "node scripts/login-bfsu.mjs git",
+    "dns:status": "node scripts/cf-dns-manager.mjs status",
+    "dns:sync": "node scripts/cf-dns-manager.mjs sync",
+    "db:status": "node scripts/supabase-scoped.mjs migration list",
+    "db:push": "node scripts/supabase-scoped.mjs db push",
+    "db:pull": "node scripts/supabase-scoped.mjs db pull",
+    "deploy:prod": "vercel --prod --global-config ./.vercel"
   },
   "devDependencies": {
+    "@intuitui-labs/a11y-gate": "^0.2.0",
     "@types/node": "26.6.2",
     "@types/react": "19.3.0",
     "autoprefixer": "^10.4.27",
@@ -20,7 +32,9 @@
     "supabase": "^2.117.0",
     "tailwindcss": "^3.4.19",
     "taze": "^21.1.0",
-    "typescript": "~5.9.3"
+    "typescript": "~5.9.3",
+    "vercel": "^60.1.3",
+    "wrangler": "^4.141.0"
   },
   "dependencies": {
     "@intuitui-labs/editorial": "0.1.1",

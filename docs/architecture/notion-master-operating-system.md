@@ -35,7 +35,7 @@ Everything across the union, faculty, and student societies maps into **9 interc
 │    • Contact details, Terms       │    • Press Releases, Gazettes      │
 ├───────────────────────────────────┼────────────────────────────────────┤
 │ 3. Traditions, Events & Passes    │ 4. 3 Departmental Societies Hub    │
-│    • Wasath Hiru, AGERA, Symposia │    • DSS, MOTSS, IMSS Boards       │
+│    • Wasath Hiru, AGERA, Symposia │    • DSS, BPMSS, IMSS Boards       │
 │    • Venues, Flyers, RSVP Status  │    • Flagship Initiatives, Agendas │
 ├───────────────────────────────────┼────────────────────────────────────┤
 │ 5. Academic Directory & Programs  │ 6. Student Welfare & Case Tracker  │
@@ -82,7 +82,7 @@ Everything across the union, faculty, and student societies maps into **9 interc
   - `Title` (Title): Event title (e.g. `Wasath Hiru Mangalya '26`)
   - `Slug` (Text): URL slug
   - `Category` (Select): `Cultural Tradition`, `Sports Encounter`, `Academic Symposium`, `Career Fair`
-  - `HostSociety` (Select): `BFSU Union-wide`, `DSS`, `MOTSS`, `IMSS`
+  - `HostSociety` (Select): `BFSU Union-wide`, `DSS`, `BPMSS`, `IMSS`
   - `Date` (Date / Time): Start and End timestamps
   - `Venue` (Text): Physical or virtual location
   - `RegistrationOpen` (Checkbox): Toggles live student RSVP button
@@ -92,7 +92,7 @@ Everything across the union, faculty, and student societies maps into **9 interc
 #### 4. 3 Departmental Societies Hub (`NOTION_SOCIETIES_DB`)
 * **Properties**:
   - `SocietyName` (Title): `Decision Sciences Society`, `MOT Student Society`, `IM Student Society`
-  - `Code` (Select): `DSS`, `MOTSS`, `IMSS`
+  - `Code` (Select): `DSS`, `BPMSS`, `IMSS`
   - `DepartmentCode` (Select): `DS`, `MOT`, `IM`
   - `Tagline` (Text): Departmental motto
   - `NotionWorkspaceURL` (URL): Direct link to society's dedicated Notion space

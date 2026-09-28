@@ -5,6 +5,8 @@ import { createClient } from '../../../lib/supabase/server';
 import { Container } from '../../../components/ui/Container';
 import { Typography } from '../../../components/ui/Typography';
 import { UserAvatar } from '../../../components/UserAvatar';
+import { getStaffByUsername } from '../../../lib/data/facultyStaff';
+import { StaffProfileView } from '../../../components/profiles/StaffProfileView';
 import { QRCodeSVG } from 'qrcode.react';
 import { 
     GraduationCap, Briefcase, BookOpen, MapPin, 
@@ -29,8 +31,8 @@ function getDepartmentSociety(departmentName) {
     if (lower.includes('decision') || lower.includes('analytics') || lower.includes('ds')) {
         return { name: 'Decision Sciences Society', code: 'DSS', slug: 'decision-sciences' };
     }
-    if (lower.includes('technology') || lower.includes('mot')) {
-        return { name: 'Management of Technology Society', code: 'MOTSS', slug: 'mot' };
+    if (lower.includes('technology') || lower.includes('mot') || lower.includes('bpm')) {
+        return { name: 'BPM Students\' Society', code: 'BPMSS', slug: 'bpmss' };
     }
     if (lower.includes('industrial') || lower.includes('finance') || lower.includes('im')) {
         return { name: 'Industrial Management Society', code: 'IMSS', slug: 'industrial-management' };
@@ -42,33 +44,56 @@ export async function generateMetadata({ params }) {
     const { username } = await params;
     const supabase = await createClient();
 
-    // Query either by username or by ID
+    // 1. Query either by username or by ID in delegate profiles
     const isUuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(username);
     const query = supabase.from('profiles').select('*');
     const { data: profile } = isUuid ? await query.eq('id', username).maybeSingle() : await query.eq('username', username).maybeSingle();
 
-    if (!profile) {
-        return { title: 'Delegate Not Found' };
+    if (profile) {
+        const title = `${profile.full_name || 'Member'} | BFSU UoM Verified Delegate`;
+        const description = profile.bio || `${profile.department || 'Faculty of Business'} • ${profile.batch || ''} • Business Faculty Students' Union`;
+
+        return {
+            title,
+            description,
+            openGraph: {
+                title,
+                description,
+                images: profile.avatar_url ? [{ url: profile.avatar_url }] : ['/images/logo.png'],
+            },
+            twitter: {
+                card: 'summary_large_image',
+                title,
+                description,
+                images: profile.avatar_url ? [profile.avatar_url] : ['/images/logo.png'],
+            }
+        };
     }
 
-    const title = `${profile.full_name || 'Member'} | BFSU UoM Verified Delegate`;
-    const description = profile.bio || `${profile.department || 'Faculty of Business'} • ${profile.batch || ''} • Business Faculty Students' Union`;
+    // 2. Query faculty staff profiles from Supabase database
+    const staff = await getStaffByUsername(username);
+    if (staff) {
+        const title = `${staff.honorific} ${staff.fullName} | ${staff.designation} | BFSU UoM`;
+        const description = staff.academicBio || staff.operationalScope || `${staff.designation} • ${staff.department} • University of Moratuwa`;
 
-    return {
-        title,
-        description,
-        openGraph: {
+        return {
             title,
             description,
-            images: profile.avatar_url ? [{ url: profile.avatar_url }] : ['/images/logo.png'],
-        },
-        twitter: {
-            card: 'summary_large_image',
-            title,
-            description,
-            images: profile.avatar_url ? [profile.avatar_url] : ['/images/logo.png'],
-        }
-    };
+            openGraph: {
+                title,
+                description,
+                images: ['/images/logo.png'],
+            },
+            twitter: {
+                card: 'summary_large_image',
+                title,
+                description,
+                images: ['/images/logo.png'],
+            }
+        };
+    }
+
+    return { title: 'Profile Not Found | BFSU UoM' };
 }
 
 export default async function PublicProfilePage({ params }) {
@@ -80,6 +105,11 @@ export default async function PublicProfilePage({ params }) {
     const { data: profile } = isUuid ? await query.eq('id', username).maybeSingle() : await query.eq('username', username).maybeSingle();
 
     if (!profile) {
+        // Query database for faculty staff member
+        const staff = await getStaffByUsername(username);
+        if (staff) {
+            return <StaffProfileView staff={staff} />;
+        }
         notFound();
     }
 

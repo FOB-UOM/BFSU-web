@@ -19,12 +19,12 @@ export const BackgroundCanvas = () => {
 
             {/* Cool-to-gold ambient pools — dark mode */}
             <div className="opacity-0 dark:opacity-100 transition-opacity duration-700">
-                <div className="absolute -top-48 -left-48 w-[900px] h-[900px] rounded-full blur-3xl"
-                    style={{ background: 'radial-gradient(circle, rgba(30,50,100,0.4) 0%, transparent 70%)' }} />
-                <div className="absolute top-[35%] -right-32 w-[700px] h-[700px] rounded-full blur-3xl"
-                    style={{ background: 'radial-gradient(circle, rgba(197,155,39,0.06) 0%, transparent 70%)' }} />
-                <div className="absolute -bottom-32 left-1/3 w-[600px] h-[600px] rounded-full blur-3xl"
-                    style={{ background: 'radial-gradient(circle, rgba(14,28,60,0.5) 0%, transparent 70%)' }} />
+                <div className="absolute -top-48 -left-48 w-[950px] h-[950px] rounded-full blur-3xl"
+                    style={{ background: 'radial-gradient(circle, rgba(24,54,95,0.28) 0%, transparent 70%)' }} />
+                <div className="absolute top-[35%] -right-32 w-[750px] h-[750px] rounded-full blur-3xl"
+                    style={{ background: 'radial-gradient(circle, rgba(212,175,55,0.08) 0%, transparent 70%)' }} />
+                <div className="absolute -bottom-32 left-1/3 w-[650px] h-[650px] rounded-full blur-3xl"
+                    style={{ background: 'radial-gradient(circle, rgba(18,40,75,0.22) 0%, transparent 70%)' }} />
             </div>
 
             {/* Academic coordinate watermarks */}

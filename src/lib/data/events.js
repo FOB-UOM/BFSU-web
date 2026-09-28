@@ -1,10 +1,10 @@
 import { fetchNotionEvents } from '../notion.js';
 import { createClient } from '../supabase/server';
-import { eventsData as fallbackEvents } from '../../data/eventsData';
 
 /**
- * Fetch all published collegiate events.
- * Prioritizes the live Notion operational backplane with Supabase and seed fallbacks.
+ * Database-First Events & Traditions Service
+ * Prioritizes Notion Headless CMS backplane with Supabase PostgreSQL fallback.
+ * Strictly zero static mock data.
  */
 export async function getEvents() {
     try {
@@ -13,24 +13,26 @@ export async function getEvents() {
             return notionEvents;
         }
     } catch (err) {
-        console.warn('[Events] Failed to fetch Notion events, trying Supabase:', err.message);
+        console.warn('[Events] Notion events fetch failed, falling back to Supabase:', err.message);
     }
 
     try {
         const supabase = await createClient();
+        if (!supabase) return [];
+
         const { data, error } = await supabase
             .from('events')
             .select('*')
             .eq('published', true)
             .order('date', { ascending: false });
 
-        if (error || !data || data.length === 0) {
-            return fallbackEvents;
+        if (error || !data) {
+            return [];
         }
 
         return data;
     } catch {
-        return fallbackEvents;
+        return [];
     }
 }
 
@@ -38,21 +40,33 @@ export async function getEvents() {
  * Fetch a single event by its slug.
  */
 export async function getEventBySlug(slug) {
+    if (!slug) return null;
+
+    try {
+        const allEvents = await getEvents();
+        const found = allEvents.find(e => e.slug === slug || e.id === slug);
+        if (found) return found;
+    } catch {
+        // Continue to Supabase direct query
+    }
+
     try {
         const supabase = await createClient();
+        if (!supabase) return null;
+
         const { data, error } = await supabase
             .from('events')
             .select('*')
             .eq('slug', slug)
             .eq('published', true)
-            .single();
+            .maybeSingle();
 
         if (error || !data) {
-            return fallbackEvents.find((item) => item.slug === slug) || null;
+            return null;
         }
 
         return data;
     } catch {
-        return fallbackEvents.find((item) => item.slug === slug) || null;
+        return null;
     }
 }

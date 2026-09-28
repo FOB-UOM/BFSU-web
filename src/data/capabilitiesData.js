@@ -129,15 +129,15 @@ export const systemCapabilities = [
         whatIsMissing: "Live Notion database sync for student datathon submission tracker."
     },
     {
-        id: "soc-motss",
+        id: "soc-bpmss",
         domain: "Societies",
-        name: "Management of Technology Society (MOTSS)",
-        description: "Official space for enterprise tech, digital innovation, and tech symposia with Notion Hub.",
+        name: "Business Process Management Society (BPMSS)",
+        description: "Official space for enterprise tech, process optimization, and tech symposia with Notion Hub.",
         status: "LIVE",
         carrier: "Notion & Next.js",
         carrierKey: "NOTION_SOCIETIES_DB",
-        route: "/societies/mot",
-        mobileInstructions: "Update industry visits, tech talk topics, and corporate partner links in MOTSS Notion space.",
+        route: "/societies/bpmss",
+        mobileInstructions: "Update industry visits, tech talk topics, and corporate partner links in BPMSS Notion space.",
         whatExists: "Complete society page with executive board, corporate forum initiatives, and Notion widget.",
         whatIsMissing: "Alumni technology directory live filter."
     },

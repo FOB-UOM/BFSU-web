@@ -2,11 +2,31 @@
 
 import React, { useState } from 'react';
 import { Calendar, Clock, ArrowUpRight, X, FileText, Download } from 'lucide-react';
-import { semesterTimetables, academicCalendarConfig, academicPortals } from '../data/linksData';
 
-export const QuickLinksSection = () => {
+const DEFAULT_CALENDAR = {
+    title: "Faculty Academic Calendar (Academic Year 2026)",
+    term: "Semester 1 & 2 Sessions",
+    portalUrl: "https://uom.lk/business",
+    keyDates: [
+        { label: "Semester 1 Commencement", date: "February 2026", status: "Active" },
+        { label: "Mid-Semester Recess", date: "April 2026", status: "Scheduled" },
+        { label: "Final Examination Window", date: "June 2026", status: "Scheduled" },
+        { label: "Semester 2 Commencement", date: "August 2026", status: "Scheduled" }
+    ]
+};
+
+export const QuickLinksSection = ({ portals = [], timetables = [] }) => {
     const [calendarModalOpen, setCalendarModalOpen] = useState(false);
     const [timetableModalOpen, setTimetableModalOpen] = useState(false);
+
+    const activeTimetables = Array.isArray(timetables) && timetables.length > 0 ? timetables : [
+        {
+            title: "Exam TimeTable Sem 1, 3 (Resumed)",
+            batch: "All Batches • Examination Division",
+            doc_type: "PDF Document",
+            file_url: "https://uom.lk/business/undergraduate-studies"
+        }
+    ];
 
     const quickLinks = [
         {
@@ -25,7 +45,7 @@ export const QuickLinksSection = () => {
         },
         {
             id: 3,
-            title: "Faculty Library",
+            title: "University Library",
             category: "Resources",
             url: "https://uom.lk/lib",
             isModal: false
@@ -118,7 +138,7 @@ export const QuickLinksSection = () => {
                                     Official Faculty Schedule
                                 </span>
                                 <h3 className="font-display text-2xl font-bold text-[var(--text-primary)]">
-                                    {academicCalendarConfig.title}
+                                    {DEFAULT_CALENDAR.title}
                                 </h3>
                             </div>
                             <button 
@@ -130,7 +150,7 @@ export const QuickLinksSection = () => {
                         </div>
 
                         <div className="divide-y divide-[var(--border)] mb-6 max-h-[50vh] overflow-y-auto">
-                            {academicCalendarConfig.keyDates.map((row, idx) => (
+                            {DEFAULT_CALENDAR.keyDates.map((row, idx) => (
                                 <div key={idx} className="py-3 flex justify-between items-center text-sm font-body">
                                     <div>
                                         <div className="font-bold text-[var(--text-primary)]">{row.label}</div>
@@ -148,9 +168,9 @@ export const QuickLinksSection = () => {
                                 Faculty of Business • UoM Senate
                             </span>
                             <a 
-                                href={academicCalendarConfig.portalUrl}
+                                href={DEFAULT_CALENDAR.portalUrl}
                                 target="_blank"
-                                rel="noreferrer"
+                                rel="noopener noreferrer"
                                 className="font-mono text-xs font-bold uppercase tracking-wider text-[#C59B27] hover:underline inline-flex items-center gap-1"
                             >
                                 <span>Official Calendar Portal</span>
@@ -183,20 +203,20 @@ export const QuickLinksSection = () => {
                         </div>
 
                         <div className="divide-y divide-[var(--border)] mb-6 max-h-[50vh] overflow-y-auto">
-                            {semesterTimetables.map((row, idx) => (
+                            {activeTimetables.map((row, idx) => (
                                 <div key={idx} className="py-3.5 flex justify-between items-center text-sm font-body gap-4">
                                     <div>
                                         <div className="font-bold text-[var(--text-primary)] hover:text-[#C59B27] transition-colors">
                                             {row.title}
                                         </div>
                                         <div className="font-mono text-xs text-[#566072] dark:text-[#8E9BB0] mt-0.5">
-                                            {row.batch} • <span className="text-[#C59B27]">{row.type}</span>
+                                            {row.batch} • <span className="text-[#C59B27]">{row.doc_type || 'Document'}</span>
                                         </div>
                                     </div>
                                     <a
-                                        href={row.url}
+                                        href={row.file_url || row.url}
                                         target="_blank"
-                                        rel="noreferrer"
+                                        rel="noopener noreferrer"
                                         className="shrink-0 font-mono text-xs font-bold uppercase tracking-wider text-[var(--text-primary)] hover:text-[#C59B27] inline-flex items-center gap-1.5 border border-[var(--border)] px-3 py-1.5 hover:border-[#C59B27] transition-colors"
                                     >
                                         <span>Download</span>
@@ -213,7 +233,7 @@ export const QuickLinksSection = () => {
                             <a 
                                 href="https://uom.lk/business/undergraduate-studies"
                                 target="_blank"
-                                rel="noreferrer"
+                                rel="noopener noreferrer"
                                 className="font-mono text-xs font-bold uppercase tracking-wider text-[#C59B27] hover:underline inline-flex items-center gap-1"
                             >
                                 <span>Undergraduate Portal</span>

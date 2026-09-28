@@ -9,46 +9,63 @@ import { BackgroundCanvas } from '../components/BackgroundCanvas';
 import { GridBackground } from '../components/GridBackground';
 import { AuthModal } from '../components/AuthModal';
 import { ProfilePeekProvider } from '../context/ProfilePeekContext';
+import { getOrganizationJsonLd, getWebsiteJsonLd } from '../lib/seo/schema';
 
 export const metadata = {
     title: {
-        default: "Faculty of Business Students' Union | University of Moratuwa",
-        template: "%s | BFSU UoM"
+        default: "Business Faculty Students' Union | University of Moratuwa, Sri Lanka",
+        template: "%s | Business Faculty Students' Union, University of Moratuwa"
     },
-    description: "Official digital portal of the Business Faculty Students' Union (BFSU), Faculty of Business, University of Moratuwa. Supporting student welfare, leadership, and professional development.",
-    keywords: ["BFSU", "University of Moratuwa", "Faculty of Business", "Business Faculty Students Union", "UoM", "Sri Lanka"],
+    description: "Official digital portal of the Business Faculty Students' Union (BFSU), Faculty of Business, University of Moratuwa, Katubedda, Moratuwa, Sri Lanka. Supporting student welfare, academic representation, and leadership.",
+    keywords: [
+        "Business Faculty Students' Union",
+        "BFSU",
+        "BFSU UoM",
+        "University of Moratuwa",
+        "Faculty of Business",
+        "Katubedda",
+        "Moratuwa",
+        "Sri Lanka",
+        "Student Union Sri Lanka"
+    ],
     authors: [{ name: "BFSU Secretariat" }],
-    creator: "Faculty of Business Students' Union",
+    creator: "Business Faculty Students' Union, University of Moratuwa",
     metadataBase: new URL("https://bfsu-uom.lk"),
+    alternates: {
+        canonical: "https://bfsu-uom.lk",
+    },
     icons: {
         icon: "/images/logo.png",
         apple: "/images/logo.png",
     },
     openGraph: {
-        title: "Faculty of Business Students' Union | University of Moratuwa",
-        description: "Official digital portal of the Business Faculty Students' Union (BFSU), Faculty of Business, University of Moratuwa.",
+        title: "Business Faculty Students' Union | University of Moratuwa, Sri Lanka",
+        description: "Official digital portal of the Business Faculty Students' Union (BFSU), Faculty of Business, University of Moratuwa, Katubedda, Moratuwa, Sri Lanka.",
         url: "https://bfsu-uom.lk",
-        siteName: "BFSU UoM",
+        siteName: "Business Faculty Students' Union, University of Moratuwa",
         images: [
             {
                 url: "/images/logo.png",
                 width: 512,
                 height: 512,
-                alt: "BFSU Logo",
+                alt: "Business Faculty Students' Union Crest",
             },
         ],
-        locale: "en_US",
+        locale: "en_LK",
         type: "website",
     },
     twitter: {
         card: "summary_large_image",
-        title: "Faculty of Business Students' Union | University of Moratuwa",
-        description: "Official digital portal of the Business Faculty Students' Union (BFSU), Faculty of Business, University of Moratuwa.",
+        title: "Business Faculty Students' Union | University of Moratuwa, Sri Lanka",
+        description: "Official digital portal of the Business Faculty Students' Union (BFSU), Faculty of Business, University of Moratuwa, Katubedda, Moratuwa, Sri Lanka.",
         images: ["/images/logo.png"],
     },
 };
 
 export default function RootLayout({ children }) {
+    const orgJsonLd = getOrganizationJsonLd();
+    const websiteJsonLd = getWebsiteJsonLd();
+
     return (
         <html lang="en" suppressHydrationWarning>
             <head>
@@ -57,6 +74,15 @@ export default function RootLayout({ children }) {
                 <link
                     href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,600&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Cinzel:wght@600;700;800;900&family=Fraunces:ital,opsz,wght@0,9..144,400..800;1,9..144,400..700&display=swap"
                     rel="stylesheet"
+                />
+                {/* Canonical Schema.org JSON-LD Structured Data */}
+                <script
+                    type="application/ld+json"
+                    dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }}
+                />
+                <script
+                    type="application/ld+json"
+                    dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
                 />
             </head>
             <body className="antialiased selection:bg-[#C59B27]/25 selection:text-[#0F141E]">

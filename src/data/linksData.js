@@ -10,30 +10,47 @@
 export const academicPortals = [
     {
         id: "moodle",
-        tag: "DAILY ACADEMIC",
-        title: "Moodle UoM Portal",
-        sub: "Course modules, lecture notes, tutorial uploads, and assignment submissions.",
+        tag: "DAILY ACADEMIC LMS",
+        title: "Moodle UoM (online.uom.lk)",
+        sub: "Primary digital instruction environment for daily course modules, lecture slides, assignments, and tutorial submissions.",
         url: "https://online.uom.lk",
         targetUrl: "online.uom.lk",
-        category: "E-Learning"
+        category: "E-Learning",
+        authType: "UoM LDAP / Central SSO",
+        isUniversityWide: true
     },
     {
-        id: "faculty-lms",
-        tag: "FACULTY LMS",
-        title: "Faculty LMS (lms.uom.lk)",
-        sub: "Official university learning management system, semester course enrolments, and assessment tracking.",
+        id: "learnorg / lms",
+        tag: "ADMIN & REGISTRY LMS",
+        title: "LearnOrg System (lms.uom.lk)",
+        sub: "Official university academic records, semester module enrollments, GPA records, and exam admission clearance.",
         url: "https://lms.uom.lk",
         targetUrl: "lms.uom.lk",
-        category: "E-Learning"
+        category: "E-Learning",
+        authType: "UoM Central Credentials",
+        isUniversityWide: true
+    },
+    {
+        id: "webmail",
+        tag: "COMMUNICATIONS & MS 365",
+        title: "UoM Webmail & Microsoft 365",
+        sub: "Official institutional @uom.lk inbox, Microsoft Office 365 cloud tools, Teams, and institutional OneDrive.",
+        url: "https://webmail.uom.lk",
+        targetUrl: "webmail.uom.lk",
+        category: "Productivity",
+        authType: "Microsoft Entra ID (@uom.lk)",
+        isUniversityWide: true
     },
     {
         id: "cites-portal",
         tag: "CENTRAL IT",
-        title: "CITES Student Portal",
-        sub: "University email administration, network credentials, and campus Wi-Fi access management.",
+        title: "CITES Student Portal & Helpdesk",
+        sub: "University network credentials, eduroam Wi-Fi configuration, software subscriptions, and IT helpdesk ticketing.",
         url: "https://uom.lk/cites",
         targetUrl: "uom.lk/cites",
-        category: "IT Services"
+        category: "IT Services",
+        authType: "UoM Central Helpdesk",
+        isUniversityWide: true
     }
 ];
 
@@ -128,6 +145,15 @@ export const campusFacilities = [
         category: "Recreation"
     },
     {
+        id: "student-welfare",
+        tag: "HOSTELS & BURSARIES",
+        title: "Student Welfare Division & Financial Aid",
+        sub: "Hostel accommodation, Mahapola higher education scholarships, university bursaries, and canteen coordination.",
+        url: "https://uom.lk/welfare",
+        targetUrl: "uom.lk/welfare",
+        category: "Welfare"
+    },
+    {
         id: "career-guidance",
         tag: "CAREER PLACEMENTS",
         title: "Career Guidance Unit (CGU)",
@@ -138,32 +164,128 @@ export const campusFacilities = [
     }
 ];
 
-export const facultySocialLinks = [
+/**
+ * Level 0 Central University Institutional Entities
+ * Explicitly distinguished from Faculty-level and Department-level bodies.
+ */
+export const centralUniversityEntities = [
     {
-        platform: "LinkedIn",
-        name: "Business Faculty Students' Union",
-        url: "https://www.linkedin.com/company/bfsu-uom",
-        handle: "bfsu-uom"
+        code: "CITES",
+        name: "Center for Information Technology & Emerging Services",
+        level: "university",
+        scope: "All Faculties & Staff",
+        primaryUrl: "https://uom.lk/cites",
+        keyRoles: [
+            { role: "Director CITES", responsibility: "University network backbone, campus fiber & eduroam" },
+            { role: "Systems Administrator", responsibility: "LearnOrg LMS, server maintenance & Microsoft 365 licensing" },
+            { role: "IT Helpdesk Lead", responsibility: "Student ticket resolution, email recovery & Wi-Fi support" }
+        ],
+        touchpoints: [
+            { title: "CITES Student Portal", url: "https://uom.lk/cites" },
+            { title: "Helpdesk Ticket System", url: "https://helpdesk.uom.lk" },
+            { title: "UoM IT Setup Wiki", url: "https://wiki.uom.lk" }
+        ]
     },
     {
-        platform: "Facebook",
-        name: "BFSU Official Community",
-        url: "https://facebook.com/bfsu.uom",
-        handle: "bfsu.uom"
+        code: "LIBRARY",
+        name: "University of Moratuwa Main Library",
+        level: "university",
+        scope: "All Undergraduate & Postgraduate Researchers",
+        primaryUrl: "https://uom.lk/lib",
+        keyRoles: [
+            { role: "Librarian", responsibility: "Acquisitions, inter-library exchange & digital archive policy" },
+            { role: "Senior Assistant Librarian (Reader Services)", responsibility: "Book borrowing, fine appeals & study cubicle access" },
+            { role: "Digital Repository Officer", responsibility: "Past exam papers, thesis repository & journal access (Emerald, ScienceDirect)" }
+        ],
+        touchpoints: [
+            { title: "Online Public Access Catalog (OPAC)", url: "https://uom.lk/lib" },
+            { title: "Past Examination Papers Vault", url: "https://uom.lk/lib/past-papers" }
+        ]
     },
     {
-        platform: "YouTube",
-        name: "BFSU Media Unit",
-        url: "https://youtube.com/@bfsu_uom",
-        handle: "@bfsu_uom"
+        code: "HEALTH",
+        name: "University Health Centre & Medical Board",
+        level: "university",
+        scope: "All Students & Staff",
+        primaryUrl: "https://uom.lk/health",
+        keyRoles: [
+            { role: "Chief Medical Officer (CMO)", responsibility: "Emergency outpatient care, preventative health & hospital transfers" },
+            { role: "University Medical Board", responsibility: "Validating medical certificates for missed examinations and continuous assessments" },
+            { role: "Pharmacist", responsibility: "Prescription fulfillment and first-aid supplies" }
+        ],
+        touchpoints: [
+            { title: "Medical Center Consultation Desk", url: "https://uom.lk/health" },
+            { title: "Medical Leave Submission Guide", url: "https://uom.lk/health/medical-guidelines" }
+        ]
+    },
+    {
+        code: "WELFARE",
+        name: "Student Welfare Division & Proctorial Board",
+        level: "university",
+        scope: "Student Well-being, Accommodations & Safety",
+        primaryUrl: "https://uom.lk/welfare",
+        keyRoles: [
+            { role: "Senior Student Counselor", responsibility: "Confidential academic stress counseling, dispute mediation & wellbeing" },
+            { role: "Proctor", responsibility: "Campus discipline, code of conduct enforcement & security liaison" },
+            { role: "Senior Assistant Registrar (Student Welfare)", responsibility: "Hostel hall allocations, Mahapola scholarships & canteen subsidies" }
+        ],
+        touchpoints: [
+            { title: "Student Welfare Division Portal", url: "https://uom.lk/welfare" },
+            { title: "Hostel Allocation Noticeboard", url: "https://uom.lk/welfare/hostels" },
+            { title: "Mahapola / Bursary Verification Desk", url: "https://uom.lk/welfare/scholarships" }
+        ]
+    },
+    {
+        code: "PE",
+        name: "Physical Education Division & Sports Council",
+        level: "university",
+        scope: "University Sports & Fitness",
+        primaryUrl: "https://uom.lk/physical-education",
+        keyRoles: [
+            { role: "Director of Physical Education", responsibility: "Inter-university games, faculty tournaments & facility governance" },
+            { role: "Gymnasium & Pool Custodian", responsibility: "Fitness center memberships, equipment loans & court reservations" },
+            { role: "Faculty Sports Captains", responsibility: "Faculty of Business team selection & training schedules" }
+        ],
+        touchpoints: [
+            { title: "Physical Education Portal", url: "https://uom.lk/physical-education" }
+        ]
+    },
+    {
+        code: "CGU",
+        name: "Career Guidance Unit (CGU)",
+        level: "university",
+        scope: "Professional Development & Industry Placement",
+        primaryUrl: "https://uom.lk/cgu",
+        keyRoles: [
+            { role: "Director CGU", responsibility: "National corporate partnerships & graduate employability frameworks" },
+            { role: "Career Advisor", responsibility: "CV polishing, mock technical interviews & soft skill workshops" },
+            { role: "Faculty Industry Liaison", responsibility: "Faculty of Business annual internship matchmaking" }
+        ],
+        touchpoints: [
+            { title: "CGU Career Fair Portal", url: "https://uom.lk/cgu" }
+        ]
     }
 ];
 
-export const unionContactChannels = {
-    email: "bfsu@uom.lk",
-    hotline: "+94 11 265 0301",
-    officeLocation: "Students' Union Room, Level 01, Faculty of Business, University of Moratuwa",
-    welfareFormUrl: "/explore#room",
-    feedbackFormUrl: "https://notion.so/bfsu-uom/feedback",
-    administrationPortalUrl: "https://uom.lk/business"
+import { 
+    OFFICIAL_FACULTY_SOCIAL_LINKS, 
+    OFFICIAL_UNION_CHANNELS,
+    OFFICIAL_SOCIAL_LINKS,
+    OFFICIAL_ACADEMIC_PORTALS,
+    OFFICIAL_DIRECT_PORTALS
+} from '../lib/constants/links';
+
+export {
+    OFFICIAL_FACULTY_SOCIAL_LINKS,
+    OFFICIAL_UNION_CHANNELS,
+    OFFICIAL_SOCIAL_LINKS,
+    OFFICIAL_ACADEMIC_PORTALS,
+    OFFICIAL_DIRECT_PORTALS
 };
+
+/**
+ * Backwards-compatible immutable exports
+ */
+export const facultySocialLinks = OFFICIAL_FACULTY_SOCIAL_LINKS;
+export const unionContactChannels = OFFICIAL_UNION_CHANNELS;
+

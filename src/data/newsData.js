@@ -62,6 +62,7 @@ const rawArticles = [
         date: "2026-03-01",
         label: "Feedback",
         author: "BFSU Academic & Welfare",
+        entityCode: "BFSU",
         brief: "The Business Faculty Students' Union invites all students to share their feedback, concerns, complaints, and suggestions.",
         content: `
             <p>📢 <strong>Faculty of Business – Student Feedback Form</strong></p>
@@ -74,6 +75,36 @@ const rawArticles = [
             <p>Your input is valuable and will help us work towards positive improvements.</p>
             <br/>
             <p>Business Faculty Students’ Union<br/>University of Moratuwa</p>
+        `,
+        image: null,
+        icon: LinkIcon,
+        kind: "article",
+        language: "en"
+    },
+    {
+        id: 4,
+        slug: "hybrid-platform-operational-release",
+        title: "Deployment of Unified BFSU Hybrid Operating System & Governance Ledger",
+        description: "Official release notes for the Faculty digital infrastructure connecting live Notion databases, Supabase verified profiles, and democratic batch representation.",
+        date: "2026-09-25",
+        label: "Technology",
+        author: "Naveen Sandeepa",
+        authorUsername: "naveen-sandeepa",
+        authorRole: "Lead Systems Architect & Core Developer",
+        cohortCode: "B22-DS",
+        entityCode: "BFSU",
+        brief: "Architecture dispatch detailing the multi-tier institutional hierarchy, batch representative registers, and zero-mock live profile synchronization.",
+        content: `
+            <p>🚀 <strong>Deployment of Unified BFSU Hybrid Operating System</strong></p>
+            <br/>
+            <p>The Business Faculty Students' Union announces the deployment of its unified digital backplane, engineered to connect statutory governance with live data backplanes.</p>
+            <br/>
+            <p><strong>Core Architectural Milestones:</strong></p>
+            <ul>
+                <li><strong>Institutional Hierarchy:</strong> Formalized University (Level 0), Faculty of Business (Level 1), 3 Academic Departments (Level 2), and Societies SOBA, BPMSS, FSMSS (Level 3).</li>
+                <li><strong>Democratic Cohort Representation:</strong> Integrated 2 elected Batch Representatives for each (Batch x Department) cohort with time-bounded tenure ledgers.</li>
+                <li><strong>Universal Identity:</strong> Autonomous student profiles with LinkedIn OAuth sync and zero-mock fallbacks.</li>
+            </ul>
         `,
         image: null,
         icon: LinkIcon,

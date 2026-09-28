@@ -69,7 +69,7 @@ On desktop viewports, the navigation header displays 3 structured mega-dropdowns
 * **Departmental Student Societies**:
   - **SOBA** — Society of Business Analytics (live from Notion `30d3b460dd9e81dcb43bcff420397d32`).
   - **FSMSS** — FSM Students' Society (live from Notion `30d3b460dd9e81bfa07bf533a61bb294`).
-  - **MOTSS** — MOT Students' Society.
+  - **BPMSS** — Business Process Management Students' Society.
 * **Platform Capability Matrix**: System feature audit, data carriers, and capability inventory (`/capabilities`).
 
 ---
@@ -120,7 +120,7 @@ On desktop viewports, the navigation header displays 3 structured mega-dropdowns
      - Council Members (e.g. "Yasitha", "Naveen", "Kosala")
      - Degree Tracks (e.g. "Business Analytics", "FSM", "MBAn")
      - Events (e.g. "Orientation Batch 25", "Uni Starts")
-     - Societies ("SOBA", "FSMSS", "MOTSS")
+     - Societies ("SOBA", "FSMSS", "BPMSS")
      - System Capabilities (`/capabilities`)
 2. **Notion Direct Carrier Pill**:
    - Live workspace connection badge: *"Connected to Notion: Students' Union - FOB @ UOM"*.

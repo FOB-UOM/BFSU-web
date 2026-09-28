@@ -1,4 +1,6 @@
-﻿User-agent: *
+User-agent: *
 Allow: /
+Disallow: /admin/
+Disallow: /api/
 
-Sitemap: https://bfsu-uom.org/sitemap.xml
+Sitemap: https://bfsu-uom.lk/sitemap.xml

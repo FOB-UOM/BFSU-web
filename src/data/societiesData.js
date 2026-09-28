@@ -4,7 +4,7 @@
  * 
  * - SOBA: Society of Business Analytics (Department of Decision Sciences)
  * - FSMSS: FSM Students' Society (Department of Industrial Management)
- * - MOTSS: MOT Students' Society (Department of Management of Technology)
+ * - BPMSS: Business Process Management Students' Society (Department of Management of Technology)
  * 
  * Centralized, editable configuration. Supports live Notion sync.
  */
@@ -20,16 +20,31 @@ export const departmentalSocieties = [
         departmentCode: "DS",
         tagline: "Pioneering Business Analytics, Machine Learning & Algorithmic Optimization",
         description: "The official academic student body representing undergraduates in Decision Sciences and Business Analytics at the Faculty of Business, University of Moratuwa. SOBA empowers students with state-of-the-art computational tools, inter-university hackathons, predictive modeling workshops, and data engineering mastery.",
+        workspaces: {
+            notion: {
+                workspaceName: "BFSU / Decision Sciences Hub",
+                workspaceUrl: "https://notion.so/bfsu-uom/decision-sciences-society",
+                notionPageId: "30d3b460dd9e81dcb43bcff420397d32"
+            },
+            googleWorkspace: {
+                sharedDriveUrl: "https://drive.google.com/drive/folders/1soba-uom-analytics-archive",
+                calendarUrl: "https://calendar.google.com"
+            },
+            repository: {
+                githubUrl: "https://github.com/bfsu-uom"
+            }
+        },
         notion: {
             workspaceName: "BFSU / Decision Sciences Hub",
             workspaceUrl: "https://notion.so/bfsu-uom/decision-sciences-society",
             notionPageId: "30d3b460dd9e81dcb43bcff420397d32",
             description: "The centralized operational and academic workspace for Decision Sciences undergraduates, task teams, and event steering committees.",
             resources: [
-                { title: "Hackathon & Datathon Task Tracker", type: "Database", tag: "Projects" },
-                { title: "Business Analytics Curated Learning Path", type: "Knowledge Base", tag: "Academic" },
-                { title: "Research Working Group Drafts", type: "Workspace", tag: "Research" },
-                { title: "Executive Committee Meeting Minutes", type: "Internal", tag: "Secretariat" }
+                { title: "Hackathon & Datathon Task Tracker", type: "Database", tag: "Projects", provider: "notion" },
+                { title: "Business Analytics Curated Learning Path", type: "Knowledge Base", tag: "Academic", provider: "notion" },
+                { title: "Machine Learning & Datathon Datasets Vault", type: "Drive Folder", tag: "Resources", provider: "google-drive" },
+                { title: "Decision Sciences Algorithmic Starters", type: "Code Repository", tag: "Open Source", provider: "github", url: "https://github.com/bfsu-uom" },
+                { title: "Executive Committee Meeting Minutes", type: "Internal", tag: "Secretariat", provider: "notion" }
             ]
         },
         stats: {
@@ -86,16 +101,28 @@ export const departmentalSocieties = [
         departmentCode: "IM",
         tagline: "Engineering Financial Systems, Econometrics & High-Stakes Operations",
         description: "The official student body representing undergraduates in Industrial Management and Financial Services Management at the Faculty of Business, University of Moratuwa. FSMSS is dedicated to quantitative finance, risk econometrics, supply chain resilience, and operational excellence.",
+        workspaces: {
+            notion: {
+                workspaceName: "BFSU / FSMSS Operations Hub",
+                workspaceUrl: "https://notion.so/bfsu-uom/fsm-students-society",
+                notionPageId: "30d3b460dd9e81bfa07bf533a61bb294"
+            },
+            googleWorkspace: {
+                sharedDriveUrl: "https://drive.google.com/drive/folders/1fsmss-financial-models-vault",
+                calendarUrl: "https://calendar.google.com"
+            }
+        },
         notion: {
             workspaceName: "BFSU / FSMSS Operations Hub",
             workspaceUrl: "https://notion.so/bfsu-uom/fsm-students-society",
             notionPageId: "30d3b460dd9e81bfa07bf533a61bb294",
             description: "Collaborative research databases, financial valuation spreadsheets, trading simulation tracks, and semester revision vaults.",
             resources: [
-                { title: "Quantitative Finance & Econometrics Compendium", type: "Knowledge Base", tag: "Finance" },
-                { title: "Supply Chain Operations Case Repository", type: "Library", tag: "Operations" },
-                { title: "Financial Trading & Risk Simulation Sandbox", type: "Project Board", tag: "Simulation" },
-                { title: "Industrial Mentorship Matching Desk", type: "Directory", tag: "Mentorship" }
+                { title: "Quantitative Finance & Econometrics Compendium", type: "Knowledge Base", tag: "Finance", provider: "notion" },
+                { title: "Financial Valuation & DCF Models Vault", type: "Drive Folder", tag: "Finance", provider: "google-drive" },
+                { title: "Supply Chain Operations Case Repository", type: "Library", tag: "Operations", provider: "notion" },
+                { title: "Financial Trading & Risk Simulation Sandbox", type: "Project Board", tag: "Simulation", provider: "notion" },
+                { title: "Industrial Mentorship Matching Desk", type: "Directory", tag: "Mentorship", provider: "notion" }
             ]
         },
         stats: {
@@ -143,25 +170,37 @@ export const departmentalSocieties = [
         ]
     },
     {
-        id: "motss",
-        slug: "motss",
-        aliases: ["mot", "management-of-technology", "bpm"],
-        code: "MOTSS",
-        name: "MOT Students' Society",
+        id: "bpmss",
+        slug: "bpmss",
+        aliases: ["motss", "mot", "management-of-technology", "bpm"],
+        code: "BPMSS",
+        name: "Business Process Management Students' Society (BPMSS)",
         departmentName: "Department of Management of Technology",
         departmentCode: "MOT",
         tagline: "Bridging Cutting-Edge Enterprise Technology, Digital Transformation & Strategy",
-        description: "The Management of Technology Student Society (MOTSS) is the flagship student organisation of the Department of Management of Technology. Dedicated to grooming technology leaders, enterprise architects, and digital product managers.",
+        description: "The Business Process Management Students' Society (BPMSS) is the flagship student organisation of the Department of Management of Technology. Dedicated to grooming technology leaders, enterprise architects, and digital product managers.",
+        workspaces: {
+            notion: {
+                workspaceName: "BFSU / BPMSS Strategy Hub",
+                workspaceUrl: "https://notion.so/bfsu-uom/bpm-society",
+                notionPageId: null
+            },
+            googleWorkspace: {
+                sharedDriveUrl: "https://drive.google.com/drive/folders/1bpmss-technology-case-vault",
+                calendarUrl: "https://calendar.google.com"
+            }
+        },
         notion: {
-            workspaceName: "BFSU / MOTSS Strategy Hub",
-            workspaceUrl: "https://notion.so/bfsu-uom/mot-society",
+            workspaceName: "BFSU / BPMSS Strategy Hub",
+            workspaceUrl: "https://notion.so/bfsu-uom/bpm-society",
             notionPageId: null,
             description: "The digital nerve centre for industrial technology projects, corporate sponsorship pipelines, and product architecture roadmaps.",
             resources: [
-                { title: "Enterprise Technology Industry Directory", type: "Database", tag: "Industry" },
-                { title: "Digital Product Architecture Case Studies", type: "Library", tag: "Curriculum" },
-                { title: "Tech Talk & Corporate Webinar Planner", type: "Calendar", tag: "Events" },
-                { title: "Alumni Technology Mentorship Register", type: "Directory", tag: "Alumni" }
+                { title: "Enterprise Technology Industry Directory", type: "Database", tag: "Industry", provider: "notion" },
+                { title: "ERP & Digital Product Architecture Archive", type: "Drive Folder", tag: "Curriculum", provider: "google-drive" },
+                { title: "Digital Product Architecture Case Studies", type: "Library", tag: "Curriculum", provider: "notion" },
+                { title: "Tech Talk & Corporate Webinar Planner", type: "Calendar", tag: "Events", provider: "notion" },
+                { title: "Alumni Technology Mentorship Register", type: "Directory", tag: "Alumni", provider: "notion" }
             ]
         },
         stats: {
@@ -175,7 +214,7 @@ export const departmentalSocieties = [
                 role: "President",
                 username: "prageeth-harshana",
                 batch: "Batch '21",
-                email: "president.motss@uom.lk",
+                email: "president.bpmss@uom.lk",
                 headline: "Enterprise Systems Architect & Digital Strategist"
             },
             {
@@ -183,7 +222,7 @@ export const departmentalSocieties = [
                 role: "Secretary",
                 username: "warsha-julige",
                 batch: "Batch '22",
-                email: "secretary.motss@uom.lk",
+                email: "secretary.bpmss@uom.lk",
                 headline: "Technology Innovation Management & Product Operations"
             },
             {
@@ -191,7 +230,7 @@ export const departmentalSocieties = [
                 role: "Vice President",
                 username: "poorna-lakshan",
                 batch: "Batch '22",
-                email: "vp.motss@uom.lk",
+                email: "vp.bpmss@uom.lk",
                 headline: "Cloud Architectures & Business Process Systems"
             }
         ],

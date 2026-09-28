@@ -10,12 +10,15 @@ import {
     Calendar, 
     Award, 
     ChevronRight,
-    Compass
+    Compass,
+    HardDrive,
+    GitBranch
 } from 'lucide-react';
 import { departmentalSocieties } from '../../../data/societiesData';
 import { NotionHubWidget } from '../../../components/NotionHubWidget';
 import { UserAvatar } from '../../../components/UserAvatar';
 import { fetchNotionCouncil } from '../../../lib/notion';
+import { getCollaborationHub } from '../../../lib/data/collaboration';
 
 export async function generateStaticParams() {
     const params = [];
@@ -81,6 +84,28 @@ export default async function SocietyPage({ params }) {
         // Fall back gracefully to curated society roster
     }
 
+    // Fetch live collaboration hub from Supabase database
+    const collabHub = await getCollaborationHub(society.code);
+
+    const workspaces = {
+        notion: {
+            workspaceUrl: collabHub?.workspaces?.notion?.workspaceUrl || society.workspaces?.notion?.workspaceUrl || society.notion?.workspaceUrl,
+            workspaceName: society.workspaces?.notion?.workspaceName || society.notion?.workspaceName || `${society.name} Notion Workspace`
+        },
+        googleWorkspace: {
+            sharedDriveUrl: collabHub?.workspaces?.googleWorkspace?.sharedDriveUrl || society.workspaces?.googleWorkspace?.sharedDriveUrl,
+            calendarId: collabHub?.workspaces?.googleWorkspace?.calendarId || society.workspaces?.googleWorkspace?.calendarId,
+            membershipFormUrl: collabHub?.workspaces?.googleWorkspace?.membershipFormUrl || society.workspaces?.googleWorkspace?.membershipFormUrl
+        },
+        repository: {
+            githubUrl: collabHub?.workspaces?.repository?.githubUrl || society.workspaces?.repository?.githubUrl
+        }
+    };
+
+    const resources = collabHub?.resources && collabHub.resources.length > 0 
+        ? collabHub.resources 
+        : (society.notion?.resources || []);
+
     const executiveBoard = liveExecutives.length > 0 ? liveExecutives : society.executiveBoard;
 
     // Sister departmental societies for quick navigation
@@ -125,15 +150,39 @@ export default async function SocietyPage({ params }) {
                     </p>
 
                     <div className="flex flex-wrap items-center gap-3">
-                        <a
-                            href={society.notion.workspaceUrl}
-                            target="_blank"
-                            rel="noreferrer"
-                            className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-[#C59B27] to-[#E5B842] hover:brightness-110 text-[#001738] font-bold text-xs flex items-center gap-2 shadow-lg shadow-[#C59B27]/20 transition-all"
-                        >
-                            <span>Launch Society Notion Hub</span>
-                            <ExternalLink className="w-4 h-4" />
-                        </a>
+                        {workspaces.googleWorkspace?.sharedDriveUrl && (
+                            <a
+                                href={workspaces.googleWorkspace.sharedDriveUrl}
+                                target="_blank"
+                                rel="noreferrer"
+                                className="px-5 py-2.5 rounded-xl bg-blue-600/20 hover:bg-blue-600/30 text-blue-300 border border-blue-500/40 font-bold text-xs flex items-center gap-2 shadow-sm transition-all"
+                            >
+                                <HardDrive className="w-4 h-4 text-blue-400" />
+                                <span>Google Drive Vault</span>
+                            </a>
+                        )}
+                        {workspaces.notion?.workspaceUrl && (
+                            <a
+                                href={workspaces.notion.workspaceUrl}
+                                target="_blank"
+                                rel="noreferrer"
+                                className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-[#C59B27] to-[#E5B842] hover:brightness-110 text-[#001738] font-bold text-xs flex items-center gap-2 shadow-lg shadow-[#C59B27]/20 transition-all"
+                            >
+                                <span>Launch Notion Hub</span>
+                                <ExternalLink className="w-4 h-4" />
+                            </a>
+                        )}
+                        {workspaces.repository?.githubUrl && (
+                            <a
+                                href={workspaces.repository.githubUrl}
+                                target="_blank"
+                                rel="noreferrer"
+                                className="px-5 py-2.5 rounded-xl bg-purple-600/20 hover:bg-purple-600/30 text-purple-300 border border-purple-500/40 font-bold text-xs flex items-center gap-2 shadow-sm transition-all"
+                            >
+                                <GitBranch className="w-4 h-4 text-purple-400" />
+                                <span>GitHub Workspace</span>
+                            </a>
+                        )}
                         <Link
                             href="/about#departments"
                             className="px-5 py-2.5 rounded-xl border border-[var(--border)] bg-[var(--bg-elevated)] hover:bg-[var(--border)] text-[var(--text-primary)] font-semibold text-xs flex items-center gap-2 transition-colors"
@@ -242,13 +291,15 @@ export default async function SocietyPage({ params }) {
 
                 {/* Right Col: Notion Hub Widget & Sister Societies */}
                 <div className="space-y-8">
-                    {/* Connected Notion Hub */}
+                    {/* Connected Multi-Cloud Collaborative Hub */}
                     <NotionHubWidget
-                        title={society.notion.workspaceName}
-                        workspaceUrl={society.notion.workspaceUrl}
-                        description={society.notion.description}
-                        resources={society.notion.resources}
+                        title={workspaces.notion.workspaceName}
+                        workspaceUrl={workspaces.notion.workspaceUrl}
+                        description={society.notion?.description || `${society.name} collaborative resource desk and shared workspace.`}
+                        workspaces={workspaces}
+                        resources={resources}
                         stats={society.stats}
+                        societyCode={society.code}
                     />
 
                     {/* Sister Departmental Societies Navigation */}

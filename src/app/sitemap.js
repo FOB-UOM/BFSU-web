@@ -1,6 +1,8 @@
 import { getNews } from '../lib/data/news';
 import { getEvents } from '../lib/data/events';
 import { createClient } from '../lib/supabase/server';
+import { departmentalSocieties } from '../data/societiesData';
+import { departmentsData } from '../data/departmentsData';
 
 export default async function sitemap() {
     const baseUrl = 'https://bfsu-uom.lk';
@@ -72,5 +74,20 @@ export default async function sitemap() {
         // Fallback
     }
 
-    return [...staticRoutes, ...newsRoutes, ...eventRoutes, ...profileRoutes];
+    // Department and Society dedicated routes
+    const departmentRoutes = departmentsData.map((d) => ({
+        url: `${baseUrl}/departments/${d.slug}`,
+        lastModified: new Date().toISOString(),
+        changeFrequency: 'monthly',
+        priority: 0.85,
+    }));
+
+    const societyRoutes = departmentalSocieties.map((s) => ({
+        url: `${baseUrl}/societies/${s.slug}`,
+        lastModified: new Date().toISOString(),
+        changeFrequency: 'monthly',
+        priority: 0.85,
+    }));
+
+    return [...staticRoutes, ...departmentRoutes, ...societyRoutes, ...newsRoutes, ...eventRoutes, ...profileRoutes];
 }

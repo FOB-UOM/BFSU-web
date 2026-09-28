@@ -1,8 +1,4 @@
 import { Client } from '@notionhq/client';
-import { newsData as fallbackNews } from '../data/newsData.js';
-import { eventsData as fallbackEvents } from '../data/eventsData.js';
-import { departmentalSocieties as fallbackSocieties } from '../data/societiesData.js';
-import { fallbackCouncil } from '../data/councilData.js';
 
 // Initialize the official Notion SDK client
 const notionApiKey = process.env.NOTION_API_KEY;
@@ -81,7 +77,7 @@ export async function fetchNotionNews() {
     const dbId = process.env.NOTION_NEWS_DB_ID;
 
     if (!dbId) {
-        return fallbackNews;
+        return [];
     }
 
     try {
@@ -95,7 +91,7 @@ export async function fetchNotionNews() {
         });
 
         if (!data || !data.results || data.results.length === 0) {
-            return fallbackNews;
+            return [];
         }
 
         return data.results.map(page => {
@@ -117,8 +113,8 @@ export async function fetchNotionNews() {
             };
         });
     } catch (error) {
-        console.warn('[Notion API] fetchNotionNews failed, falling back to cached news:', error.message);
-        return fallbackNews;
+        console.warn('[Notion API] fetchNotionNews error:', error.message);
+        return [];
     }
 }
 
@@ -129,7 +125,7 @@ export async function fetchNotionEvents() {
     const dbId = process.env.NOTION_EVENTS_DB_ID;
 
     if (!dbId) {
-        return fallbackEvents;
+        return [];
     }
 
     try {
@@ -143,7 +139,7 @@ export async function fetchNotionEvents() {
         });
 
         if (!data || !data.results || data.results.length === 0) {
-            return fallbackEvents;
+            return [];
         }
 
         return data.results.map(page => {
@@ -193,93 +189,22 @@ export async function fetchNotionEvents() {
             };
         });
     } catch (error) {
-        console.warn('[Notion API] fetchNotionEvents failed, falling back to cached events:', error.message);
-        return fallbackEvents;
+        console.warn('[Notion API] fetchNotionEvents error:', error.message);
+        return [];
     }
 }
 
 /**
- * 2.5 Fetch Executive Council & Committee Members from Notion
+ * 2.5 Fetch Executive Council & Committee Members from Notion & DB Sync
+ * Returns ONLY real synced profiles without any fake fallbacks.
  */
 export async function fetchNotionCouncil() {
-    const dbId = process.env.NOTION_COUNCIL_DB_ID;
-
-
-
-    if (!dbId) {
-        return fallbackCouncil;
-    }
-
     try {
-        const response = await queryNotionDatabase(dbId);
-
-        if (!response || !response.results || response.results.length === 0) {
-            return fallbackCouncil;
-        }
-
-        const rolePriorityMap = {
-            'President': 1,
-            'Vice President': 2,
-            'Secretary': 3,
-            'Junior Treasurer': 4,
-            'Junior Teasurer': 4,
-            'Editor': 5,
-            'Co-Editor': 6,
-            'Assistant Secretary': 7,
-            'Committee Member': 10
-        };
-
-        const members = response.results.map((page, idx) => {
-            const props = page.properties;
-            const name = getPlainText(props['Member Name']) || 'Council Officer';
-            const roles = getMultiSelect(props.Role);
-            const primaryRole = roles[0] || 'Executive Member';
-            const contactText = getPlainText(props['Contact Info']);
-            
-            // Extract email from Email property or from Contact Info text
-            let email = props.Email?.email || null;
-            if (!email && contactText) {
-                const match = contactText.match(/[\w.-]+@[\w.-]+\.\w+/);
-                if (match) email = match[0];
-            }
-
-            // Extract phone
-            let phone = null;
-            if (contactText) {
-                const phoneMatch = contactText.match(/(?:Phone:\s*)([0-9+() -]+)/i);
-                if (phoneMatch) phone = phoneMatch[1].trim();
-            }
-
-            const priorityVal = props.Priority?.number;
-            const computedPriority = priorityVal !== undefined && priorityVal !== null
-                ? priorityVal
-                : (rolePriorityMap[primaryRole] ?? (20 + idx));
-
-            const avatarFile = getFileUrl(props.Avatar);
-
-            return {
-                id: page.id,
-                name,
-                role: primaryRole,
-                roles: roles.length > 0 ? roles : [primaryRole],
-                email: email || '',
-                phone: phone || '',
-                department: getSelect(props.Department) || 'General',
-                batch: getSelect(props.Batch) || 'Batch 22',
-                term: getSelect(props.Term) || '2025/2026',
-                bio: getPlainText(props.Bio) || `${primaryRole} of the Faculty of Business Students' Union (BFSU).`,
-                linkedin: props.LinkedIn?.url || null,
-                priority: computedPriority,
-                image: avatarFile || fallbackCouncil[idx]?.image || `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(name)}`,
-                notionPageId: page.id
-            };
-        });
-
-        // Sort by priority ascending (1 = President, 2 = VP, etc.)
-        return members.sort((a, b) => a.priority - b.priority);
+        const { fetchSyncedCouncilMembers } = await import('./services/people.js');
+        return await fetchSyncedCouncilMembers();
     } catch (error) {
-        console.warn('[Notion API] fetchNotionCouncil failed, falling back to cached council:', error.message);
-        return fallbackCouncil;
+        console.warn('[Notion API] fetchNotionCouncil sync error:', error.message);
+        return [];
     }
 }
 
@@ -290,35 +215,34 @@ export async function fetchNotionSocieties() {
     const dbId = process.env.NOTION_SOCIETIES_DB_ID;
 
     if (!dbId) {
-        return fallbackSocieties;
+        return [];
     }
 
     try {
         const response = await queryNotionDatabase(dbId);
 
         if (!response || !response.results || response.results.length === 0) {
-            return fallbackSocieties;
+            return [];
         }
 
-        return response.results.map((page, idx) => {
+        return response.results.map((page) => {
             const props = page.properties;
-            const name = getPlainText(props.SocietyName) || fallbackSocieties[idx]?.name;
-            const slug = getPlainText(props.Slug) || fallbackSocieties[idx]?.slug;
+            const name = getPlainText(props.SocietyName) || 'Student Society';
+            const slug = getPlainText(props.Slug) || name.toLowerCase().replace(/[^a-z0-9]+/g, '-');
 
             return {
-                ...fallbackSocieties[idx],
+                id: page.id,
                 name,
                 slug,
-                tagline: getPlainText(props.Tagline) || fallbackSocieties[idx]?.tagline,
+                tagline: getPlainText(props.Tagline) || '',
                 notion: {
-                    ...fallbackSocieties[idx]?.notion,
-                    workspaceUrl: props.NotionWorkspaceURL?.url || fallbackSocieties[idx]?.notion?.workspaceUrl
+                    workspaceUrl: props.NotionWorkspaceURL?.url || ''
                 }
             };
         });
     } catch (error) {
-        console.warn('[Notion API] fetchNotionSocieties failed, falling back:', error.message);
-        return fallbackSocieties;
+        console.warn('[Notion API] fetchNotionSocieties error:', error.message);
+        return [];
     }
 }
 

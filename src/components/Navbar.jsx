@@ -41,7 +41,7 @@ export const Navbar = () => {
                 { title: 'The Faculty of Business', desc: 'Departments of DS, IM & MOT', href: '/about#faculty' },
                 { title: 'Degrees & Specializations', desc: 'Business Analytics, FSM, BPM & Masters', href: '/about#degrees' },
                 { title: 'Executive Council 2026', desc: 'Elected officials & committee members (from Notion)', href: '/about#council' },
-                { title: 'Student Societies', desc: 'SOBA, FSMSS & MOTSS hubs', href: '/about#departments' },
+                { title: 'Student Societies', desc: 'SOBA, FSMSS & BPMSS hubs', href: '/about#departments' },
                 { title: '2027 Decennial Milestone', desc: '10 years of pioneering analytics education', href: '/about#decennial' },
                 { title: 'Platform Capabilities', desc: 'Live feature matrix & operating cockpit', href: '/capabilities' },
             ]
@@ -72,7 +72,7 @@ export const Navbar = () => {
 
     return (
         <>
-            <header className="sticky top-0 w-full z-40 bg-white/95/95 backdrop-blur-md border-b border-[var(--border)] transition-colors">
+            <header className="sticky top-0 w-full z-40 bg-[var(--bg-page)]/90 backdrop-blur-md border-b border-[var(--border)] transition-colors">
                 
                 {/* 1. Status Ribbon */}
                 <div className="bg-[var(--bg-page)] text-[#12161F] dark:text-[#E2E8F0] px-4 sm:px-8 lg:px-12 py-1.5 flex justify-between items-center text-[11px] font-mono font-medium tracking-wider border-b border-[var(--border)]">
@@ -99,7 +99,7 @@ export const Navbar = () => {
                             className="w-9 h-9 sm:w-10 sm:h-10 object-contain group-hover:scale-105 transition-transform flex-shrink-0" 
                         />
                         <div>
-                            <span className="text-lg sm:text-xl font-extrabold tracking-tight text-[#12161F] block leading-tight">
+                            <span className="text-lg sm:text-xl font-extrabold tracking-tight text-[var(--text-primary)] block leading-tight">
                                 BFSU <span className="text-[#C59B27] font-mono text-xs sm:text-sm font-bold uppercase">UoM</span>
                             </span>
                             <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-[#566072] dark:text-[#9CA3AF] font-bold block">
@@ -145,18 +145,18 @@ export const Navbar = () => {
                                         {/* Dropdown Panel */}
                                         {isCurrentActive && (
                                             <div className="absolute top-full left-0 pt-2 w-72 z-50 animate-in fade-in slide-in-from-top-1 duration-150">
-                                                <div className="bg-[var(--bg-surface)] border border-[var(--border)] shadow-xl p-2 divide-y divide-[#E5E2DA]/60 dark:divide-[#1E2534] rounded-sm">
+                                                <div className="bg-[var(--bg-surface)] border border-[var(--border)] shadow-xl p-2 divide-y divide-[var(--border)] rounded-sm">
                                                     {menuItem.items.map((sub, sIdx) => (
                                                         <a
                                                             key={sIdx}
                                                             href={sub.href}
-                                                            className="block p-3 hover:bg-[var(--bg-page)] dark:hover:bg-white/5 transition-colors group"
+                                                            className="block p-3 hover:bg-[var(--bg-elevated)] transition-colors group"
                                                             onClick={() => setActiveDropdown(null)}
                                                         >
-                                                            <div className="text-sm font-bold text-[#12161F] group-hover:text-[#C59B27] transition-colors">
+                                                            <div className="text-sm font-bold text-[var(--text-primary)] group-hover:text-[#C59B27] transition-colors">
                                                                 {sub.title}
                                                             </div>
-                                                            <div className="text-xs font-medium text-[#566072] dark:text-[#9CA3AF] mt-0.5 leading-snug">
+                                                            <div className="text-xs font-medium text-[var(--text-muted)] mt-0.5 leading-snug">
                                                                 {sub.desc}
                                                             </div>
                                                         </a>
@@ -169,18 +169,18 @@ export const Navbar = () => {
                             })}
                         </nav>
 
-                        <div className="h-4 w-[1px] bg-[#E5E2DA] dark:bg-[#1E2534]" />
+                        <div className="h-4 w-[1px] bg-[var(--border)]" />
 
                         {/* Search, Theme Toggle & Help Desk */}
                         <div className="flex items-center gap-3">
                             <button
                                 onClick={() => setSearchOpen(true)}
-                                className="flex items-center gap-2 px-3 py-1.5 border border-[var(--border)] bg-[var(--bg-surface)] hover:border-[#C59B27] text-[#566072] dark:text-[#9CA3AF] font-mono text-[11px] font-semibold transition-colors rounded-sm"
+                                className="flex items-center gap-2 px-3 py-1.5 border border-[var(--border)] bg-[var(--bg-surface)] hover:border-[#C59B27] text-[var(--text-muted)] font-mono text-[11px] font-semibold transition-colors rounded-sm"
                                 title="Press Cmd+K to search"
                             >
                                 <Search size={13} className="text-[#C59B27]" />
                                 <span className="hidden xl:inline">Search...</span>
-                                <kbd className="text-[9px] bg-[var(--bg-page)] dark:bg-white/10 px-1 py-0.5 border border-[var(--border)] dark:border-white/10 rounded font-bold">⌘K</kbd>
+                                <kbd className="text-[9px] bg-[var(--bg-subtle)] text-[var(--text-muted)] px-1 py-0.5 border border-[var(--border)] rounded font-bold">⌘K</kbd>
                             </button>
 
                             {/* Restored Theme Switcher */}
@@ -241,7 +241,7 @@ export const Navbar = () => {
                     <div className="flex items-center gap-2 lg:hidden">
                         <button
                             onClick={() => setSearchOpen(true)}
-                            className="p-2 border border-[var(--border)] text-[#12161F]"
+                            className="p-2 border border-[var(--border)] text-[var(--text-primary)]"
                             aria-label="Search"
                         >
                             <Search size={18} />
@@ -249,7 +249,7 @@ export const Navbar = () => {
                         <ThemeToggle />
                         <button 
                             onClick={() => setIsOpen(!isOpen)}
-                            className="p-2 border border-[var(--border)] text-[#12161F]"
+                            className="p-2 border border-[var(--border)] text-[var(--text-primary)]"
                             aria-label="Toggle navigation"
                         >
                             {isOpen ? <X size={18} /> : <Menu size={18} />}
@@ -261,7 +261,7 @@ export const Navbar = () => {
                 {/* Mobile Menu */}
                 {isOpen && (
                     <div className="lg:hidden border-t border-[var(--border)] px-5 py-4 bg-[var(--bg-surface)] max-h-[80vh] overflow-y-auto">
-                        <nav className="flex flex-col divide-y divide-[#E5E2DA]/50 dark:divide-[#1E2534]">
+                        <nav className="flex flex-col divide-y divide-[var(--border)]">
                             {menuStructure.map((item) => {
                                 const hasSub = Array.isArray(item.items);
                                 const isMobileOpen = mobileExpandedSection === item.key;
@@ -271,7 +271,7 @@ export const Navbar = () => {
                                         <a 
                                             key={item.key} 
                                             href={item.href} 
-                                            className="py-3 font-mono text-xs font-bold uppercase tracking-[0.16em] text-[#12161F] hover:text-[#C59B27]"
+                                            className="py-3 font-mono text-xs font-bold uppercase tracking-[0.16em] text-[var(--text-primary)] hover:text-[#C59B27]"
                                             onClick={() => setIsOpen(false)}
                                         >
                                             {item.name}
@@ -284,7 +284,7 @@ export const Navbar = () => {
                                         <div className="flex items-center justify-between py-2">
                                             <a 
                                                 href={item.href}
-                                                className="font-mono text-xs font-bold uppercase tracking-[0.16em] text-[#12161F] hover:text-[#C59B27]"
+                                                className="font-mono text-xs font-bold uppercase tracking-[0.16em] text-[var(--text-primary)] hover:text-[#C59B27]"
                                                 onClick={() => setIsOpen(false)}
                                             >
                                                 {item.name}

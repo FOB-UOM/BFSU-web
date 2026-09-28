@@ -12,10 +12,12 @@ export default {
           // Semantic palette — matches CSS custom props
           page:          'var(--bg-page)',
           surface:       'var(--bg-surface)',
+          elevated:      'var(--bg-elevated)',
           subtle:        'var(--bg-subtle)',
           inset:         'var(--bg-inset)',
 
           text:          'var(--text-primary)',
+          secondary:     'var(--text-secondary)',
           muted:         'var(--text-muted)',
           faint:         'var(--text-faint)',
 

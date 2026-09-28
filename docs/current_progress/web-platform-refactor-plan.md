@@ -29,7 +29,7 @@ This execution plan guides the refactoring of the public web frontend to align w
 │ **Phase 3**  │ Event Calendar (`/events`)    │ Fetch live from Notion `Event calendar` │
 │              │                               │ with categorized chips & countdowns     │
 ├──────────────┼───────────────────────────────┼─────────────────────────────────────────┤
-│ **Phase 4**  │ Society Hubs (`/societies/*`) │ Dynamic pages for SOBA, FSMSS, MOTSS    │
+│ **Phase 4**  │ Society Hubs (`/societies/*`) │ Dynamic pages for SOBA, FSMSS, BPMSS    │
 │              │                               │ with live Notion block rendering        │
 ├──────────────┼───────────────────────────────┼─────────────────────────────────────────┤
 │ **Phase 5**  │ Academics & Admissions        │ `/admissions/why-fob` hub & outbound    │
@@ -49,7 +49,7 @@ This execution plan guides the refactoring of the public web frontend to align w
 - [ ] Refactor [`src/components/Navbar.jsx`](file:///c:/Users/Naween/projects/BFSU-web/src/components/Navbar.jsx):
   - Group links into 3 Desktop Dropdown Hubs:
     1. *Academics & Faculty* (Degrees, Master's links, Admissions)
-    2. *Campus & Student Life* (Union Council, SOBA, FSMSS, MOTSS, Events)
+    2. *Campus & Student Life* (Union Council, SOBA, FSMSS, BPMSS, Events)
     3. *Community & Impact* (Alumni, Quant Talent, News, Decennial)
   - Add quick action pill for Notion Hub and Capabilities Matrix.
 - [ ] Create `src/components/MobileBottomNav.jsx`:
@@ -73,15 +73,15 @@ This execution plan guides the refactoring of the public web frontend to align w
   - Parse `Name`, `Date`, `Location`, `Category`, `Organizer`, `Description`, `Cover`, `Registration`.
 - [ ] Update `src/app/events/page.jsx`:
   - Render upcoming vs past events with live Notion date timestamps.
-  - Add filter pills: `All`, `BFSU`, `SOBA`, `FSMSS`, `MOTSS`.
+  - Add filter pills: `All`, `BFSU`, `SOBA`, `FSMSS`, `BPMSS`.
 
 ### Phase 4: Dynamic Society Hubs (`/societies/[slug]`)
 - [ ] Update [`src/app/societies/[slug]/page.jsx`](file:///c:/Users/Naween/projects/BFSU-web/src/app/societies/[slug]/page.jsx):
   - Support canonical slugs:
     - `/societies/soba` (Society of Business Analytics)
     - `/societies/fsmss` (FSM Students' Society)
-    - `/societies/motss` (MOT Students' Society)
-    - Aliases: `/societies/dss` $\rightarrow$ SOBA, `/societies/industrial-management` $\rightarrow$ FSMSS, `/societies/mot` $\rightarrow$ MOTSS.
+    - `/societies/BPMSS` (MOT Students' Society)
+    - Aliases: `/societies/dss` $\rightarrow$ SOBA, `/societies/industrial-management` $\rightarrow$ FSMSS, `/societies/mot` $\rightarrow$ BPMSS.
   - Pull live markdown/blocks from Notion society pages (`30d3b460dd9e81dcb43bcff420397d32`, `30d3b460dd9e81bfa07bf533a61bb294`).
 
 ### Phase 5: Academics & Admissions Flagship Hub

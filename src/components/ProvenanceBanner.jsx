@@ -33,7 +33,7 @@ export const ProvenanceBanner = ({
 
     return (
         <aside 
-            className={`border border-[#C59B27]/30 bg-[#FAF9F5]/90 dark:bg-[#111622]/90 rounded-2xl p-5 sm:p-6 mb-10 shadow-sm backdrop-blur-sm transition-colors ${className}`}
+            className={`border border-[var(--gold)]/30 bg-[var(--bg-surface)]/90 rounded-2xl p-5 sm:p-6 mb-10 shadow-sm backdrop-blur-sm transition-colors ${className}`}
             aria-label="Editorial provenance and canonical publication record"
         >
             {/* Structured Schema.org JSON-LD output */}
@@ -45,8 +45,8 @@ export const ProvenanceBanner = ({
             )}
 
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[var(--border)]">
-                <div className="flex items-center gap-2 text-xs font-mono font-bold tracking-[0.16em] uppercase text-[#C59B27]">
-                    <ShieldCheck size={16} className="text-[#C59B27]" />
+                <div className="flex items-center gap-2 text-xs font-mono font-bold tracking-[0.16em] uppercase text-[var(--gold)]">
+                    <ShieldCheck size={16} className="text-[var(--gold)]" />
                     <span>Verified Union Ledger & Provenance Record</span>
                 </div>
 

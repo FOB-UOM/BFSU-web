@@ -1,26 +1,38 @@
+import { fetchNotionNews } from '../notion.js';
 import { createClient } from '../supabase/server';
-import { newsData as fallbackNews } from '../../data/newsData';
 
 /**
- * Fetch all published news articles.
- * Falls back gracefully to static seed data if Supabase connection/table is not yet created.
+ * Database-First News & Official Notices Service
+ * Prioritizes Notion Headless CMS backplane with Supabase PostgreSQL fallback.
+ * Strictly zero static mock data.
  */
 export async function getNews() {
     try {
+        const notionNews = await fetchNotionNews();
+        if (notionNews && notionNews.length > 0) {
+            return notionNews;
+        }
+    } catch (err) {
+        console.warn('[News] Notion news fetch failed, falling back to Supabase:', err.message);
+    }
+
+    try {
         const supabase = await createClient();
+        if (!supabase) return [];
+
         const { data, error } = await supabase
             .from('news')
             .select('*')
             .eq('published', true)
             .order('date', { ascending: false });
 
-        if (error || !data || data.length === 0) {
-            return fallbackNews;
+        if (error || !data) {
+            return [];
         }
 
         return data;
     } catch {
-        return fallbackNews;
+        return [];
     }
 }
 
@@ -28,21 +40,33 @@ export async function getNews() {
  * Fetch a single news article by its slug.
  */
 export async function getNewsBySlug(slug) {
+    if (!slug) return null;
+
+    try {
+        const allNews = await getNews();
+        const found = allNews.find(n => n.slug === slug || n.id === slug);
+        if (found) return found;
+    } catch {
+        // Continue to Supabase direct query
+    }
+
     try {
         const supabase = await createClient();
+        if (!supabase) return null;
+
         const { data, error } = await supabase
             .from('news')
             .select('*')
             .eq('slug', slug)
             .eq('published', true)
-            .single();
+            .maybeSingle();
 
         if (error || !data) {
-            return fallbackNews.find((item) => item.slug === slug) || null;
+            return null;
         }
 
         return data;
     } catch {
-        return fallbackNews.find((item) => item.slug === slug) || null;
+        return null;
     }
 }

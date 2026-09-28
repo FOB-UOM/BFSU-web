@@ -2,7 +2,7 @@
 -- Migration: Institutional Hierarchy, Departmental Societies, Roles & Notion Hubs
 -- Establishes:
 -- 1. departments (DS, MOT, IM)
--- 2. student_societies (DSS, MOTSS, IMSS) with Notion hub connections
+-- 2. student_societies (DSS, BPMSS, IMSS) with Notion hub connections
 -- 3. institutional_roles (Union & Society executive board appointments)
 -- 4. web_maintainers (Platform maintainers and developers)
 -- 5. Foreign key bindings to public.profiles(id)
@@ -40,9 +40,9 @@ SET
 CREATE TABLE IF NOT EXISTS public.student_societies (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     department_id UUID REFERENCES public.departments(id) ON DELETE SET NULL,
-    code TEXT UNIQUE NOT NULL, -- 'DSS', 'MOTSS', 'IMSS'
+    code TEXT UNIQUE NOT NULL, -- 'DSS', 'BPMSS', 'IMSS'
     name TEXT NOT NULL,
-    slug TEXT UNIQUE NOT NULL, -- 'decision-sciences', 'mot', 'industrial-management'
+    slug TEXT UNIQUE NOT NULL, -- 'decision-sciences', 'bpmss', 'industrial-management'
     description TEXT NOT NULL,
     notion_workspace_url TEXT,
     notion_database_id TEXT,
@@ -70,11 +70,11 @@ VALUES
     ),
     (
         (SELECT id FROM public.departments WHERE code = 'MOT'),
-        'MOTSS',
-        'Management of Technology Student Society',
-        'mot',
+        'BPMSS',
+        'Business Process Management Students'' Society',
+        'bpmss',
         'Fostering leadership in enterprise technology, digital transformation, and industrial innovation through industry forums and tech symposia.',
-        'https://notion.so/bfsu-uom/mot-society'
+        'https://notion.so/bfsu-uom/bpm-society'
     ),
     (
         (SELECT id FROM public.departments WHERE code = 'IM'),

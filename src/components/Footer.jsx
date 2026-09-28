@@ -1,7 +1,13 @@
 import React from 'react';
 import Link from 'next/link';
 import { ArrowUpRight } from 'lucide-react';
-import { facultySocialLinks, academicPortals, unionContactChannels } from '../data/linksData';
+
+import { 
+    OFFICIAL_FACULTY_SOCIAL_LINKS, 
+    OFFICIAL_DIRECT_PORTALS, 
+    OFFICIAL_UNION_CHANNELS 
+} from '../lib/constants/links';
+
 
 export const Footer = () => {
     return (
@@ -32,12 +38,12 @@ export const Footer = () => {
                                 Official Digital Channels
                             </span>
                             <div className="flex flex-wrap items-center gap-2.5">
-                                {facultySocialLinks.map((social, idx) => (
+                                {OFFICIAL_FACULTY_SOCIAL_LINKS.map((social, idx) => (
                                     <a 
                                         key={idx}
                                         href={social.url} 
                                         target="_blank" 
-                                        rel="noreferrer"
+                                        rel="noopener noreferrer"
                                         className="px-3 py-1.5 bg-[var(--bg-surface)] hover:bg-[#C59B27] hover:text-white text-[var(--text-primary)] font-mono text-[11px] font-bold uppercase tracking-wider transition-colors inline-flex items-center gap-1.5 border border-[var(--border)] shadow-xs rounded-sm"
                                     >
                                         <span>{social.platform}</span>
@@ -71,12 +77,12 @@ export const Footer = () => {
                             Direct Portals
                         </span>
                         <ul className="space-y-2 font-mono text-xs font-semibold text-[#4B5563] dark:text-[#94A3B8]">
-                            {academicPortals.map((portal) => (
+                            {OFFICIAL_DIRECT_PORTALS.map((portal) => (
                                 <li key={portal.id}>
                                     <a 
                                         href={portal.url} 
                                         target="_blank" 
-                                        rel="noreferrer" 
+                                        rel="noopener noreferrer" 
                                         className="hover:text-[#C59B27] transition-colors flex items-center justify-between"
                                     >
                                         <span>{portal.title}</span>
@@ -86,9 +92,9 @@ export const Footer = () => {
                             ))}
                             <li>
                                 <a 
-                                    href={unionContactChannels.administrationPortalUrl} 
+                                    href={OFFICIAL_UNION_CHANNELS.administrationPortalUrl} 
                                     target="_blank" 
-                                    rel="noreferrer" 
+                                    rel="noopener noreferrer" 
                                     className="hover:text-[#C59B27] transition-colors flex items-center justify-between"
                                 >
                                     <span>Faculty Portal</span>
@@ -107,9 +113,9 @@ export const Footer = () => {
                             Confidential academic inquiries, student welfare notices, and direct union advocacy.
                         </p>
                         <a 
-                            href={unionContactChannels.feedbackFormUrl}
+                            href={OFFICIAL_UNION_CHANNELS.feedbackFormUrl}
                             target="_blank"
-                            rel="noreferrer"
+                            rel="noopener noreferrer"
                             className="inline-block py-2.5 px-4 bg-[#C59B27] text-[#001738] font-mono font-bold tracking-[0.16em] uppercase text-[11px] hover:brightness-110 transition-all rounded-sm shadow-xs"
                         >
                             Contact Union Desk &rarr;

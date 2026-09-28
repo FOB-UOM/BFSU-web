@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React from 'react';
 import { ArrowRight, ArrowUpRight, Sparkles, HeartHandshake } from 'lucide-react';
 
 export const HeroSection = () => {
@@ -19,21 +19,21 @@ export const HeroSection = () => {
                         <span className="font-extrabold text-[#C59B27]">Scholarship</span> & Community.
                     </h1>
 
-                    <p className="text-lg sm:text-xl text-[#2D3748] font-medium leading-relaxed max-w-xl mb-9 tracking-normal">
+                    <p className="text-lg sm:text-xl text-[var(--text-secondary)] font-medium leading-relaxed max-w-xl mb-9 tracking-normal">
                         A vibrant student fellowship connecting undergraduates across Business Analytics, Industrial Management, and Technology with mentorship, campus life, and collective student welfare.
                     </p>
 
                     <div className="flex flex-wrap items-center gap-4">
                         <a 
                             href="/explore"
-                            className="bg-[#0F141E] dark:bg-[var(--bg-surface)] text-white dark:text-[var(--text-primary)] hover:bg-[#C59B27] dark:hover:bg-[#C59B27] dark:hover:text-white px-7 py-3.5 font-mono text-xs font-bold uppercase tracking-[0.22em] transition-all inline-flex items-center gap-2 shadow-sm rounded-sm"
+                            className="bg-[#12161F] dark:bg-[var(--gold)] text-white dark:text-[#0C1017] hover:bg-[var(--gold)] dark:hover:brightness-110 px-7 py-3.5 font-mono text-xs font-bold uppercase tracking-[0.22em] transition-all inline-flex items-center gap-2 shadow-sm rounded-sm"
                         >
                             <span>Explore Student Life</span>
                             <ArrowRight size={14} />
                         </a>
                         <a 
                             href="/links"
-                            className="border-2 border-[#0F141E] dark:border-white/60 text-[var(--text-primary)]  hover:border-[#C59B27] hover:text-[#C59B27] px-7 py-3.5 font-mono text-xs font-bold uppercase tracking-[0.22em] transition-all inline-flex items-center gap-2 rounded-sm"
+                            className="border border-[var(--border-strong)] text-[var(--text-primary)] hover:border-[var(--gold)] hover:text-[var(--gold)] px-7 py-3.5 font-mono text-xs font-bold uppercase tracking-[0.22em] transition-all inline-flex items-center gap-2 rounded-sm"
                         >
                             <span>Student Portals</span>
                             <ArrowUpRight size={13} />
@@ -43,7 +43,7 @@ export const HeroSection = () => {
 
                 {/* Right Column: Clean Photographic Frame with Warm Human Badges */}
                 <div className="lg:col-span-5">
-                    <div className="border border-[var(--border)] bg-[var(--bg-surface)]  p-4 shadow-xl rounded-sm">
+                    <div className="border border-[var(--border)] bg-[var(--bg-surface)] p-4 shadow-xl rounded-sm">
                         <div className="overflow-hidden aspect-[4/3] relative border border-[var(--border)] rounded-sm">
                             <img 
                                 src="/images/faculty_official_real.jpg" 
@@ -64,12 +64,12 @@ export const HeroSection = () => {
 
                         {/* Quick Directory Ledger below image */}
                         <div className="grid grid-cols-2 gap-2 mt-3 pt-3 border-t border-[var(--border)] font-mono text-[11px] font-bold">
-                            <a href="/about#council" className="p-2.5 border border-[var(--border)] hover:border-[#C59B27] flex items-center justify-between transition-colors rounded-sm tracking-wider">
-                                <span className="text-[#374151]">Council Roster</span>
+                            <a href="/about#council" className="p-2.5 border border-[var(--border)] hover:border-[#C59B27] flex items-center justify-between transition-colors rounded-sm tracking-wider group">
+                                <span className="text-[var(--text-secondary)] group-hover:text-[var(--text-primary)]">Council Roster</span>
                                 <ArrowRight size={12} className="text-[#C59B27]" />
                             </a>
-                            <a href="/news" className="p-2.5 border border-[var(--border)] hover:border-[#C59B27] flex items-center justify-between transition-colors rounded-sm tracking-wider">
-                                <span className="text-[#374151]">Official Circulars</span>
+                            <a href="/news" className="p-2.5 border border-[var(--border)] hover:border-[#C59B27] flex items-center justify-between transition-colors rounded-sm tracking-wider group">
+                                <span className="text-[var(--text-secondary)] group-hover:text-[var(--text-primary)]">Official Circulars</span>
                                 <ArrowRight size={12} className="text-[#C59B27]" />
                             </a>
                         </div>

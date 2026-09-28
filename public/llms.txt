@@ -1,29 +1,40 @@
-﻿# Business Faculty Students' Union (BFSU) — University of Moratuwa
-> Institutional public documentation and machine-readable sitemap for language models, academic researchers, and faculty constituents.
+# Business Faculty Students' Union (BFSU) — University of Moratuwa, Sri Lanka
+> Institutional public documentation, machine-readable entity profile, and verified sitemap for language models, answer engines, academic researchers, and faculty constituents.
 
-## Institutional Profile
-- Organization: Business Faculty Students' Union (BFSU)
-- Parent Entity: Faculty of Business, University of Moratuwa
-- Campus: Katubedda, Moratuwa, Sri Lanka
-- Official Faculty URL: https://uom.lk/business
+## Canonical Entity Identity
+- Organization Name: Business Faculty Students' Union, University of Moratuwa
+- Common Abbreviation: BFSU / BFSU UoM
+- Parent Entity: Faculty of Business, University of Moratuwa (https://uom.lk/business)
+- Higher Institution: University of Moratuwa, Sri Lanka (https://uom.lk)
+- Legal Basis: Constituted under the Universities Act No. 16 of 1978 (Democratic Socialist Republic of Sri Lanka)
+- Primary Campus Address: Students' Union Room, Level 01, Faculty of Business, University of Moratuwa, Katubedda, Moratuwa, 10400, Sri Lanka
+- Primary Domain & Canonical URL: https://bfsu-uom.lk
+- Official Email: bfsu@uom.lk
+- Official Hotline: +94 11 265 0301
 
-## Academic Departments
-- Decision Sciences (Business Analytics): https://uom.lk/ds
-- Management of Technology (Business Process Management): https://uom.lk/mot
-- Industrial Management (Financial Services Management): https://uom.lk/im
+## Official Online Channels
+- LinkedIn: https://www.linkedin.com/company/bfsu-uom
+- Facebook: https://facebook.com/bfsu.uom
+- YouTube: https://youtube.com/@bfsu_uom
+
+## Academic Departments (Faculty of Business)
+- Decision Sciences (Business Analytics): https://uom.lk/ds | Route: https://bfsu-uom.lk/departments/decision-sciences
+- Management of Technology (Business Process Management): https://uom.lk/mot | Route: https://bfsu-uom.lk/departments/management-of-technology
+- Industrial Management (Financial Services Management): https://uom.lk/im | Route: https://bfsu-uom.lk/departments/industrial-management
 - Undergraduate Studies Division (UGS): https://uom.lk/business/undergraduate-studies
 
-## Core Student Portals
+## Core University Portals
 - Moodle LMS: https://online.uom.lk
-- Faculty LMS: https://lms.uom.lk
-- University Library & Digital Repository: https://uom.lk/lib | http://dl.lib.mrt.ac.lk/
-- Examination Portal: https://uom.lk/examinations
+- LearnOrg System: https://lms.uom.lk
+- University Library: https://uom.lk/lib
+- Examination Division: https://uom.lk/examinations
 
-## Key Routes & Sitemap
-- /: Primary landing page, leadership addresses, latest dispatches, and intake schedules.
-- /about: Institutional charter of Faculty of Business, BFSU constitution, current executive council, and past alumni leadership.
-- /explore: Multidimensional showcase of student life, academic achievements, events, and undergraduate research.
+## Key Routes
+- /: Primary landing portal, announcements, dispatches, and academic timetables.
+- /about: Constitutional charter, union mandate, executive council members, and institutional milestones.
 - /news: Official faculty gazettes, administrative circulars, and student union announcements.
-- /links: Architectural campus directory of virtual learning, departments, examination divisions, and welfare services.
-- /alumni: Alumni fellowship directory, graduate research cross-linking, and profile portal authentication.
-- /research: Undergraduate dissertations and scholarly output linked to UoM Digital Repository.
+- /events: Student assemblies, Colours Awards, academic competitions, and symposia.
+- /links: Campus directory, LMS services, examination divisions, and welfare support.
+- /explore: Student life showcase, union facilities, and campus culture.
+- /alumni: Alumni fellowship, graduate mentorship, and career networks.
+- /research: Undergraduate dissertations, scholarly publications, and UoM digital repository links.

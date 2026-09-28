@@ -7,7 +7,7 @@ export const Card = ({ children, className = '', hover = true, variant = 'defaul
 
     return (
         <div
-            className={`bg-white dark:bg-[#121721] border border-[#E8E6E1] dark:border-white/10 rounded-xl shadow-paper ${hoverStyles} ${className}`}
+            className={`bg-[var(--bg-surface)] border border-[var(--border)] rounded-xl shadow-paper ${hoverStyles} ${className}`}
             {...props}
         >
             {children}
@@ -16,7 +16,7 @@ export const Card = ({ children, className = '', hover = true, variant = 'defaul
 };
 
 export const CardHeader = ({ children, className = '', ...props }) => (
-    <div className={`p-6 pb-3 border-b border-[#E8E6E1]/60 dark:border-white/5 ${className}`} {...props}>
+    <div className={`p-6 pb-3 border-b border-[var(--border)] ${className}`} {...props}>
         {children}
     </div>
 );
@@ -28,7 +28,7 @@ export const CardContent = ({ children, className = '', ...props }) => (
 );
 
 export const CardFooter = ({ children, className = '', ...props }) => (
-    <div className={`p-6 pt-3 mt-auto border-t border-[#E8E6E1]/60 dark:border-white/5 ${className}`} {...props}>
+    <div className={`p-6 pt-3 mt-auto border-t border-[var(--border)] ${className}`} {...props}>
         {children}
     </div>
 );

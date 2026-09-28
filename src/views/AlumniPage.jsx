@@ -8,7 +8,7 @@ import { useAuth } from '../context/AuthContext';
 import { UserAvatar } from '../components/UserAvatar';
 import { createClient } from '../lib/supabase/client';
 import { useProfilePeek } from '../context/ProfilePeekContext';
-import { alumniPillars, fallbackAlumniSpotlights } from '../data/alumniData';
+import { alumniPillars } from '../data/alumniData';
 import { 
     GraduationCap, 
     Network, 
@@ -86,13 +86,20 @@ export const AlumniPage = () => {
         };
     });
 
-    const alumniSpotlights = fallbackAlumniSpotlights;
-
-    // Merge database profiles with spotlights (dedup by ID/email)
-    const combinedProfiles = [
-        ...dbProfiles,
-        ...alumniSpotlights.filter(sp => !dbProfiles.some(p => p.email === sp.email))
+    // Use ONLY live verified alumni profiles (no mock profiles, active undergraduates excluded)
+    const graduatedBatches = [
+        "Batch '17", "Batch '18", "Batch '19", "Batch '20", "Batch '21",
+        "Batch 17", "Batch 18", "Batch 19", "Batch 20", "Batch 21"
     ];
+    const combinedProfiles = dbProfiles.filter(p => {
+        // Explicit alumni role
+        if (p.role === 'alumni') return true;
+        // Batch intake is already graduated and profile is not an active undergrad
+        if (p.batch && graduatedBatches.includes(p.batch) && p.role !== 'student') return true;
+        // Stored graduation year
+        if (p.graduation_year && p.role !== 'student') return true;
+        return false;
+    });
 
     // Apply batch, department, and search filtering
     const filteredProfiles = combinedProfiles.filter(p => {
@@ -162,7 +169,7 @@ export const AlumniPage = () => {
                     {pillars.map((item, idx) => {
                         const Icon = item.icon;
                         return (
-                            <div key={idx} className="border-t-2 border-[#12161F] dark:border-white/50 pt-6">
+                            <div key={idx} className="border-t-2 border-[#12161F] dark:border-[var(--border-strong)] pt-6">
                                 <Icon size={22} className="text-[#C59B27] mb-4" />
                                 <h3 className="font-display text-xl sm:text-2xl font-bold text-[var(--text-primary)] mb-3">
                                     {item.title}

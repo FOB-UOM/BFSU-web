@@ -25,7 +25,7 @@ Prior to this decision:
 We formally adopt the three-pillar academic and student body ontology:
 - **Decision Sciences (DS)** $\leftrightarrow$ **Business Analytics** $\leftrightarrow$ **Society of Business Analytics (SOBA)** (`30d3b460dd9e81dcb43bcff420397d32`)
 - **Industrial Management (IM)** $\leftrightarrow$ **Financial Services Management (FSM)** $\leftrightarrow$ **FSM Students' Society (FSMSS)** (`30d3b460dd9e81bfa07bf533a61bb294`)
-- **Management of Technology (MOT)** $\leftrightarrow$ **Business Process Management (BPM)** $\leftrightarrow$ **MOT Students' Society (MOTSS)**
+- **Management of Technology (MOT)** $\leftrightarrow$ **Business Process Management (BPM)** $\leftrightarrow$ **MOT Students' Society (BPMSS)**
 
 ### 2. Universal Identity Resolution
 The canonical master key connecting Supabase `profiles` with Notion `Committee Members` and `People` records is the student's institutional email (`[username].[batch]@uom.lk`).
