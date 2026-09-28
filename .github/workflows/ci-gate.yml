@@ -1,0 +1,51 @@
+name: CI Release Gate & Verification Suite
+
+on:
+  pull_request:
+    branches:
+      - main
+      - preview
+      - qa
+      - dev
+  push:
+    branches:
+      - qa
+      - preview
+
+jobs:
+  gate-verification:
+    name: Typecheck, Security, A11y & Production Build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 12.4.2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'pnpm'
+
+      - name: Install Dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Verify TypeScript Types
+        run: pnpm run typecheck
+
+      - name: Verify Link Security & Anti-Poisoning
+        run: pnpm run test:links
+
+      - name: Verify WCAG 3 / APCA Accessibility Gate
+        run: pnpm run test:a11y
+
+      - name: Verify Production Next.js Build
+        run: pnpm run build
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL || 'https://jbbcsxdkboiytqgaceen.supabase.co' }}
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'dummy_anon_key_for_ci_build' }}

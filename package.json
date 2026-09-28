@@ -18,7 +18,12 @@
     "db:status": "node scripts/supabase-scoped.mjs migration list",
     "db:push": "node scripts/supabase-scoped.mjs db push",
     "db:pull": "node scripts/supabase-scoped.mjs db pull",
-    "deploy:prod": "vercel --prod --global-config ./.vercel"
+    "deploy:prod": "vercel --prod --global-config ./.vercel",
+    "typecheck": "tsc --noEmit",
+    "test:links": "node scripts/test-link-security.mjs",
+    "test:a11y": "node scripts/audit-a11y.cjs",
+    "test": "pnpm typecheck && pnpm test:links && pnpm test:a11y",
+    "ci": "pnpm test && pnpm build"
   },
   "devDependencies": {
     "@intuitui-labs/a11y-gate": "^0.2.0",
